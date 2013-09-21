@@ -90,12 +90,12 @@ void Star::SetRandomColorAndSize(RandomNumberGenerator& random){
              break;
              }
     case (1):{
-		_sprite.setColor(sf::Color::Cyan);
+        _sprite.setColor(sf::Color::Red);
 		
              break;
              }
     case (2):{
-		_sprite.setColor(sf::Color::Green);
+        _sprite.setColor(sf::Color::Magenta);
 		
             break;
              }

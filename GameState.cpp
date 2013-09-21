@@ -13,9 +13,9 @@ _player(nullptr)
 
 	//initialize stars; 
 	for(int i = 0; i < 150; ++i){										//little offset so when player move to right side there are still stars
-		sf::Vector2f starPos(_game->_randomNumGenerator.getRandomVec2f(_game->_width + 50.f)); 
+        sf::Vector2f starPos(_game->_randomNumGenerator.getRandomVec2f(_game->_width + 60.f));
 		//create new star
-		uptr_entity star(new Star(game,starPos, _game->_randomNumGenerator, _player));
+        sptr_entity star(new Star(game,starPos, _game->_randomNumGenerator, _player));
 		star->SetTexture(_game->_starTexture);
 		entities.push_back(std::move(star));
 	}
@@ -35,7 +35,7 @@ GameState::~GameState(){
 
 void GameState::Update(const sf::Time& deltaFrame){
 	
-	for(uptr_entity& i : entities){
+    for(sptr_entity& i : entities){
 		i->Update(_game->_frame_delta); 
 	}
 	
@@ -49,7 +49,7 @@ void GameState::Render(){
 		//first draw background, than everything else
 		_game->renderWindow.draw(_background->GetSprite());
 		
-		for(uptr_entity& i : entities){
+        for(sptr_entity& i : entities){
 		_game->renderWindow.draw(i->GetSprite());
 		}
 		_game->renderWindow.display(); 
