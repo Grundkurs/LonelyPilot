@@ -26,26 +26,26 @@ std::cout << "destroying player\n";
 
 void Player::Update(const sf::Time& deltaFrame){
 	changeRect(0);
-	
+//---------------------------------------------------
 	//basic controls
 	if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left)){
 		changeRect(1); 
-		_velocity.x -= 105.5f * deltaFrame.asSeconds(); 
+		_velocity.x -= 1105.5f * deltaFrame.asSeconds(); 
 	}
 	if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right)){
 		changeRect(2);
-		_velocity.x += 105.5f * deltaFrame.asSeconds();
+		_velocity.x += 1105.5f * deltaFrame.asSeconds();
 	}
 	if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up)){
 		
-		_velocity.y -= 105.5f * deltaFrame.asSeconds();
+		_velocity.y -= 505.5f * deltaFrame.asSeconds();
 	}
 	if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down)){
 		
-		_velocity.y += 105.5f * deltaFrame.asSeconds();
+		_velocity.y += 505.5f * deltaFrame.asSeconds();
 	}
 
-
+//--------------------------------------------------------------------------
 	//limit MaxSpeed
 
 	if(_velocity.x > 400.f){
@@ -55,6 +55,15 @@ void Player::Update(const sf::Time& deltaFrame){
 	if(_velocity.x < -400.f){
 		
 		_velocity.x = -400.f; 
+	}
+
+	if(_velocity.y > 400.f){
+		
+		_velocity.y = 400.f; 
+	}
+	if(_velocity.y < -400.f){
+		
+		_velocity.y = -400.f; 
 	}
 
 	//--------------------------------------------------------------------------

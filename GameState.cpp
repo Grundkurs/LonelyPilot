@@ -13,9 +13,8 @@ _player(nullptr)
 
 	//initialize stars; 
 	for(int i = 0; i < 150; ++i){										//little offset so when player move to right side there are still stars
-        sf::Vector2f starPos(_game->_randomNumGenerator.getRandomVec2f(_game->_width + 60.f));
-		//create new star
-        sptr_entity star(new Star(game,starPos, _game->_randomNumGenerator, _player));
+       //create new star
+        sptr_entity star(new Star(game,_game->_randomNumGenerator, _player));
 		star->SetTexture(_game->_starTexture);
 		entities.push_back(std::move(star));
 	}

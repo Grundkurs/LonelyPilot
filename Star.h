@@ -20,7 +20,7 @@ class Star :
 
 public:
 	Star(Game* game, std::shared_ptr<Player> player);
-	Star(Game* game, sf::Vector2f position,RandomNumberGenerator& random, std::shared_ptr<Player>player);
+	Star(Game* game, RandomNumberGenerator& random, std::shared_ptr<Player>player);
 	~Star();
 	void Update(const sf::Time& deltaFrame); 
 	void SetTexture(const sf::Texture& tex);

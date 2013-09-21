@@ -7,22 +7,26 @@ class Game;
 Star::Star(Game* game, std::shared_ptr<Player>player) : _game(game), _player(player){
 }
 
-Star::Star(Game* game, sf::Vector2f position,RandomNumberGenerator& random, std::shared_ptr<Player>player) 
+Star::Star(Game* game, RandomNumberGenerator& random, std::shared_ptr<Player>player) 
 	:	_game(game),
-		mPos(position),
+	mPos(sf::Vector2f(0.f, 0.f)),
 		mSpeedEnhancment(1.0),
 		_player(player)
 {
 
-	float yPos = random.getRandomInt(_game->_height); 
-    _sprite.setPosition(mPos.x, yPos);
+	float xPos = random.getRandomInt(_game->_width + 30);
+	float yPos = random.getRandomInt(_game->_height + 400);
+	_sprite.setPosition(xPos, yPos);
+	mPos.x = xPos; 
+	mPos.y = yPos; 
+    
 
     //makes the stars at the borders faster, which looks nicer
-    if(position.x < 100 || position.x > 900){
+    if(mPos.x < 100 || mPos.x > 900){
         mSpeedEnhancment = 1.5f;
     }
     mSpeed.x = 0;
-    mSpeed.y = ((position.y /10) * mSpeedEnhancment);
+    mSpeed.y = ((mPos.y /10) * mSpeedEnhancment);
     SetRandomColorAndSize(random);
 
 }
@@ -45,8 +49,8 @@ void Star::Update(const sf::Time& deltaFrame){
 	newPos += mSpeed * deltaFrame.asSeconds();
 
 	//offset of 20 pixels at top and bottom (788 instead of 768 for bottom and -20 instead of 0 for top)
-    if(newPos.y > 788){
-        newPos.y = -20;
+    if(newPos.y > (_game->_height + 400)){
+        newPos.y = -40.f;
     }
 
     _sprite.setPosition(newPos);
@@ -81,11 +85,9 @@ void Star::SetRandomColorAndSize(RandomNumberGenerator& random){
 
 
     //Color
-
-    
     switch(number){
     case (0):{
-		_sprite.setColor(sf::Color::Yellow);
+		_sprite.setColor(sf::Color(240,0,0));
 		
              break;
              }
