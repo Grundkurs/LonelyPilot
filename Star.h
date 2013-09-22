@@ -7,8 +7,8 @@
 class Star :
 	public IEntity
 {
-	sf::Vector2f _pos;
-	sf::Sprite _sprite;
+	
+	sf::Sprite mSprite;
 	Game* _game;
 	std::shared_ptr<Player>_player; 
     sf::Vector2f mPos;

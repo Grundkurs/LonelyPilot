@@ -18,7 +18,7 @@ Star::Star( Game* game, RandomNumberGenerator& random, std::shared_ptr<Player>pl
 
 	float xPos = random.getRandomInt( _game->_width + 30 );
 	float yPos = random.getRandomInt( _game->_height + 400 );
-	_sprite.setPosition( xPos, yPos );
+	mSprite.setPosition( xPos, yPos );
 	mPos.x = xPos; 
 	mPos.y = yPos; 
     
@@ -43,7 +43,7 @@ Star::~Star()
 
 void Star::Update( const sf::Time& deltaFrame )
 {
-	sf::Vector2f newPos = _sprite.getPosition();
+	sf::Vector2f newPos = mSprite.getPosition();
 
 	//bind star-movement to player-speed
 	newPos.y += ( -_player->_velocity.y) * deltaFrame.asSeconds();
@@ -57,13 +57,13 @@ void Star::Update( const sf::Time& deltaFrame )
         newPos.y = -40.f;
     }
 
-    _sprite.setPosition( newPos );
+    mSprite.setPosition( newPos );
 
 }
 
 void Star::SetTexture( const sf::Texture& tex )
 {
-	_sprite.setTexture( tex ); 
+	mSprite.setTexture( tex ); 
 }
 
 
@@ -88,39 +88,39 @@ void Star::SetRandomColorAndSize( RandomNumberGenerator& random )
 	{
 		scale = .3f;
 	}
-    _sprite.setScale( scale, scale );
+    mSprite.setScale( scale, scale );
 
 
     //Color
     switch( number )
 	{
     case ( 0 ):{
-		_sprite.setColor(sf::Color(240,0,0));
+		mSprite.setColor(sf::Color(240,0,0));
 		
              break;
              }
     case ( 1 ):{
-        _sprite.setColor(sf::Color::Red);
+        mSprite.setColor(sf::Color::Red);
 		
              break;
              }
     case ( 2 ):{
-        _sprite.setColor(sf::Color::Magenta);
+        mSprite.setColor(sf::Color::Magenta);
 		
             break;
              }
     case ( 3 ):{
-		_sprite.setColor(sf::Color::Blue);
+		mSprite.setColor(sf::Color::Blue);
 		
             break;
              }
     case ( 4 ):{
-        _sprite.setColor(sf::Color::Red);
+        mSprite.setColor(sf::Color::Red);
 		
              break;
              }
     default:{
-		_sprite.setColor(sf::Color::Magenta);
+		mSprite.setColor(sf::Color::Magenta);
             break;
             }
     }
@@ -129,5 +129,5 @@ void Star::SetRandomColorAndSize( RandomNumberGenerator& random )
 
 const sf::Sprite& Star::GetSprite() const 
 {
-	return _sprite;
+	return mSprite;
 }

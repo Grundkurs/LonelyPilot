@@ -20,8 +20,8 @@ class GameState : public IState
 	Game* _game; 
 	
     std::vector<sptr_entity> entities;
-	std::shared_ptr<Player> _player; 
-	std::unique_ptr<Background> _background; 
+	std::shared_ptr<Player> mPlayer; 
+	std::unique_ptr<Background> mBackground; 
 public:
 	GameState(Game* game);
 	~GameState();

@@ -6,7 +6,7 @@ class Background :
 {
 
 	Game* _game;
-	sf::Vector2f _pos;
+	sf::Vector2f mPos;
 	sf::Sprite _sprite;
 public:
 	Background(Game* game);
