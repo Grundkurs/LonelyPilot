@@ -3,50 +3,50 @@
 
 Game::Game( int width, int height ) 
 	:
-    renderWindow( sf::VideoMode(width, height), "Space Game Shooter v1.0" ),
-	_width( width ),
-	_height( height ),
-	_currentState( new MenuState(this) ),
-	_previousState( _currentState ),
-	_switchStateInput( .05f )
+    mRenderWindow( sf::VideoMode(width, height), "Space Game Shooter v1.0" ),
+	mWidth( width ),
+	mHeight( height ),
+	mpCurrentState( new MenuState(this) ),
+	mpPreviousState( mpCurrentState ),
+	mSwitchStateInput( .05f )
 
 {
 	//start Clock; 
-	_start_time.restart(); 
+	mStartTime.restart(); 
 }
 
 Game::~Game()
 {
-	if( _currentState )
+	if( mpCurrentState )
 	{
-		delete _currentState;
+		delete mpCurrentState;
 	}
 }
 
 
 bool Game::Initialize()
 {	
-	if( !renderWindow.isOpen() ){
-		std::cout << "could not open RenderWindow\n"; 
+	if( !mRenderWindow.isOpen() ){
+		std::cout << "could not open mRenderWindow\n"; 
 		return false; 
 	}
-		std::cout << "RenderWindow opened successfully\n"; 
+		std::cout << "mRenderWindow opened successfully\n"; 
 
-		if( !_starTexture.loadFromFile("..\\Art\\Visual\\Star.png") )
+		if( !mStarTexture.loadFromFile("..\\Art\\Visual\\Star.png") )
 		{
 			std::cout << "error loading Star-Texture\n"; 
 			return false; 
 		}
 		std::cout << "Star loaded successfully\n"; 
 
-		if( !_playerTexture.loadFromFile("..\\Art\\Visual\\PlayerSheet.png") )
+		if( !mPlayerTexture.loadFromFile("..\\Art\\Visual\\PlayerSheet.png") )
 		{
 			std::cout << "error loading player-Texture\n"; 
 			return false; 
 		}
 		std::cout << "player-Texture loaded successfully\n"; 
 
-		if( !_backgroundTexture.loadFromFile("..\\Art\\Visual\\StarBackground1024x768.jpg") )
+		if( !mBackgroundTexture.loadFromFile("..\\Art\\Visual\\StarBackground1024x768.jpg") )
 		{
 			std::cout << "error loading Background-Texture\n"; 
 			return false;
@@ -58,20 +58,20 @@ bool Game::Initialize()
 
 int Game::Run()
 {
-	sf::Time lastTime = _start_time.getElapsedTime();
+	sf::Time lastTime = mStartTime.getElapsedTime();
 	sf::Time currentTime; 
 	
 	//main Program-Loop
-	while( renderWindow.isOpen() )
+	while( mRenderWindow.isOpen() )
 	{
-		currentTime = _start_time.getElapsedTime(); 
-		_frame_delta = currentTime - lastTime; 
+		currentTime = mStartTime.getElapsedTime(); 
+		mFrameDelta = currentTime - lastTime; 
 		lastTime = currentTime; 
 	
 
 		ProcessHandle(); 
-		_currentState->Update(_frame_delta); 
-		_currentState->Render(); 
+		mpCurrentState->Update(mFrameDelta); 
+		mpCurrentState->Render(); 
 
 	}
 	return 0; 
@@ -79,31 +79,31 @@ int Game::Run()
 
 void Game::ProcessHandle()
 {
-	_switchStateInput.process( _frame_delta ); 
-	//_press_Button_Trigger += _frame_delta.asSeconds();  
+	mSwitchStateInput.process( mFrameDelta ); 
+	//_press_Button_Trigger += mFrameDelta.asSeconds();  
 
 	sf::Event event;
 	
-		while( renderWindow.pollEvent(event) ){
+		while( mRenderWindow.pollEvent(event) ){
 			//Global inputs
 			if(event.type == sf::Event::Closed){
-				renderWindow.close(); 
+				mRenderWindow.close(); 
 			}
 
 
 
 
-			if( _switchStateInput.canChange() )
+			if( mSwitchStateInput.canChange() )
 			{
 				//Input commands depends on current State
-				_currentState = _currentState->ProcessStateInput(event); 
-				if( _currentState != _previousState )
+				mpCurrentState = mpCurrentState->ProcessStateInput(event); 
+				if( mpCurrentState != mpPreviousState )
 				{
-					delete _previousState; 
-					_previousState = _currentState; 
+					delete mpPreviousState; 
+					mpPreviousState = mpCurrentState; 
 				}
 			}
 			
-		}//end of renderWindow.pollEvent
+		}//end of mRenderWindow.pollEvent
 
 } //end of ProcessHandle

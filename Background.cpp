@@ -1,7 +1,7 @@
 #include "Background.h"
 #include <iostream>
 
-Background::Background( Game* game ) : _game( game )
+Background::Background( Game* game ) : mpGame( game )
 {
 }
 
@@ -18,11 +18,11 @@ void Background::Update( const sf::Time& deltaFrame )
 	
 void Background::SetTexture( const sf::Texture& tex )
 {
-	_sprite.setTexture( tex ); 
+	mSprite.setTexture( tex ); 
 }
 
 
 const sf::Sprite& Background::GetSprite() const
 {
-	return _sprite;
+	return mSprite;
 }

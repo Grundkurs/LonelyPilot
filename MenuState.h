@@ -9,38 +9,35 @@ class Game;
 class MenuState :
 	public IState
 {
-	Game* _game; 
+	Game* mpGame; 
 	
 public:
-	MenuState(Game* game);
-	~MenuState();
+								MenuState(Game* game);
+								~MenuState();
 
 
-	IState* ProcessStateInput(const sf::Event& event); 
-	void Update(const sf::Time& deltaFrame); 
-	void Render(); 
+	IState*						ProcessStateInput(const sf::Event& event); 
+	void						Update(const sf::Time& deltaFrame); 
+	void						Render(); 
 
-	sf::Sprite _backgroundSprite1;
-	sf::Sprite _backgroundSprite2;
-	sf::Sprite _spaceShipSprite;
-	sf::Sprite _starStripeSprite;
-	sf::RectangleShape _rectShape; 
-	float _spaceShipVelocity;
-	sf::Font _font; 
-
-	sf::Text _NewGameText; 
-
-	std::shared_ptr<Option> sPtr_NewGame; 
-	std::shared_ptr<Option> sPtr_Options; 
-	std::shared_ptr<Option> sPtr_Exit;
-
-	Option* _currentOption; 
+	sf::Sprite					mBackgroundSprite1;
+	sf::Sprite					mBackgroundSprite2;
+	sf::Sprite					mSpaceShipSprite;
+	sf::Sprite					mStarStripeSprite;
+	sf::RectangleShape			mRectShape; 
+	float						mSpaceShipVelocity;
 	
-	sf::Texture _backgroundTexture1;
-	sf::Texture _backgroundTexture2;
-	sf::Texture _spaceShipTexture;
-	sf::Texture _starStripeTexture; 
-	sf::Texture _titleScreenTexture; 
+	std::shared_ptr<Option>		sPtr_NewGame; 
+	std::shared_ptr<Option>		sPtr_Options; 
+	std::shared_ptr<Option>		sPtr_Exit;
+
+	Option*						mpCurrentOption; 
+	
+	sf::Texture					mBackgroundTexture1;
+	sf::Texture					mBackgroundTexture2;
+	sf::Texture					mSpaceShipTexture;
+	sf::Texture					mStarStripeTexture; 
+	
 };
 
 #endif //MENUSTATE_H

@@ -5,28 +5,28 @@ class Game;
 
 MenuState::MenuState( Game* game ) 
 	: 
-	_game( game ), 
-	_spaceShipVelocity( 10.f ),
-	_currentOption( nullptr )
+	mpGame( game ), 
+	mSpaceShipVelocity( 10.f ),
+	mpCurrentOption( nullptr )
 {
 
-	if( !_backgroundTexture1.loadFromFile("..\\Art\\Visual\\MainMenuParts\\Background1.jpg") )
+	if( !mBackgroundTexture1.loadFromFile("..\\Art\\Visual\\MainMenuParts\\Background1.jpg") )
 		{
 			std::cout << "error loading Background-Texture\n"; 
 		}
 		
-		if( !_backgroundTexture2.loadFromFile("..\\Art\\Visual\\MainMenuParts\\Background2.jpg") )
+		if( !mBackgroundTexture2.loadFromFile("..\\Art\\Visual\\MainMenuParts\\Background2.jpg") )
 		{
 			std::cout << "error loading Background-Texture\n"; 
 		}
 		
 		
-		if( !_spaceShipTexture.loadFromFile("..\\Art\\Visual\\MainMenuParts\\Spaceship.png") )
+		if( !mSpaceShipTexture.loadFromFile("..\\Art\\Visual\\MainMenuParts\\Spaceship.png") )
 		{
 			std::cout << "error loading Spaceship-Texture\n"; 
 		}
 
-		if( !_starStripeTexture.loadFromFile("..\\Art\\Visual\\MainMenuParts\\StarStripe.jpg") )
+		if( !mStarStripeTexture.loadFromFile("..\\Art\\Visual\\MainMenuParts\\StarStripe.jpg") )
 		{
 			std::cout << "error loading StarStripe-Texture\n"; 
 		}
@@ -35,37 +35,29 @@ MenuState::MenuState( Game* game )
 
 
 
-		_spaceShipSprite.setTexture( _spaceShipTexture );
-		_spaceShipSprite.setPosition( sf::Vector2f(0.f, 250.f) );
-		_backgroundSprite1.setTexture(_backgroundTexture1);
+		mSpaceShipSprite.setTexture( mSpaceShipTexture );
+		mSpaceShipSprite.setPosition( sf::Vector2f(0.f, 250.f) );
+		mBackgroundSprite1.setTexture(mBackgroundTexture1);
 		
-		_backgroundSprite2.setTexture( _backgroundTexture2 );
-		_backgroundSprite2.setPosition( sf::Vector2f(1024.f, 0.f) );
+		mBackgroundSprite2.setTexture( mBackgroundTexture2 );
+		mBackgroundSprite2.setPosition( sf::Vector2f(1024.f, 0.f) );
 		
-		_starStripeSprite.setTexture(_starStripeTexture); 
-		_starStripeSprite.setPosition( sf::Vector2f(1024.f, 100.f) ); 
+		mStarStripeSprite.setTexture(mStarStripeTexture); 
+		mStarStripeSprite.setPosition( sf::Vector2f(1024.f, 100.f) ); 
 
-		int rectHeight = _game->_height; 
-		int rectWidth = _game->_width /3; 
-		_rectShape.setFillColor( sf::Color(255,165,0) );
-		_rectShape.setSize( sf::Vector2f(rectWidth,rectHeight) ); 
-		_rectShape.setPosition( sf::Vector2f((_game->_width - rectWidth), (_game->_height - rectHeight) ) ); 
+		int rectHeight = mpGame->mHeight; 
+		int rectWidth = mpGame->mWidth /3; 
+		mRectShape.setFillColor( sf::Color(255,165,0) );
+		mRectShape.setSize( sf::Vector2f(rectWidth,rectHeight) ); 
+		mRectShape.setPosition( sf::Vector2f((mpGame->mWidth - rectWidth), (mpGame->mHeight - rectHeight) ) ); 
 
-		if( !_font.loadFromFile("..\\Art\\Fonts\\Acme.ttf") )
-		{
-			std::cout << "could not load font!\n"; 
-		}
-		_NewGameText.setFont( _font ); 
-		_NewGameText.setString( "New Game" ); 
-		_NewGameText.setCharacterSize( 40 );  
-		_NewGameText.setColor( sf::Color::Red ); 
-		_NewGameText.setPosition( _game->_width /4, _game->_height - _NewGameText.getCharacterSize() ); 
+		
 
-
-		sPtr_NewGame = std::shared_ptr<Option>( new Option("New Game", sf::Vector2f(_game->_width -_game->_width/4, 100), sf::Color::Red) );
-		sPtr_Options =  std::shared_ptr<Option>( new Option("Options", sf::Vector2f(_game->_width - _game->_width/4, 300), sf::Color::Black) );
-		sPtr_Exit = std::shared_ptr<Option>( new Option("Exit", sf::Vector2f(_game->_width - _game->_width/4, 500), sf::Color::Black) );
-		_currentOption = sPtr_NewGame.get(); 
+		//Setup Menu-Options
+		sPtr_NewGame = std::shared_ptr<Option>( new Option("New Game", sf::Vector2f(mpGame->mWidth -mpGame->mWidth/4, 100), sf::Color::Red) );
+		sPtr_Options =  std::shared_ptr<Option>( new Option("Options", sf::Vector2f(mpGame->mWidth - mpGame->mWidth/4, 300), sf::Color::Black) );
+		sPtr_Exit = std::shared_ptr<Option>( new Option("Exit", sf::Vector2f(mpGame->mWidth - mpGame->mWidth/4, 500), sf::Color::Black) );
+		mpCurrentOption = sPtr_NewGame.get(); 
 		sPtr_NewGame->ConnectNext( sPtr_Options.get() ); 
 		sPtr_Options->ConnectFront( sPtr_NewGame.get() ); 
 		sPtr_Options->ConnectNext( sPtr_Exit.get() ); 
@@ -84,46 +76,46 @@ MenuState::~MenuState()
 IState* MenuState::ProcessStateInput( const sf::Event& event )
 {
 	
-	//TODO: Change this Check to ENUM (its faster)
-	if( _currentOption->_string == "New Game" )
+	//TODO: Change this Check to ENUM (its faster!)
+	if( mpCurrentOption->_string == "New Game" )
 	{
 		if( sf::Keyboard::isKeyPressed(sf::Keyboard::Return) )
 		{
-			_game->_switchStateInput.reset(); 
-			return new GameState( _game );
+			mpGame->mSwitchStateInput.reset(); 
+			return new GameState( mpGame );
 		}
 	}
 
-	else if( _currentOption->_string == "Exit" )
+	else if( mpCurrentOption->_string == "Exit" )
 	{
 		if( sf::Keyboard::isKeyPressed(sf::Keyboard::Return) )
 		{
-			_game->renderWindow.close(); 
+			mpGame->mRenderWindow.close(); 
 		}
 	}
 
 	    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)){
 	
-			_game->_switchStateInput.reset(); 
-			_game->renderWindow.close(); 
+			mpGame->mSwitchStateInput.reset(); 
+			mpGame->mRenderWindow.close(); 
 		}
 
 		if( sf::Keyboard::isKeyPressed(sf::Keyboard::Down) )
 		{
-			 _game->_switchStateInput.reset(); 
-			 if( _currentOption->_next )
+			 mpGame->mSwitchStateInput.reset(); 
+			 if( mpCurrentOption->_next )
 			 { 
-				_currentOption = _currentOption->GoNext();
+				mpCurrentOption = mpCurrentOption->GoNext();
 			 }
 
 		}
 		
 		if( sf::Keyboard::isKeyPressed(sf::Keyboard::Up) )
 		{
-			 _game->_switchStateInput.reset(); 
-			 if( _currentOption->_front )
+			 mpGame->mSwitchStateInput.reset(); 
+			 if( mpCurrentOption->_front )
 			 {
-				 _currentOption= _currentOption->GoFront(); 
+				 mpCurrentOption= mpCurrentOption->GoFront(); 
 			 }
 			
 		}
@@ -135,70 +127,70 @@ void MenuState::Update( const sf::Time& deltaFrame ){
 /**Background
 *
 */
-	sf::Vector2f newPosition = _backgroundSprite1.getPosition();
+	sf::Vector2f newPosition = mBackgroundSprite1.getPosition();
 
 
 	newPosition.x -= 5.f * deltaFrame.asSeconds();
-	_backgroundSprite1.setPosition( newPosition ); 
+	mBackgroundSprite1.setPosition( newPosition ); 
 	
-	newPosition = _backgroundSprite2.getPosition();
+	newPosition = mBackgroundSprite2.getPosition();
 	newPosition.x -= 5.f * deltaFrame.asSeconds();
-	_backgroundSprite2.setPosition( newPosition ); 
+	mBackgroundSprite2.setPosition( newPosition ); 
 	
-	if( _backgroundSprite1.getPosition().x < -1024 )
+	if( mBackgroundSprite1.getPosition().x < -1024 )
 	{
-		_backgroundSprite1.setPosition( sf::Vector2f(1024.f, 0) );
+		mBackgroundSprite1.setPosition( sf::Vector2f(1024.f, 0) );
 	}
-	else if( _backgroundSprite2.getPosition().x < -1024 )
+	else if( mBackgroundSprite2.getPosition().x < -1024 )
 	{
-		_backgroundSprite2.setPosition( sf::Vector2f(1024.f, 0) );
+		mBackgroundSprite2.setPosition( sf::Vector2f(1024.f, 0) );
 	}
 
 /**SpaceShip
 *
 */
-	newPosition = _spaceShipSprite.getPosition();
+	newPosition = mSpaceShipSprite.getPosition();
 
-	newPosition.y += _spaceShipVelocity * deltaFrame.asSeconds();
+	newPosition.y += mSpaceShipVelocity * deltaFrame.asSeconds();
 
 	if( newPosition.y > 260 )
 	{
 		newPosition.y = 259.f;
-		_spaceShipVelocity = -_spaceShipVelocity;
+		mSpaceShipVelocity = -mSpaceShipVelocity;
 	}
 	else if( newPosition.y < 240 )
 	{
 		newPosition.y = 241.f;
-		_spaceShipVelocity = -_spaceShipVelocity;
+		mSpaceShipVelocity = -mSpaceShipVelocity;
 	
 	}
 
-	_spaceShipSprite.setPosition( newPosition );
+	mSpaceShipSprite.setPosition( newPosition );
 //End of Spaceship
 
 //----------------------------------------------------------------------------------------------------------
 	/**StarStripe
 	*/
-	newPosition = _starStripeSprite.getPosition(); 
+	newPosition = mStarStripeSprite.getPosition(); 
 	newPosition.x -= 8500.f *deltaFrame.asSeconds(); //Speed of Stripe
 	
 	//if x-position smaller than width of stripe-texture + random-amount 
-	if(newPosition.x < -( (int)_starStripeTexture.getSize().x + ( _game->_randomNumGenerator.getRandomInt(15000) ) ) )
+	if(newPosition.x < -( (int)mStarStripeTexture.getSize().x + ( mpGame->mRandomNumGenerator.getRandomInt(15000) ) ) )
 	{
-		newPosition.x = _game->_width + _game->_randomNumGenerator.getRandomInt( 15000 ); 
-		newPosition.y = _game->_randomNumGenerator.getRandomInt( _game->_height );
+		newPosition.x = mpGame->mWidth + mpGame->mRandomNumGenerator.getRandomInt( 15000 ); 
+		newPosition.y = mpGame->mRandomNumGenerator.getRandomInt( mpGame->mHeight );
 	}
-		_starStripeSprite.setPosition( newPosition ); 
+		mStarStripeSprite.setPosition( newPosition ); 
 }
 void MenuState::Render(){
-	_game->renderWindow.clear( sf::Color::Black );
-	_game->renderWindow.draw( _backgroundSprite1 ); 
-	_game->renderWindow.draw( _backgroundSprite2 ); 
-	_game->renderWindow.draw( _spaceShipSprite ); 
-	_game->renderWindow.draw( _starStripeSprite ); 
-	_game->renderWindow.draw( _rectShape ); 
-	_game->renderWindow.draw( sPtr_NewGame->_text );
-	_game->renderWindow.draw( sPtr_Options->_text ); 
-	_game->renderWindow.draw( sPtr_Exit->_text ); 
-	_game->renderWindow.display(); 
+	mpGame->mRenderWindow.clear( sf::Color::Black );
+	mpGame->mRenderWindow.draw( mBackgroundSprite1 ); 
+	mpGame->mRenderWindow.draw( mBackgroundSprite2 ); 
+	mpGame->mRenderWindow.draw( mSpaceShipSprite ); 
+	mpGame->mRenderWindow.draw( mStarStripeSprite ); 
+	mpGame->mRenderWindow.draw( mRectShape ); 
+	mpGame->mRenderWindow.draw( sPtr_NewGame->_text );
+	mpGame->mRenderWindow.draw( sPtr_Options->_text ); 
+	mpGame->mRenderWindow.draw( sPtr_Exit->_text ); 
+	mpGame->mRenderWindow.display(); 
 } 

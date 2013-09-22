@@ -17,7 +17,7 @@ typedef std::shared_ptr<IEntity> sptr_entity;
 
 class GameState : public IState
 {
-	Game* _game; 
+	Game* mpGame; 
 	
     std::vector<sptr_entity> entities;
 	std::shared_ptr<Player> mPlayer; 

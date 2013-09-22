@@ -34,34 +34,35 @@ public:
 };
 
 class Game
-{
+{								//private copy constructor, prevents that Game can be copied
+								Game(const Game& game); 
 public:
-	Game(int width, int height);
-	~Game(void);
-
-	bool Initialize(); 
-	int Run(); 
-	void ProcessHandle(); 
-
-
-	//Fields
-	RandomNumberGenerator _randomNumGenerator; 
-	int _width, _height; 
-	sf::Clock _start_time; 
-	sf::Time _frame_delta;
- 
-	SwitchStateInput	_switchStateInput; 
-
-	sf::RenderWindow	renderWindow;
-	IState*				_currentState; 
-	IState*				_previousState; 
-
-
-
-	sf::Texture			_starTexture; 
-	sf::Texture			_playerTexture;
-	sf::Texture			_backgroundTexture; 
-	sf::Texture			_titleScreen; 
-
+								Game(int width, int height);
+								~Game(void);
+		
+		bool					Initialize(); 
+		int						Run(); 
+		void					ProcessHandle(); 
+		
+		
+		//Fields
+		RandomNumberGenerator	mRandomNumGenerator; 
+		int						mWidth, mHeight; 
+		sf::Clock				mStartTime; 
+		sf::Time				mFrameDelta;
+		
+		SwitchStateInput		mSwitchStateInput; 
+		
+		sf::RenderWindow		mRenderWindow;
+		IState*					mpCurrentState; 
+		IState*					mpPreviousState; 
+		
+		
+		
+		sf::Texture				mStarTexture; 
+		sf::Texture				mPlayerTexture;
+		sf::Texture				mBackgroundTexture; 
+	
+		
 };
 #endif //GAME_H

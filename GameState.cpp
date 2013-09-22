@@ -4,26 +4,27 @@
 
 //TODO: can I initialize entities-vector with default size like 200 star-entities and set all to nullptr? like entities[200, nullptr]
 GameState::GameState( Game* game ) 
-: _game( game ),
+: mpGame( game ),
 mPlayer( nullptr )
 
 { 
-	mPlayer = std::shared_ptr<Player>( new Player(_game) );
-	mPlayer->SetTexture( _game->_playerTexture );
+	mPlayer = std::shared_ptr<Player>( new Player(mpGame) );
+	mPlayer->SetTexture( mpGame->mPlayerTexture );
 
 	//initialize stars; 
-	for(int i = 0; i < 150; ++i){										//little offset so when player move to right side there are still stars
+	for(int i = 0; i < 150; ++i)
+	{										//little offset so when player move to right side there are still stars
        //create new star
-        sptr_entity star( new Star(game,_game->_randomNumGenerator, mPlayer) );
-		star->SetTexture( _game->_starTexture );
+        sptr_entity star( new Star(game, mPlayer) );
+		star->SetTexture( mpGame->mStarTexture );
 		entities.push_back( std::move(star) );
 	}
 	//menuManager = std::unique_ptr<MenuManager>(new MenuManager(this));
 	
 	entities.push_back( std::move(mPlayer) );
 	
-	mBackground = std::unique_ptr<Background>( new Background(_game) );
-	mBackground->SetTexture( _game->_backgroundTexture );
+	mBackground = std::unique_ptr<Background>( new Background(mpGame) );
+	mBackground->SetTexture( mpGame->mBackgroundTexture );
 	
 	//_background->_sprite.setScale((16/9), (16/9)); 
 }
@@ -37,7 +38,7 @@ void GameState::Update( const sf::Time& deltaFrame )
 	
     for( sptr_entity& i : entities )
 	{
-		i->Update( _game->_frame_delta ); 
+		i->Update( mpGame->mFrameDelta ); 
 	}
 	
 }
@@ -46,23 +47,23 @@ void GameState::Update( const sf::Time& deltaFrame )
 
 void GameState::Render(){
 	
-		_game->renderWindow.clear( sf::Color::Black );
+		mpGame->mRenderWindow.clear( sf::Color::Black );
 		//first draw background, than everything else
-		_game->renderWindow.draw( mBackground->GetSprite() );
+		mpGame->mRenderWindow.draw( mBackground->GetSprite() );
 		
         for( sptr_entity& i : entities )
 		{
-			_game->renderWindow.draw( i->GetSprite() );
+			mpGame->mRenderWindow.draw( i->GetSprite() );
 		}
-		_game->renderWindow.display(); 	
+		mpGame->mRenderWindow.display(); 	
 }
 
 IState* GameState::ProcessStateInput( const sf::Event& event )
 {
 	if(sf::Keyboard::isKeyPressed( sf::Keyboard::Escape ) )
 	{
-		_game->_switchStateInput.reset(); 
-		return new MenuState( _game ); 
+		mpGame->mSwitchStateInput.reset(); 
+		return new MenuState( mpGame ); 
 	}
 	return this; 
 }

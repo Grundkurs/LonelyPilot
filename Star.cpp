@@ -4,20 +4,17 @@
 class Game; 
 
 
-Star::Star( Game* game, std::shared_ptr<Player>player ) : _game( game ), _player( player )
-{
-}
 
-Star::Star( Game* game, RandomNumberGenerator& random, std::shared_ptr<Player>player ) 
+Star::Star( Game* game, std::shared_ptr<Player>player ) 
 	:	
-	_game( game ),
+	mpGame( game ),
 	mPos( sf::Vector2f(0.f, 0.f) ),
 	mSpeedEnhancment( 1.0 ),
-	_player( player )
+	mPlayer( player )
 {
-
-	float xPos = random.getRandomInt( _game->_width + 30 );
-	float yPos = random.getRandomInt( _game->_height + 400 );
+	
+	float xPos = mpGame->mRandomNumGenerator.getRandomInt( mpGame->mWidth + 30 );
+	float yPos = mpGame->mRandomNumGenerator.getRandomInt( mpGame->mHeight + 400 );
 	mSprite.setPosition( xPos, yPos );
 	mPos.x = xPos; 
 	mPos.y = yPos; 
@@ -29,8 +26,8 @@ Star::Star( Game* game, RandomNumberGenerator& random, std::shared_ptr<Player>pl
         mSpeedEnhancment = 1.5f;
     }
     mSpeed.x = 0;
-    mSpeed.y = ( (mPos.y /10) * mSpeedEnhancment);
-    SetRandomColorAndSize( random );
+    mSpeed.y = ( (mPos.y /8) * mSpeedEnhancment);
+    SetRandomColorAndSize( mpGame->mRandomNumGenerator );
 
 }
 
@@ -46,14 +43,14 @@ void Star::Update( const sf::Time& deltaFrame )
 	sf::Vector2f newPos = mSprite.getPosition();
 
 	//bind star-movement to player-speed
-	newPos.y += ( -_player->_velocity.y) * deltaFrame.asSeconds();
-	newPos.x += ( -_player->_velocity.x) * deltaFrame.asSeconds() * 0.2f; //x-movement of stars 5x slower than y-movement
+	newPos.y += ( -mPlayer->mVelocity.y) * deltaFrame.asSeconds();
+	newPos.x += ( -mPlayer->mVelocity.x) * deltaFrame.asSeconds() * 0.2f; //x-movement of stars 5x slower than y-movement
 
 	//independend star-movement
 	newPos += mSpeed * deltaFrame.asSeconds();
 
 	//offset of 20 pixels at top and bottom (788 instead of 768 for bottom and -20 instead of 0 for top)
-    if( newPos.y > ( _game->_height + 400 ) ){
+    if( newPos.y > ( mpGame->mHeight + 400 ) ){
         newPos.y = -40.f;
     }
 
@@ -70,8 +67,8 @@ void Star::SetTexture( const sf::Texture& tex )
 void Star::SetRandomColorAndSize( RandomNumberGenerator& random )
 {
 	//TODO: Write propper and index ranged random-Generator, like getRandomInt(int, int) instead getRandomInt(int)) to make sure 0 doesnt get returned 
-	int divisor = random.getRandomInt(6);
-	int number = random.getRandomInt(5);
+	int divisor = mpGame->mRandomNumGenerator.getRandomInt(6);
+	int number = mpGame->mRandomNumGenerator.getRandomInt(5);
 	 
     if( divisor == 0 )
 	{
@@ -84,7 +81,7 @@ void Star::SetRandomColorAndSize( RandomNumberGenerator& random )
 	{
 		scale = 0.5f;
     }
-    if ( scale  == 0.f )
+    if ( scale  < 0.1f )
 	{
 		scale = .3f;
 	}
