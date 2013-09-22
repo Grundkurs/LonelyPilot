@@ -1,70 +1,70 @@
 #include "Option.h"
 
 Option::Option( std::string name, sf::Vector2f pos, sf::Color color ) : 
-	_string( name ), 
-	_front( nullptr ), 
-	_next( nullptr ),
-	_color( color )
+	mColor( color ),
+	mString( name ), 
+	mpFront( nullptr ), 
+	mpNext( nullptr )
 {
-	if( !_font.loadFromFile( "..\\Art\\Fonts\\Acme.ttf" ) )
+	if( !mFont.loadFromFile( "..\\Art\\Fonts\\Acme.ttf" ) )
 	{
 		std::cout << "could not load font!\n"; 
 	}
-	_text.setPosition( pos );
-	_text.setFont( _font ); 
-	_text.setColor( color ); 
-	_text.setString( _string ); 
+	mText.setPosition( pos );
+	mText.setFont( mFont ); 
+	mText.setColor( mColor ); 
+	mText.setString( mString ); 
 }
 
 
 
 
-Option::~Option(){std::cout << "deleting: " << _string << std::endl; }
+Option::~Option(){std::cout << "deleting: " << mString << std::endl; }
 
 
 
 void Option::ConnectFront( Option* option )
 {
-	if( _front )
+	if( mpFront )
 	{
-		std::cout << "error, already connected to " << _front->_string << std::endl; 
+		std::cout << "error, already connected to " << mpFront->mString << std::endl; 
 		return; 
 	}
-	_front = option; 
+	mpFront = option; 
 }
 
 void Option::ConnectNext( Option* option )
 {
-	if( _next )
+	if( mpNext )
 	{
-		std::cout << "error, already connected to " << _next->_string << std::endl; 
+		std::cout << "error, already connected to " << mpNext->mString << std::endl; 
 		return; 
 	}
-	_next = option; 
+	mpNext = option; 
 }
 
 
 Option* Option::GoFront(){
-	if( _front )
+	if( mpFront )
 	{
-		_color = sf::Color::Black;
-		_text.setColor( _color ); 
-		_front->_color = sf::Color::Red;
-		_front->_text.setColor( _front->_color ); 
-		return _front;
+		mColor = sf::Color::Black;
+		mText.setColor( mColor ); 
+		mpFront->mColor = sf::Color::Red;
+		mpFront->mText.setColor( mpFront->mColor ); 
+		return mpFront;
 	}
 	
 	return nullptr; 
 }
 Option* Option::GoNext()
 {
-	if( _next )
+	if( mpNext )
 	{
-		_color = sf::Color::Black;
-		_text.setColor( _color ); 
-		_next->_color = sf::Color::Red;
-		_next->_text.setColor( _next->_color ); 
-		return _next;
+		mColor = sf::Color::Black;
+		mText.setColor( mColor ); 
+		mpNext->mColor = sf::Color::Red;
+		mpNext->mText.setColor( mpNext->mColor ); 
+		return mpNext;
 	}
 	
 	return nullptr; 

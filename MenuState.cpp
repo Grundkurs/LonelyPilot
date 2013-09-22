@@ -77,7 +77,7 @@ IState* MenuState::ProcessStateInput( const sf::Event& event )
 {
 	
 	//TODO: Change this Check to ENUM (its faster!)
-	if( mpCurrentOption->_string == "New Game" )
+	if( mpCurrentOption->mString == "New Game" )
 	{
 		if( sf::Keyboard::isKeyPressed(sf::Keyboard::Return) )
 		{
@@ -86,7 +86,7 @@ IState* MenuState::ProcessStateInput( const sf::Event& event )
 		}
 	}
 
-	else if( mpCurrentOption->_string == "Exit" )
+	else if( mpCurrentOption->mString == "Exit" )
 	{
 		if( sf::Keyboard::isKeyPressed(sf::Keyboard::Return) )
 		{
@@ -103,7 +103,7 @@ IState* MenuState::ProcessStateInput( const sf::Event& event )
 		if( sf::Keyboard::isKeyPressed(sf::Keyboard::Down) )
 		{
 			 mpGame->mSwitchStateInput.reset(); 
-			 if( mpCurrentOption->_next )
+			 if( mpCurrentOption->mpNext )
 			 { 
 				mpCurrentOption = mpCurrentOption->GoNext();
 			 }
@@ -113,7 +113,7 @@ IState* MenuState::ProcessStateInput( const sf::Event& event )
 		if( sf::Keyboard::isKeyPressed(sf::Keyboard::Up) )
 		{
 			 mpGame->mSwitchStateInput.reset(); 
-			 if( mpCurrentOption->_front )
+			 if( mpCurrentOption->mpFront )
 			 {
 				 mpCurrentOption= mpCurrentOption->GoFront(); 
 			 }
@@ -189,8 +189,8 @@ void MenuState::Render(){
 	mpGame->mRenderWindow.draw( mSpaceShipSprite ); 
 	mpGame->mRenderWindow.draw( mStarStripeSprite ); 
 	mpGame->mRenderWindow.draw( mRectShape ); 
-	mpGame->mRenderWindow.draw( sPtr_NewGame->_text );
-	mpGame->mRenderWindow.draw( sPtr_Options->_text ); 
-	mpGame->mRenderWindow.draw( sPtr_Exit->_text ); 
+	mpGame->mRenderWindow.draw( sPtr_NewGame->mText );
+	mpGame->mRenderWindow.draw( sPtr_Options->mText ); 
+	mpGame->mRenderWindow.draw( sPtr_Exit->mText ); 
 	mpGame->mRenderWindow.display(); 
 } 

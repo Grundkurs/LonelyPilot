@@ -7,22 +7,25 @@
 class Option
 {
 public:
-	Option(std::string name, sf::Vector2f pos, sf::Color color); 
-	~Option();
-	sf::Text _text; 
-	sf::Font _font; 
-	sf::Color _color; 
-	void ConnectFront( Option* option );
-	void ConnectNext( Option* option );
-	Option* GoFront(); 
-	Option* GoNext();
+							Option(std::string name, sf::Vector2f pos, sf::Color color); 
+							~Option();
+		sf::Text			mText; 
+		sf::Font			mFont; 
+		sf::Color			mColor; 
+		std::string			mString;
+		
+		Option*				mpFront; 
+		Option*				mpNext; 
 
 
-
-	std::string _string; 
+		void				ConnectFront( Option* option );
+		void				ConnectNext( Option* option );
+		Option*				GoFront(); 
+		Option*				GoNext();
 	
-	Option* _front; 
-	Option* _next; 
+	
+	 
+		
 };
 
 #endif //OPTION_H
