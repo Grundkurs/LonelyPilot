@@ -1,5 +1,6 @@
 #include "Game.h"
 
+#include "StringUtilities.h"
 
 Game::Game( int width, int height )
 	:
@@ -33,7 +34,9 @@ bool Game::Initialize()
 
 		std::cout << "mRenderWindow opened successfully\n";
 
-		if( !mStarTexture.loadFromFile("..\\Art\\Visual\\Star.png") )
+		string file("..\\Art\\Visual\\Star.png");
+
+		if( !mStarTexture.loadFromFile(ToPlatformPath(file)) )
 			{
 			std::cout << "error loading Star-Texture\n";
 			return false;
@@ -41,7 +44,8 @@ bool Game::Initialize()
 
 		std::cout << "Star loaded successfully\n";
 
-		if( !mPlayerTexture.loadFromFile("..\\Art\\Visual\\PlayerSheet.png") )
+		file = "..\\Art\\Visual\\PlayerSheet.png";
+		if( !mPlayerTexture.loadFromFile(ToPlatformPath(file)) )
 			{
 			std::cout << "error loading player-Texture\n";
 			return false;
@@ -49,14 +53,16 @@ bool Game::Initialize()
 
 		std::cout << "player-Texture loaded successfully\n";
 
-		if( !mBackgroundTexture.loadFromFile("..\\Art\\Visual\\StarBackground1024x768.jpg") )
+		file = "..\\Art\\Visual\\StarBackground1024x768.jpg";
+		if( !mBackgroundTexture.loadFromFile(ToPlatformPath(file)) )
 			{
 			std::cout << "error loading Background-Texture\n";
 			return false;
 			}
 		std::cout << "Background-Texture loaded successfully\n";
 
-		if( !mAmbulanceTexture.loadFromFile("..\\Art\\Visual\\Ambulance.png") )
+		file = "..\\Art\\Visual\\Ambulance.png";
+		if( !mAmbulanceTexture.loadFromFile(ToPlatformPath(file)) )
 			{
 				std::cout << "error loading Ambulance-Texture!";
 			}

@@ -15,7 +15,8 @@ SOURCES += main.cpp \
 	GameState.cpp \
 	Game.cpp \
 	Background.cpp \
-	Ambulance.cpp
+	Ambulance.cpp \
+	StringUtilities.cpp
 
 
 
@@ -26,7 +27,7 @@ LIBS += -LC:\SFMLMinGW\lib
 
 LIBS += -lsfml-audio -lsfml-graphics -lsfml-network -lsfml-window -lsfml-system
 
-win32: LIBS += lsfml-main
+win32: LIBS += -lsfml-main
 
 OTHER_FILES +=
 
@@ -41,4 +42,5 @@ HEADERS += \
 	GameState.h \
 	Game.h \
 	Background.h \
-	Ambulance.h
+	Ambulance.h \
+	StringUtilities.h
