@@ -9,6 +9,7 @@
 #include <memory>
 #include "Player.h"
 #include "Background.h"
+#include "Ambulance.h"
 
 
 class Game; 
@@ -20,7 +21,8 @@ class GameState : public IState
 	Game* mpGame; 
 	
     std::vector<sptr_entity> entities;
-	std::shared_ptr<Player> mPlayer; 
+	std::shared_ptr<Player> mPlayer;
+	std::shared_ptr<Ambulance> mAmbulance; 
 	std::unique_ptr<Background> mBackground; 
 public:
 	GameState(Game* game);

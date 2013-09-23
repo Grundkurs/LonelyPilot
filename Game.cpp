@@ -56,6 +56,12 @@ bool Game::Initialize()
 			}
 		std::cout << "Background-Texture loaded successfully\n";
 
+		if( !mAmbulanceTexture.loadFromFile("..\\Art\\Visual\\Ambulance.png") )
+			{
+				std::cout << "error loading Ambulance-Texture!"; 
+			}
+		std::cout << "successfully loaded ambulance-Texture!\n"; 
+
 	return true; 
 	}
 

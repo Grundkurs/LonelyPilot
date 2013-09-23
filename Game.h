@@ -62,6 +62,7 @@ public:
 		sf::Texture				mStarTexture; 
 		sf::Texture				mPlayerTexture;
 		sf::Texture				mBackgroundTexture; 
+		sf::Texture				mAmbulanceTexture; 
 	
 		
 };

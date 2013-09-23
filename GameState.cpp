@@ -6,10 +6,14 @@
 GameState::GameState( Game* game ) 
 	:	
 	mpGame( game ),
-	mPlayer( nullptr )
+	mPlayer( nullptr ),
+	mAmbulance( nullptr) 
 	{ 
 	mPlayer = std::shared_ptr<Player>( new Player(mpGame) );
 	mPlayer->SetTexture( mpGame->mPlayerTexture );
+
+	mAmbulance = std::shared_ptr<Ambulance>(new Ambulance(mpGame, mPlayer.get()) );
+	mAmbulance->SetTexture(mpGame->mAmbulanceTexture); 
 
 	//initialize stars; 
 	for(int i = 0; i < 150; ++i)
@@ -20,7 +24,7 @@ GameState::GameState( Game* game )
 		}
 	
 	entities.push_back( std::move(mPlayer) );
-	
+	entities.push_back( std::move(mAmbulance) ); 
 	mBackground = std::unique_ptr<Background>( new Background(mpGame) );
 	mBackground->SetTexture( mpGame->mBackgroundTexture );
 	
