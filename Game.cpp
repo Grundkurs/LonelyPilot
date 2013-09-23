@@ -9,61 +9,64 @@ Game::Game( int width, int height )
 	mpCurrentState( new MenuState(this) ),
 	mpPreviousState( mpCurrentState ),
 	mSwitchStateInput( .05f )
-
-{
+	{
 	//start Clock; 
 	mStartTime.restart(); 
-}
+	}
 
 Game::~Game()
-{
-	if( mpCurrentState )
 	{
+	if( mpCurrentState )
+		{
 		delete mpCurrentState;
+		}
 	}
-}
 
 
 bool Game::Initialize()
 {	
-	if( !mRenderWindow.isOpen() ){
+	if( !mRenderWindow.isOpen() )
+		{
 		std::cout << "could not open mRenderWindow\n"; 
 		return false; 
-	}
+		}
+
 		std::cout << "mRenderWindow opened successfully\n"; 
 
 		if( !mStarTexture.loadFromFile("..\\Art\\Visual\\Star.png") )
-		{
+			{
 			std::cout << "error loading Star-Texture\n"; 
 			return false; 
-		}
+			}
+
 		std::cout << "Star loaded successfully\n"; 
 
 		if( !mPlayerTexture.loadFromFile("..\\Art\\Visual\\PlayerSheet.png") )
-		{
+			{
 			std::cout << "error loading player-Texture\n"; 
 			return false; 
-		}
+			}
+
 		std::cout << "player-Texture loaded successfully\n"; 
 
 		if( !mBackgroundTexture.loadFromFile("..\\Art\\Visual\\StarBackground1024x768.jpg") )
-		{
+			{
 			std::cout << "error loading Background-Texture\n"; 
 			return false;
-		}
+			}
 		std::cout << "Background-Texture loaded successfully\n";
 
 	return true; 
-}
+	}
 
 int Game::Run()
-{
+	{
 	sf::Time lastTime = mStartTime.getElapsedTime();
 	sf::Time currentTime; 
 	
 	//main Program-Loop
 	while( mRenderWindow.isOpen() )
-	{
+		{
 		currentTime = mStartTime.getElapsedTime(); 
 		mFrameDelta = currentTime - lastTime; 
 		lastTime = currentTime; 
@@ -73,9 +76,9 @@ int Game::Run()
 		mpCurrentState->Update(mFrameDelta); 
 		mpCurrentState->Render(); 
 
+		}
+	return 0;
 	}
-	return 0; 
-}
 
 void Game::ProcessHandle()
 {

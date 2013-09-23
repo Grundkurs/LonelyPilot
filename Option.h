@@ -13,7 +13,7 @@ public:
 		sf::Font			mFont; 
 		sf::Color			mColor; 
 		std::string			mString;
-		
+
 		Option*				mpFront; 
 		Option*				mpNext; 
 
@@ -22,10 +22,7 @@ public:
 		void				ConnectNext( Option* option );
 		Option*				GoFront(); 
 		Option*				GoNext();
-	
-	
-	 
-		
+
 };
 
 #endif //OPTION_H

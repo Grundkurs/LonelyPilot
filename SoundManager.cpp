@@ -2,10 +2,10 @@
 
 
 SoundManager::SoundManager()
-{
-}
+	{
+	}
 
 
 SoundManager::~SoundManager()
-{
-}
+	{
+	}

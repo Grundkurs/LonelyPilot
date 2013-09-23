@@ -8,28 +8,28 @@ MenuState::MenuState( Game* game )
 	mpGame( game ), 
 	mSpaceShipVelocity( 10.f ),
 	mpCurrentOption( nullptr )
-{
+	{
 
 	if( !mBackgroundTexture1.loadFromFile("..\\Art\\Visual\\MainMenuParts\\Background1.jpg") )
-		{
+			{
 			std::cout << "error loading Background-Texture\n"; 
-		}
+			}
 		
 		if( !mBackgroundTexture2.loadFromFile("..\\Art\\Visual\\MainMenuParts\\Background2.jpg") )
-		{
+			{
 			std::cout << "error loading Background-Texture\n"; 
-		}
+			}
 		
 		
 		if( !mSpaceShipTexture.loadFromFile("..\\Art\\Visual\\MainMenuParts\\Spaceship.png") )
-		{
+			{
 			std::cout << "error loading Spaceship-Texture\n"; 
-		}
+			}
 
 		if( !mStarStripeTexture.loadFromFile("..\\Art\\Visual\\MainMenuParts\\StarStripe.jpg") )
-		{
+			{
 			std::cout << "error loading StarStripe-Texture\n"; 
-		}
+			}
 		
 
 
@@ -51,8 +51,6 @@ MenuState::MenuState( Game* game )
 		mRectShape.setSize( sf::Vector2f(rectWidth,rectHeight) ); 
 		mRectShape.setPosition( sf::Vector2f((mpGame->mWidth - rectWidth), (mpGame->mHeight - rectHeight) ) ); 
 
-		
-
 		//Setup Menu-Options
 		sPtr_NewGame = std::shared_ptr<Option>( new Option("New Game", sf::Vector2f(mpGame->mWidth -mpGame->mWidth/4, 100), sf::Color::Red) );
 		sPtr_Options =  std::shared_ptr<Option>( new Option("Options", sf::Vector2f(mpGame->mWidth - mpGame->mWidth/4, 300), sf::Color::Black) );
@@ -64,13 +62,13 @@ MenuState::MenuState( Game* game )
 		sPtr_Exit->ConnectFront(sPtr_Options.get()); 
 
 
-}
+	}
 
 
 MenuState::~MenuState()
-{
-		std::cout << "Destroying MenuState\n";
-}
+	{
+	std::cout << "Destroying MenuState\n";
+	}
 
 
 IState* MenuState::ProcessStateInput( const sf::Event& event )
@@ -78,52 +76,51 @@ IState* MenuState::ProcessStateInput( const sf::Event& event )
 	
 	//TODO: Change this Check to ENUM (its faster!)
 	if( mpCurrentOption->mString == "New Game" )
-	{
-		if( sf::Keyboard::isKeyPressed(sf::Keyboard::Return) )
 		{
+		if( sf::Keyboard::isKeyPressed(sf::Keyboard::Return) )
+			{
 			mpGame->mSwitchStateInput.reset(); 
 			return new GameState( mpGame );
+			}
 		}
-	}
 
 	else if( mpCurrentOption->mString == "Exit" )
-	{
-		if( sf::Keyboard::isKeyPressed(sf::Keyboard::Return) )
 		{
+		if( sf::Keyboard::isKeyPressed(sf::Keyboard::Return) )
+			{
 			mpGame->mRenderWindow.close(); 
+			}
 		}
-	}
 
-	    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)){
-	
+	    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+			{
 			mpGame->mSwitchStateInput.reset(); 
 			mpGame->mRenderWindow.close(); 
-		}
+			}
 
 		if( sf::Keyboard::isKeyPressed(sf::Keyboard::Down) )
-		{
+			{
 			 mpGame->mSwitchStateInput.reset(); 
 			 if( mpCurrentOption->mpNext )
-			 { 
+				{ 
 				mpCurrentOption = mpCurrentOption->GoNext();
-			 }
+				}
 
-		}
+			}
 		
 		if( sf::Keyboard::isKeyPressed(sf::Keyboard::Up) )
-		{
+			{
 			 mpGame->mSwitchStateInput.reset(); 
 			 if( mpCurrentOption->mpFront )
-			 {
+				{
 				 mpCurrentOption= mpCurrentOption->GoFront(); 
-			 }
+				 }
 			
-		}
-
+			}
 	return this; 
-} 
-void MenuState::Update( const sf::Time& deltaFrame ){
-
+	} 
+void MenuState::Update( const sf::Time& deltaFrame )
+	{
 /**Background
 *
 */
@@ -138,32 +135,30 @@ void MenuState::Update( const sf::Time& deltaFrame ){
 	mBackgroundSprite2.setPosition( newPosition ); 
 	
 	if( mBackgroundSprite1.getPosition().x < -1024 )
-	{
+		{
 		mBackgroundSprite1.setPosition( sf::Vector2f(1024.f, 0) );
-	}
+		}
 	else if( mBackgroundSprite2.getPosition().x < -1024 )
-	{
+		{
 		mBackgroundSprite2.setPosition( sf::Vector2f(1024.f, 0) );
-	}
+		}
 
 /**SpaceShip
 *
 */
 	newPosition = mSpaceShipSprite.getPosition();
-
 	newPosition.y += mSpaceShipVelocity * deltaFrame.asSeconds();
 
 	if( newPosition.y > 260 )
-	{
+		{
 		newPosition.y = 259.f;
 		mSpaceShipVelocity = -mSpaceShipVelocity;
-	}
+		}
 	else if( newPosition.y < 240 )
-	{
+		{
 		newPosition.y = 241.f;
 		mSpaceShipVelocity = -mSpaceShipVelocity;
-	
-	}
+		}
 
 	mSpaceShipSprite.setPosition( newPosition );
 //End of Spaceship
@@ -176,13 +171,14 @@ void MenuState::Update( const sf::Time& deltaFrame ){
 	
 	//if x-position smaller than width of stripe-texture + random-amount 
 	if(newPosition.x < -( (int)mStarStripeTexture.getSize().x + ( mpGame->mRandomNumGenerator.getRandomInt(15000) ) ) )
-	{
+		{
 		newPosition.x = mpGame->mWidth + mpGame->mRandomNumGenerator.getRandomInt( 15000 ); 
 		newPosition.y = mpGame->mRandomNumGenerator.getRandomInt( mpGame->mHeight );
-	}
+		}
 		mStarStripeSprite.setPosition( newPosition ); 
-}
-void MenuState::Render(){
+	}
+void MenuState::Render()
+	{
 	mpGame->mRenderWindow.clear( sf::Color::Black );
 	mpGame->mRenderWindow.draw( mBackgroundSprite1 ); 
 	mpGame->mRenderWindow.draw( mBackgroundSprite2 ); 
@@ -193,4 +189,4 @@ void MenuState::Render(){
 	mpGame->mRenderWindow.draw( sPtr_Options->mText ); 
 	mpGame->mRenderWindow.draw( sPtr_Exit->mText ); 
 	mpGame->mRenderWindow.display(); 
-} 
+	} 
