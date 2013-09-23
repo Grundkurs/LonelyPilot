@@ -14,7 +14,8 @@ SOURCES += main.cpp \
     IEntity.cpp \
     GameState.cpp \
     Game.cpp \
-    Background.cpp
+    Background.cpp \
+    Ambulance.cpp
 
 
 
@@ -38,4 +39,5 @@ HEADERS += \
     IEntity.h \
     GameState.h \
     Game.h \
-    Background.h
+    Background.h \
+    Ambulance.h
