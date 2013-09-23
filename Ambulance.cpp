@@ -6,6 +6,7 @@ Ambulance::Ambulance(Game* game, Player* player)
 	: 
 	mpGame(game), 
 	mpPlayer(player),
+	mVelocity(50.f),
 	mWidth(85), 
 	mHeight(107),
 	mFrameCounter(0.f),
@@ -30,6 +31,40 @@ Ambulance::~Ambulance()
 
 void Ambulance::Update(const sf::Time& deltaFrame)
 	{
+		Animation(deltaFrame); 
+		Movement(deltaFrame); 
+	 	
+}
+				
+void Ambulance::SetTexture(const sf::Texture& tex)
+	{
+		mSprite.setTexture(tex); 
+	}
+const sf::Sprite& Ambulance::GetSprite() const
+	{ 
+		return mSprite; 
+	}
+
+
+
+
+
+
+void Ambulance::Movement(const sf::Time& deltaFrame)
+	{
+	sf::Vector2f newPos = mSprite.getPosition();
+
+	newPos.y += (mVelocity * deltaFrame.asSeconds()); 
+	
+	//bind star-movement to player-speed
+	newPos.y += ( -mpPlayer->mVelocity.y) * deltaFrame.asSeconds();
+	newPos.x += ( -mpPlayer->mVelocity.x) * deltaFrame.asSeconds() * 0.2f; //x-movement of stars 5x slower than y-movement
+	
+	mSprite.setPosition(newPos);
+	}
+				
+void Ambulance::Animation(const sf::Time& deltaFrame)
+	{
 		//Animation related
 		//------------------------------------------
 		mFrameCounter += deltaFrame.asSeconds(); 
@@ -40,31 +75,9 @@ void Ambulance::Update(const sf::Time& deltaFrame)
 				if(mCurrentFrame > 3)
 					{
 						mCurrentFrame = 0; 
-						
 					}
-				
-				
 				mFrameCounter = 0; 
 			}
 		mSprite.setTextureRect(sf::IntRect(mCurrentFrame * mWidth, 0, mWidth, mHeight));
 		
-
-		//Movement related
-		//-------------------------------------------------------------------
-
-		sf::Vector2f newPos = mSprite.getPosition();
-
-	//bind star-movement to player-speed
-	newPos.y += ( -mpPlayer->mVelocity.y) * deltaFrame.asSeconds();
-	newPos.x += ( -mpPlayer->mVelocity.x) * deltaFrame.asSeconds() * 0.2f; //x-movement of stars 5x slower than y-movement
-	mSprite.setPosition(newPos); 	
-}
-				
-void Ambulance::SetTexture(const sf::Texture& tex)
-	{
-		mSprite.setTexture(tex); 
-	}
-const sf::Sprite& Ambulance::GetSprite() const
-	{ 
-		return mSprite; 
 	}

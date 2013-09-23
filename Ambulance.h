@@ -17,12 +17,15 @@ class Ambulance : public IEntity
 		int							mTotalColumn; 
 		float						mFrameCounter; 
 		float						mMaxFrame; 
+		float						mVelocity; 
 public:
 									Ambulance(Game* game, Player* player);
 									~Ambulance();
 
 		void						Update(const sf::Time& deltaFrame); 
 		void						SetTexture(const sf::Texture& tex);
+		void						Animation(const sf::Time& deltaFrame);
+		void						Movement(const sf::Time& deltaFrame);
 const	sf::Sprite&					GetSprite() const; 
 };
 
