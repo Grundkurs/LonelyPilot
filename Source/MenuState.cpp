@@ -188,7 +188,7 @@ void MenuState::Update( const sf::Time& deltaFrame )
 	*/
 	newPosition = mStarStripeSprite.getPosition();
 
-	newPosition.x -= 8500.f *deltaFrame.asSeconds(); //Speed of Stripe
+    newPosition.x -= 8500.f *deltaFrame.asSeconds(); //Speed of Stripe
 
 	//if x-position smaller than width of stripe-texture + random-amount
 	if(newPosition.x < -( (int)mStarStripeTexture.getSize().x + ( mpGame->mRandomNumGenerator.getRandomInt(15000) ) ) )
@@ -198,16 +198,6 @@ void MenuState::Update( const sf::Time& deltaFrame )
 		}
 	mStarStripeSprite.setPosition( newPosition );
 
-
-    newPosition.x -= 8500.f *deltaFrame.asSeconds(); //Speed of Stripe
-
-    if( mStarStripeDirectionChangeTrigger < timeStamp)
-        {
-        mStarStripeDirectionChangeTrigger = timeStamp + Random::Between(1.f, 2.5f);
-        newPosition.x = mpGame->mWidth;
-        newPosition.y =  mpGame->mRandomNumGenerator.getRandomInt( mpGame->mHeight );
-        }
-		mStarStripeSprite.setPosition( newPosition );
 
     }//End of MenuState::Update
 
