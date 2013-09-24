@@ -27,6 +27,7 @@ public:
 	sf::RectangleShape			mRectShape;
 	float						mSpaceShipVelocity;
 	float						mShipDirectionChangeTrigger;
+    float                       mStarStripeDirectionChangeTrigger;
 
 	std::shared_ptr<Option>		sPtr_NewGame;
 	std::shared_ptr<Option>		sPtr_Options;
