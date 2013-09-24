@@ -148,9 +148,9 @@ void MenuState::Update( const sf::Time& deltaFrame )
 		mBackgroundSprite2.setPosition( sf::Vector2f(windowSize.x, 0) );
 		}
 
-/**SpaceShip
-*
-*/
+	/**SpaceShip
+	*
+	*/
 
 	float timeStamp = mpGame->mFrameStamp.asSeconds();
 
@@ -192,7 +192,7 @@ void MenuState::Update( const sf::Time& deltaFrame )
 		newPosition.x = mpGame->mWidth + mpGame->mRandomNumGenerator.getRandomInt( 15000 );
 		newPosition.y = mpGame->mRandomNumGenerator.getRandomInt( mpGame->mHeight );
 		}
-		mStarStripeSprite.setPosition( newPosition );
+	mStarStripeSprite.setPosition( newPosition );
 	}
 void MenuState::Render()
 	{
