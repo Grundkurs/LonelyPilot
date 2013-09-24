@@ -130,7 +130,10 @@ void MenuState::Update( const sf::Time& deltaFrame )
 	*/
 	sf::Vector2f newPosition = mBackgroundSprite1.getPosition();
 
-	sf::Vector2u windowSize (mpGame->mRenderWindow.getSize());
+
+    //needs to be sf::Vector2f instead sf::Vector2u because otherwise you cant make
+    //the variable negative. Example: "-windowSize.x" would not work
+    sf::Vector2f windowSize (mpGame->mRenderWindow.getSize());
 
 	newPosition.x -= 5.f * deltaFrame.asSeconds();
 	mBackgroundSprite1.setPosition( newPosition );
