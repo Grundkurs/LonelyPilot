@@ -16,7 +16,8 @@ SOURCES += main.cpp \
 	Game.cpp \
 	Background.cpp \
 	Ambulance.cpp \
-	StringUtilities.cpp
+	StringUtilities.cpp \
+    RandomGenerator.cpp
 
 
 
@@ -43,4 +44,5 @@ HEADERS += \
 	Game.h \
 	Background.h \
 	Ambulance.h \
-	StringUtilities.h
+	StringUtilities.h \
+    RandomGenerator.h

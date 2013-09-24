@@ -1,5 +1,6 @@
 #include "Game.h"
 
+#include "RandomGenerator.h"
 #include "StringUtilities.h"
 
 Game::Game( int width, int height )
@@ -12,7 +13,8 @@ Game::Game( int width, int height )
 	mSwitchStateInput( .05f )
 	{
 	//start Clock;
-	mStartTime.restart();
+	mStartClock.restart();
+	Random::Seed();
 	}
 
 Game::~Game()
@@ -25,64 +27,62 @@ Game::~Game()
 
 
 bool Game::Initialize()
-{
+	{
 	if( !mRenderWindow.isOpen() )
 		{
 		std::cout << "could not open mRenderWindow\n";
 		return false;
 		}
 
-		std::cout << "mRenderWindow opened successfully\n";
+	std::cout << "mRenderWindow opened successfully\n";
 
-		string file("..\\Art\\Visual\\Star.png");
+	string file("..\\Art\\Visual\\Star.png");
 
-		if( !mStarTexture.loadFromFile(ToPlatformPath(file)) )
-			{
-			std::cout << "error loading Star-Texture\n";
-			return false;
-			}
+	if( !mStarTexture.loadFromFile(ToPlatformPath(file)) )
+		{
+		std::cout << "error loading Star-Texture\n";
+		return false;
+		}
 
-		std::cout << "Star loaded successfully\n";
+	std::cout << "Star loaded successfully\n";
 
-		file = "..\\Art\\Visual\\PlayerSheet.png";
-		if( !mPlayerTexture.loadFromFile(ToPlatformPath(file)) )
-			{
-			std::cout << "error loading player-Texture\n";
-			return false;
-			}
+	file = "..\\Art\\Visual\\PlayerSheet.png";
+	if( !mPlayerTexture.loadFromFile(ToPlatformPath(file)) )
+		{
+		std::cout << "error loading player-Texture\n";
+		return false;
+		}
 
-		std::cout << "player-Texture loaded successfully\n";
+	std::cout << "player-Texture loaded successfully\n";
 
-		file = "..\\Art\\Visual\\StarBackground1024x768.jpg";
-		if( !mBackgroundTexture.loadFromFile(ToPlatformPath(file)) )
-			{
-			std::cout << "error loading Background-Texture\n";
-			return false;
-			}
-		std::cout << "Background-Texture loaded successfully\n";
+	file = "..\\Art\\Visual\\StarBackground1024x768.jpg";
+	if( !mBackgroundTexture.loadFromFile(ToPlatformPath(file)) )
+		{
+		std::cout << "error loading Background-Texture\n";
+		return false;
+		}
+	std::cout << "Background-Texture loaded successfully\n";
 
-		file = "..\\Art\\Visual\\Ambulance.png";
-		if( !mAmbulanceTexture.loadFromFile(ToPlatformPath(file)) )
-			{
-				std::cout << "error loading Ambulance-Texture!";
-			}
-		std::cout << "successfully loaded ambulance-Texture!\n";
+	file = "..\\Art\\Visual\\Ambulance.png";
+	if( !mAmbulanceTexture.loadFromFile(ToPlatformPath(file)) )
+		{
+			std::cout << "error loading Ambulance-Texture!";
+		}
+	std::cout << "successfully loaded ambulance-Texture!\n";
 
 	return true;
 	}
 
 int Game::Run()
 	{
-	sf::Time lastTime = mStartTime.getElapsedTime();
-	sf::Time currentTime;
+	mFrameStamp = mStartClock.getElapsedTime();
 
 	//main Program-Loop
 	while( mRenderWindow.isOpen() )
 		{
-		currentTime = mStartTime.getElapsedTime();
-		mFrameDelta = currentTime - lastTime;
-		lastTime = currentTime;
-
+		sf::Time currentTime = mStartClock.getElapsedTime();
+		mFrameDelta = currentTime - mFrameStamp;
+		mFrameStamp = currentTime;
 
 		ProcessHandle();
 		mpCurrentState->Update(mFrameDelta);
@@ -106,9 +106,6 @@ void Game::ProcessHandle()
 			{
 			mRenderWindow.close();
 			}
-
-
-
 
 		if( mSwitchStateInput.canChange() )
 			{

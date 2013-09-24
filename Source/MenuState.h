@@ -9,35 +9,36 @@ class Game;
 class MenuState :
 	public IState
 {
-	Game* mpGame; 
-	
+	Game* mpGame;
+
 public:
 								MenuState(Game* game);
 								~MenuState();
 
 
-	IState*						ProcessStateInput(const sf::Event& event); 
-	void						Update(const sf::Time& deltaFrame); 
-	void						Render(); 
+	IState*						ProcessStateInput(const sf::Event& event);
+	void						Update(const sf::Time& deltaFrame);
+	void						Render();
 
 	sf::Sprite					mBackgroundSprite1;
 	sf::Sprite					mBackgroundSprite2;
 	sf::Sprite					mSpaceShipSprite;
 	sf::Sprite					mStarStripeSprite;
-	sf::RectangleShape			mRectShape; 
+	sf::RectangleShape			mRectShape;
 	float						mSpaceShipVelocity;
-	
-	std::shared_ptr<Option>		sPtr_NewGame; 
-	std::shared_ptr<Option>		sPtr_Options; 
+	float						mShipDirectionChangeTrigger;
+
+	std::shared_ptr<Option>		sPtr_NewGame;
+	std::shared_ptr<Option>		sPtr_Options;
 	std::shared_ptr<Option>		sPtr_Exit;
 
-	Option*						mpCurrentOption; 
-	
+	Option*						mpCurrentOption;
+
 	sf::Texture					mBackgroundTexture1;
 	sf::Texture					mBackgroundTexture2;
 	sf::Texture					mSpaceShipTexture;
-	sf::Texture					mStarStripeTexture; 
-	
+	sf::Texture					mStarStripeTexture;
+
 };
 
 #endif //MENUSTATE_H

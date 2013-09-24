@@ -6,31 +6,36 @@
 #include "MenuState.h"
 #include "RandomNumberGenerator.h"
 #include <iostream>
-class SwitchStateInput{
+class SwitchStateInput
+{
 private:
-	float _press_Button_Trigger;
+	float mPress_Button_Trigger;
 	const float PRESS_RELEASE_TIME;
 public:
 	SwitchStateInput(float pressRelease)
 		:
 		PRESS_RELEASE_TIME(pressRelease),
-		_press_Button_Trigger(0.f)
+		mPress_Button_Trigger(0.f)
 		{}
 
-	void process(const sf::Time& frameDelta){
-		_press_Button_Trigger += frameDelta.asSeconds();
-	}
-
-	void reset(){
-		_press_Button_Trigger = 0.f;
-	}
-
-	bool canChange(){
-		if(_press_Button_Trigger > PRESS_RELEASE_TIME){
-			return true;
+	void process(const sf::Time& frameDelta)
+		{
+		mPress_Button_Trigger += frameDelta.asSeconds();
 		}
+
+	void reset()
+		{
+		mPress_Button_Trigger = 0.f;
+		}
+
+	bool canChange()
+		{
+		if(mPress_Button_Trigger > PRESS_RELEASE_TIME)
+			{
+			return true;
+			}
 		return false;
-	}
+		}
 };
 
 class Game
@@ -48,8 +53,9 @@ public:
 		//Fields
 		RandomNumberGenerator	mRandomNumGenerator;
 		int						mWidth, mHeight;
-		sf::Clock				mStartTime;
+		sf::Clock				mStartClock;
 		sf::Time				mFrameDelta;
+		sf::Time				mFrameStamp;
 
 		SwitchStateInput		mSwitchStateInput;
 
@@ -63,7 +69,5 @@ public:
 		sf::Texture				mPlayerTexture;
 		sf::Texture				mBackgroundTexture;
 		sf::Texture				mAmbulanceTexture;
-
-
 };
 #endif //GAME_H
