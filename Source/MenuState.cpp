@@ -163,7 +163,7 @@ void MenuState::Update( const sf::Time& deltaFrame )
 	if ( mShipDirectionChangeTrigger < timeStamp )
 		{
 		mSpaceShipVelocity = -mSpaceShipVelocity;
-		mShipDirectionChangeTrigger = mpGame->mFrameStamp.asSeconds() + Random::Between( 1.0f, 4.0f );
+        mShipDirectionChangeTrigger = mpGame->mFrameStamp.asSeconds() + Random::Between( 1.0f, 5.0f );
 		}
 
 	if( newPosition.y > maxPosition )
@@ -184,16 +184,21 @@ void MenuState::Update( const sf::Time& deltaFrame )
 	/**StarStripe
 	*/
 	newPosition = mStarStripeSprite.getPosition();
-	newPosition.x -= 8500.f *deltaFrame.asSeconds(); //Speed of Stripe
+    newPosition.x -= 8500.f *deltaFrame.asSeconds(); //Speed of Stripe
 
-	//if x-position smaller than width of stripe-texture + random-amount
-	if(newPosition.x < -( (int)mStarStripeTexture.getSize().x + ( mpGame->mRandomNumGenerator.getRandomInt(15000) ) ) )
-		{
-		newPosition.x = mpGame->mWidth + mpGame->mRandomNumGenerator.getRandomInt( 15000 );
-		newPosition.y = mpGame->mRandomNumGenerator.getRandomInt( mpGame->mHeight );
-		}
+    if( mStarStripeDirectionChangeTrigger < timeStamp)
+        {
+        mStarStripeDirectionChangeTrigger = timeStamp + Random::Between(1.f, 2.5f);
+        newPosition.x = mpGame->mWidth;
+        newPosition.y =  mpGame->mRandomNumGenerator.getRandomInt( mpGame->mHeight );
+        }
 		mStarStripeSprite.setPosition( newPosition );
-	}
+
+    }//End of MenuState::Update
+
+
+
+
 void MenuState::Render()
 	{
 	mpGame->mRenderWindow.clear( sf::Color::Black );

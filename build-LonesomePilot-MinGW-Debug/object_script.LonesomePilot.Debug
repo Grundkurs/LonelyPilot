@@ -1,0 +1,16 @@
+INPUT(
+./debug\main.o
+./debug\Star.o
+./debug\RandomNumberGenerator.o
+./debug\Player.o
+./debug\Option.o
+./debug\MenuState.o
+./debug\IState.o
+./debug\IEntity.o
+./debug\GameState.o
+./debug\Game.o
+./debug\Background.o
+./debug\Ambulance.o
+./debug\StringUtilities.o
+./debug\RandomGenerator.o
+);

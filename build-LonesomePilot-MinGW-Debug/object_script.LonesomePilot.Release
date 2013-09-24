@@ -1,0 +1,16 @@
+INPUT(
+./release\main.o
+./release\Star.o
+./release\RandomNumberGenerator.o
+./release\Player.o
+./release\Option.o
+./release\MenuState.o
+./release\IState.o
+./release\IEntity.o
+./release\GameState.o
+./release\Game.o
+./release\Background.o
+./release\Ambulance.o
+./release\StringUtilities.o
+./release\RandomGenerator.o
+);
