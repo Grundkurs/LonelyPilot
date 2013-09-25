@@ -17,7 +17,12 @@ MenuState::MenuState( Game* game )
 	mShipDirectionChangeTrigger(0.0f),
 	mpCurrentOption( nullptr )
 	{
-	string file("..\\Art\\Visual\\MainMenuParts\\Background1.jpg");
+	string file;
+
+	file = "..\\Art\\Audio\\spaceGameMusic.wav";
+	game->mAudioMan.LoadAndPlayMusic(ToPlatformPath(file) );
+
+	file = "..\\Art\\Visual\\MainMenuParts\\Background1.jpg";
 
 	if( !mBackgroundTexture1.loadFromFile( ToPlatformPath(file) ) )
 		{
@@ -131,9 +136,9 @@ void MenuState::Update( const sf::Time& deltaFrame )
 	sf::Vector2f newPosition = mBackgroundSprite1.getPosition();
 
 
-    //needs to be sf::Vector2f instead sf::Vector2u because otherwise you cant make
-    //the variable negative. Example: "-windowSize.x" would not work
-    sf::Vector2f windowSize (mpGame->mRenderWindow.getSize());
+	//needs to be sf::Vector2f instead sf::Vector2u because otherwise you cant make
+	//the variable negative. Example: "-windowSize.x" would not work
+	sf::Vector2f windowSize (mpGame->mRenderWindow.getSize());
 
 	newPosition.x -= 5.f * deltaFrame.asSeconds();
 	mBackgroundSprite1.setPosition( newPosition );
@@ -166,7 +171,7 @@ void MenuState::Update( const sf::Time& deltaFrame )
 	if ( mShipDirectionChangeTrigger < timeStamp )
 		{
 		mSpaceShipVelocity = -mSpaceShipVelocity;
-        mShipDirectionChangeTrigger = mpGame->mFrameStamp.asSeconds() + Random::Between( 1.0f, 5.0f );
+		mShipDirectionChangeTrigger = mpGame->mFrameStamp.asSeconds() + Random::Between( 1.0f, 5.0f );
 		}
 
 	if( newPosition.y > maxPosition )
@@ -188,7 +193,7 @@ void MenuState::Update( const sf::Time& deltaFrame )
 	*/
 	newPosition = mStarStripeSprite.getPosition();
 
-    newPosition.x -= 8500.f *deltaFrame.asSeconds(); //Speed of Stripe
+	newPosition.x -= 8500.f *deltaFrame.asSeconds(); //Speed of Stripe
 
 	//if x-position smaller than width of stripe-texture + random-amount
 	if(newPosition.x < -( (int)mStarStripeTexture.getSize().x + ( mpGame->mRandomNumGenerator.getRandomInt(15000) ) ) )
@@ -199,7 +204,7 @@ void MenuState::Update( const sf::Time& deltaFrame )
 	mStarStripeSprite.setPosition( newPosition );
 
 
-    }//End of MenuState::Update
+	}//End of MenuState::Update
 
 
 void MenuState::Render()

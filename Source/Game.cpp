@@ -8,13 +8,16 @@ Game::Game( int width, int height )
 	mRenderWindow( sf::VideoMode(width, height), "Space Game Shooter v1.0" ),
 	mWidth( width ),
 	mHeight( height ),
-	mpCurrentState( new MenuState(this) ),
+	mpCurrentState( nullptr ),
 	mpPreviousState( mpCurrentState ),
-	mSwitchStateInput( .05f )
+	mSwitchStateInput( .05f ),
+	mAudioMan()
 	{
 	//start Clock;
 	mStartClock.restart();
 	Random::Seed();
+
+	mpCurrentState = new MenuState(this);
 	}
 
 Game::~Game()

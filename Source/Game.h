@@ -5,7 +5,11 @@
 #include "GameState.h"
 #include "MenuState.h"
 #include "RandomNumberGenerator.h"
+#include "AudioManager.h"
+
 #include <iostream>
+
+
 class SwitchStateInput
 {
 private:
@@ -69,5 +73,7 @@ public:
 		sf::Texture				mPlayerTexture;
 		sf::Texture				mBackgroundTexture;
 		sf::Texture				mAmbulanceTexture;
+
+		AudioManager mAudioMan;
 };
 #endif //GAME_H
