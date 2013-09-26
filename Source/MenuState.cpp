@@ -10,9 +10,9 @@
 
 class Game;
 
-MenuState::MenuState( Game* game )
+MenuState::MenuState( Game* pGame )
 	:
-	mpGame( game ),
+	mpGame( pGame ),
 	mSpaceShipVelocity( 100.f ),
 	mShipDirectionChangeTrigger(0.0f),
 	mpCurrentOption( nullptr )
@@ -20,7 +20,7 @@ MenuState::MenuState( Game* game )
 	string file;
 
 	file = "..\\Art\\Audio\\first_run_jingle.ogg";
-	game->mAudioMan.LoadAndPlayMusic(ToPlatformPath(file) );
+	pGame->mAudioMan.LoadAndPlayMusic( ToPlatformPath(file) );
 
 	file = "..\\Art\\Visual\\MainMenuParts\\Background1.jpg";
 
@@ -78,6 +78,7 @@ MenuState::MenuState( Game* game )
 
 MenuState::~MenuState()
 	{
+	mpGame->mAudioMan.StopMusic();
 	std::cout << "Destroying MenuState\n";
 	}
 

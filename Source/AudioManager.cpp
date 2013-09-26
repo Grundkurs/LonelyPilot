@@ -1,6 +1,8 @@
 #include "AudioManager.h"
 #include "RandomGenerator.h"
 
+#include "StringUtilities.h"
+
 AudioData::AudioData(int soundID)
 	:
 	mSoundID(soundID)
@@ -38,7 +40,113 @@ bool AudioData::AddAudioBuffer(string file)
 		}
 	}
 
-// ctor
+void AudioData::ClearBuffers()
+	{
+	mAudioBuffers.clear();
+	}
+
+// ActiveSound
+
+ActiveSound::ActiveSound(sf::SoundBuffer & soundBuffer, bool deleteAfterDone)
+	:
+	mDeleteNow(false),
+	mDeleteAfterDone( deleteAfterDone ),
+	mSound(soundBuffer)
+	{
+
+	}
+
+void ActiveSound::Play()
+	{
+	mSound.play();
+	}
+
+void ActiveSound::SetVolume(const float volume)
+	{
+	mSound.setVolume(volume);
+	}
+
+void ActiveSound::SetPitch(const float pitch)
+	{
+	mSound.setPitch(pitch);
+	}
+
+void ActiveSound::SetMinimumDistance(const float dist)
+	{
+	mSound.setMinDistance( dist );
+	}
+
+void ActiveSound::SetAttenuation( const float atten )
+	{
+	mSound.setAttenuation( atten );
+	}
+
+void ActiveSound::SetLooping( const bool loop )
+	{
+	mSound.setLoop(loop);
+	}
+
+void ActiveSound::SetPosition(sf::Vector3f pos)
+	{
+	mSound.setPosition(pos);
+	}
+
+void ActiveSound::SetRelativeToListener(bool relative)
+	{
+	mSound.setRelativeToListener(relative);
+	}
+
+float ActiveSound::GetVolume() const
+	{
+	return mSound.getVolume();
+	}
+
+float ActiveSound::GetPitch() const
+	{
+	return mSound.getPitch();
+	}
+
+bool ActiveSound::GetDone() const
+	{
+	return mSound.getStatus() == sf::SoundSource::Stopped ? true : false;
+	}
+
+sf::Vector3f ActiveSound::GetPosition() const
+	{
+	return mSound.getPosition();
+	}
+
+void ActiveSound::SetDeleteNow(bool deleteNow)
+	{
+	mDeleteNow = deleteNow;
+	}
+
+void ActiveSound::SetDeleteAfterDone(bool deleteAfterDone)
+	{
+	mDeleteAfterDone = deleteAfterDone;
+	}
+
+bool ActiveSound::GetDeleteNow() const
+	{
+	return mDeleteNow;
+	}
+
+bool ActiveSound::GetDeleteAfterDone() const
+	{
+	return mDeleteAfterDone;
+	}
+
+sf::Sound * ActiveSound::GetSoundPtr()
+	{
+	return &mSound;
+	}
+
+const sf::SoundBuffer * ActiveSound::GetSoundBufferPtr()
+	{
+	return mSound.getBuffer();
+	}
+
+// AudioManager
 AudioManager::AudioManager()
 	:
 	mSoundBuffers(),
@@ -47,6 +155,10 @@ AudioManager::AudioManager()
 	{
 	mMusic.setRelativeToListener(true);
 	mMusic.setPosition(0.0f,0.0f,0.0f);
+	SetListenerDirection( 0.0f, -1.0f, 0.0f );
+	LoadEnums();
+	string file("../Art/Audio/lasershot.wav");
+	LoadAudioBuffer(Sounds::SOUND_LASER, ToPlatformPath(file) );
 	}
 
 // listener
@@ -82,14 +194,18 @@ ManagedSoundWeak AudioManager::PlaySound(int soundID, const sf::Vector3f &pos, f
 	if ( !pBuffer )
 		{
 		// Log Warning not found or no associated buffers.
-		return std::weak_ptr<sf::Sound>();
+		return ManagedSoundWeak();
 		}
 
-	ManagedSound managedSound( new sf::Sound() );
-	managedSound->setPosition( pos );
-	managedSound->setBuffer( *pBuffer );
-	managedSound->setVolume( volume );
-	managedSound->setPitch( pitch );
+	ManagedSound managedSound( new ActiveSound(*pBuffer) );
+	managedSound->SetRelativeToListener(false);
+	// TODO: make this a parameter, and attenuation too
+	managedSound->SetMinimumDistance(15.0f);
+	managedSound->SetPosition( pos );
+	//managedSound->SetBuffer( *pBuffer );
+	managedSound->SetVolume( volume );
+	managedSound->SetPitch( pitch );
+	managedSound->Play();
 
 	mSounds.push_back(managedSound);
 
@@ -99,7 +215,11 @@ ManagedSoundWeak AudioManager::PlaySound(int soundID, const sf::Vector3f &pos, f
 void AudioManager::UnloadBuffersAndSounds()
 	{
 	mSounds.clear();
-	mSoundBuffers.clear();
+
+	for ( unsigned int i = 0; i < mSoundBuffers.size(); ++i )
+		{
+		mSoundBuffers[i].ClearBuffers();
+		}
 	}
 
 // music
@@ -129,4 +249,56 @@ void AudioManager::StartMusic()
 void AudioManager::StopMusic()
 	{
 	mMusic.stop();
+	}
+
+void AudioManager::Update()
+	{
+	// code for removing sounds that are done.
+	for ( unsigned int i = 0; i < mSounds.size();  )
+		{
+
+		if ( mSounds.at(i)->GetDeleteNow() )
+			{
+			mSounds.erase( mSounds.begin() + i );
+			continue;
+			}
+
+		if ( mSounds.at(i)->GetDeleteAfterDone() && mSounds.at(i)->GetDone() )
+			{
+			mSounds.erase( mSounds.begin() + i );
+			continue;
+			}
+
+		++i;
+		}
+	}
+
+void AudioManager::LoadEnums()
+	{
+	for ( unsigned int i = Sounds::SOUND_START + 1; i < Sounds::SOUND_END; ++i )
+		{
+		mSoundBuffers.emplace_back(i);
+		}
+	}
+
+bool AudioManager::LoadAudioBuffer(int soundID, const string &file)
+	{
+	AudioData * pData = nullptr;
+	for ( unsigned int i = 0; i < mSoundBuffers.size(); ++i )
+		{
+		if ( mSoundBuffers[i].GetSoundID() == soundID )
+			{
+			pData = &mSoundBuffers[i];
+			break;
+			}
+		}
+
+	if ( pData )
+		{
+		return pData->AddAudioBuffer(file);
+		}
+	else
+		{
+		return false;
+		}
 	}

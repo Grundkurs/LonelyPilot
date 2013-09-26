@@ -9,7 +9,6 @@ Game::Game( int width, int height )
 	mWidth( width ),
 	mHeight( height ),
 	mpCurrentState( nullptr ),
-	mpPreviousState( mpCurrentState ),
 	mSwitchStateInput( .05f ),
 	mAudioMan()
 	{
@@ -17,15 +16,12 @@ Game::Game( int width, int height )
 	mStartClock.restart();
 	Random::Seed();
 
-	mpCurrentState = new MenuState(this);
+	mpCurrentState.reset(new MenuState(this));
 	}
 
 Game::~Game()
 	{
-	if( mpCurrentState )
-		{
-		delete mpCurrentState;
-		}
+
 	}
 
 
@@ -69,7 +65,7 @@ bool Game::Initialize()
 	file = "..\\Art\\Visual\\Ambulance.png";
 	if( !mAmbulanceTexture.loadFromFile(ToPlatformPath(file)) )
 		{
-			std::cout << "error loading Ambulance-Texture!";
+		std::cout << "error loading Ambulance-Texture!";
 		}
 	std::cout << "successfully loaded ambulance-Texture!\n";
 
@@ -91,6 +87,7 @@ int Game::Run()
 		mpCurrentState->Update(mFrameDelta);
 		mpCurrentState->Render();
 
+		mAudioMan.Update();
 		}
 	return 0;
 	}
@@ -113,11 +110,10 @@ void Game::ProcessHandle()
 		if( mSwitchStateInput.canChange() )
 			{
 			//Input commands depends on current State
-			mpCurrentState = mpCurrentState->ProcessStateInput(event);
-			if( mpCurrentState != mpPreviousState )
+			IState * pNewState = mpCurrentState->ProcessStateInput(event);
+			if ( pNewState != mpCurrentState.get() )
 				{
-				delete mpPreviousState;
-				mpPreviousState = mpCurrentState;
+				mpCurrentState.reset(pNewState);
 				}
 			}
 

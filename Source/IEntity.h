@@ -13,6 +13,7 @@ public:
 	virtual void SetTexture(const sf::Texture& tex) = 0;
 	virtual const sf::Sprite& GetSprite() const = 0;
 
+private:
 
 };
 
