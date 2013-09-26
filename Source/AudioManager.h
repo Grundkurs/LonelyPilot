@@ -9,12 +9,6 @@ using std::vector;
 
 #include "SFML/Audio.hpp"
 
-//template<sf::Sound> using ManagedSound = std::shared_ptr<sf::Sound>;
-//template<sf::Sound> using ManagedSoundWeak = std::weak_ptr<sf::Sound>;
-
-typedef std::shared_ptr<sf::Sound> ManagedSound;
-typedef std::weak_ptr<sf::Sound> ManagedSoundWeak;
-
 class AudioData
 {
 public:
@@ -28,6 +22,41 @@ private:
 	vector<sf::SoundBuffer> mAudioBuffers;
 	int mSoundID;
 };
+
+class ActiveSound
+{
+public:
+	ActiveSound( sf::SoundBuffer & soundBuffer, bool deleteAfterDone = true );
+
+	void SetVolume( const float volume );
+	void SetPitch( const float pitch );
+
+	void SetPosition( sf::Vector3f pos );
+	void SetRelativeToListener( bool relative = true );
+
+	float GetVolume() const;
+	float GetPitch() const;
+
+	sf::Vector3f GetPosition() const;
+	bool GetRelativeToListener() const;
+
+	void SetDeleteNow( bool deleteNow = true );
+	void SetDeleteAfterDone( bool deleteAfterDone = true );
+
+	bool GetDeleteNow() const;
+	bool GetDeleteAfterDone() const;
+
+	sf::Sound * GetSoundPtr();
+	const sf::SoundBuffer * GetSoundBufferPtr();
+
+private:
+	bool mDeleteNow;
+	bool mDeleteAfterDone;
+	sf::Sound mSound;
+};
+
+typedef std::shared_ptr<ActiveSound> ManagedSound;
+typedef std::weak_ptr<ActiveSound> ManagedSoundWeak;
 
 class AudioManager
 {

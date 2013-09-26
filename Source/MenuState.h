@@ -12,7 +12,7 @@ class MenuState :
 	Game* mpGame;
 
 public:
-								MenuState(Game* game);
+								MenuState(Game* pGame);
 								~MenuState();
 
 
@@ -27,7 +27,7 @@ public:
 	sf::RectangleShape			mRectShape;
 	float						mSpaceShipVelocity;
 	float						mShipDirectionChangeTrigger;
-    float                       mStarStripeDirectionChangeTrigger;
+	float                       mStarStripeDirectionChangeTrigger;
 
 	std::shared_ptr<Option>		sPtr_NewGame;
 	std::shared_ptr<Option>		sPtr_Options;

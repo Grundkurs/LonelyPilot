@@ -64,9 +64,9 @@ public:
 		SwitchStateInput		mSwitchStateInput;
 
 		sf::RenderWindow		mRenderWindow;
-		IState*					mpCurrentState;
-		IState*					mpPreviousState;
-
+		//IState*					mpCurrentState;
+		//IState*					mpPreviousState;
+		std::unique_ptr<IState> mpCurrentState;
 
 
 		sf::Texture				mStarTexture;

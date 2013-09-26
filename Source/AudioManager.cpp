@@ -38,7 +38,83 @@ bool AudioData::AddAudioBuffer(string file)
 		}
 	}
 
-// ctor
+// ActiveSound
+
+ActiveSound::ActiveSound(sf::SoundBuffer & soundBuffer, bool deleteAfterDone)
+	:
+	mDeleteNow(false),
+	mDeleteAfterDone( deleteAfterDone ),
+	mSound(soundBuffer)
+	{
+
+	}
+
+void ActiveSound::SetVolume(const float volume)
+	{
+	mSound.setVolume(volume);
+	}
+
+void ActiveSound::SetPitch(const float pitch)
+	{
+	mSound.setPitch(pitch);
+	}
+
+void ActiveSound::SetPosition(sf::Vector3f pos)
+	{
+	mSound.setPosition(pos);
+	}
+
+void ActiveSound::SetRelativeToListener(bool relative)
+	{
+	mSound.setRelativeToListener(relative);
+	}
+
+float ActiveSound::GetVolume() const
+	{
+	return mSound.getVolume();
+	}
+
+float ActiveSound::GetPitch() const
+	{
+	return mSound.getPitch();
+	}
+
+sf::Vector3f ActiveSound::GetPosition() const
+	{
+	return mSound.getPosition();
+	}
+
+void ActiveSound::SetDeleteNow(bool deleteNow)
+	{
+	mDeleteNow = deleteNow;
+	}
+
+void ActiveSound::SetDeleteAfterDone(bool deleteAfterDone)
+	{
+	mDeleteAfterDone = deleteAfterDone;
+	}
+
+bool ActiveSound::GetDeleteNow() const
+	{
+	return mDeleteNow;
+	}
+
+bool ActiveSound::GetDeleteAfterDone() const
+	{
+	return mDeleteAfterDone;
+	}
+
+sf::Sound * ActiveSound::GetSoundPtr()
+	{
+	return &mSound;
+	}
+
+const sf::SoundBuffer * ActiveSound::GetSoundBufferPtr()
+	{
+	return mSound.getBuffer();
+	}
+
+// AudioManager
 AudioManager::AudioManager()
 	:
 	mSoundBuffers(),
@@ -82,14 +158,14 @@ ManagedSoundWeak AudioManager::PlaySound(int soundID, const sf::Vector3f &pos, f
 	if ( !pBuffer )
 		{
 		// Log Warning not found or no associated buffers.
-		return std::weak_ptr<sf::Sound>();
+		return ManagedSoundWeak();
 		}
 
-	ManagedSound managedSound( new sf::Sound() );
-	managedSound->setPosition( pos );
-	managedSound->setBuffer( *pBuffer );
-	managedSound->setVolume( volume );
-	managedSound->setPitch( pitch );
+	ManagedSound managedSound( new ActiveSound(*pBuffer) );
+	managedSound->SetPosition( pos );
+	//managedSound->SetBuffer( *pBuffer );
+	managedSound->SetVolume( volume );
+	managedSound->SetPitch( pitch );
 
 	mSounds.push_back(managedSound);
 
