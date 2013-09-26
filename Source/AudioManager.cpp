@@ -81,6 +81,11 @@ void ActiveSound::SetAttenuation( const float atten )
 	mSound.setAttenuation( atten );
 	}
 
+void ActiveSound::SetLooping( const bool loop )
+	{
+	mSound.setLoop(loop);
+	}
+
 void ActiveSound::SetPosition(sf::Vector3f pos)
 	{
 	mSound.setPosition(pos);
@@ -194,6 +199,7 @@ ManagedSoundWeak AudioManager::PlaySound(int soundID, const sf::Vector3f &pos, f
 
 	ManagedSound managedSound( new ActiveSound(*pBuffer) );
 	managedSound->SetRelativeToListener(false);
+	// TODO: make this a parameter, and attenuation too
 	managedSound->SetMinimumDistance(15.0f);
 	managedSound->SetPosition( pos );
 	//managedSound->SetBuffer( *pBuffer );

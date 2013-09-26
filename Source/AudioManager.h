@@ -35,6 +35,7 @@ public:
 	void SetPitch( const float pitch );
 	void SetMinimumDistance( const float dist );
 	void SetAttenuation( const float atten );
+	void SetLooping( const bool loop = true );
 
 	void SetPosition( sf::Vector3f pos );
 	void SetRelativeToListener( bool relative = true );
@@ -67,11 +68,11 @@ typedef std::weak_ptr<ActiveSound> ManagedSoundWeak;
 namespace Sounds
 {
 enum Sounds
-{
-SOUND_START = 0,
-SOUND_LASER,
-SOUND_END
-};
+	{
+	SOUND_START = 0,
+	SOUND_LASER,
+	SOUND_END
+	};
 }
 
 class AudioManager

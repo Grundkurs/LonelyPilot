@@ -83,6 +83,7 @@ void Player::Update( const sf::Time& deltaFrame )
 
 	//--------------------------------------------------------------------------
 	//boarder collision
+	mPos = ( mSprite.getPosition() );
 	if( mPos.x < 0 )
 		{
 		mPos.x = 1;
@@ -95,6 +96,19 @@ void Player::Update( const sf::Time& deltaFrame )
 		mPos.x = ( mpGame->mWidth - mSpriteWidth );
 		//inverse direction and slow down when touching border
 		mVelocity.x *= -0.5f;
+		}
+
+	if ( mPos.y < 1 )
+		{
+		mPos.y = 1;
+		mSprite.setPosition( mPos );
+		mVelocity.y *= -0.5f;
+		}
+	else if ( ( mPos.y + mSpriteHeight ) > mpGame->mHeight )
+		{
+		mPos.y = ( mpGame->mHeight - mSpriteHeight );
+		mVelocity.y *= -0.5f;
+		mSprite.setPosition( mPos );
 		}
 	//--------------------------------------------------------------------------
 
