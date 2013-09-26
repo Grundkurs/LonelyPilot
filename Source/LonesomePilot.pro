@@ -27,14 +27,12 @@ INCLUDEPATH += C:\SFMLMinGW\include
 DEPENDPATH += C:\SFMLMinGW\include
 LIBS += -LC:\SFMLMinGW\lib
 
-CONFIG(Release)
-{
+CONFIG(release, release|debug){
 LIBS += -lsfml-audio -lsfml-graphics -lsfml-network -lsfml-window -lsfml-system
 win32: LIBS += -lsfml-main
 }
 
-CONFIG(Debug)
-{
+CONFIG(debug, release|debug){
 LIBS += -lsfml-audio-d -lsfml-graphics-d -lsfml-network-d -lsfml-window-d -lsfml-system-d
 win32: LIBS += -lsfml-main-d
 }
