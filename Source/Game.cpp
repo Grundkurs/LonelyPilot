@@ -87,6 +87,7 @@ int Game::Run()
 		mpCurrentState->Update(mFrameDelta);
 		mpCurrentState->Render();
 
+		mAudioMan.Update();
 		}
 	return 0;
 	}

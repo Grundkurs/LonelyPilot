@@ -6,8 +6,7 @@
 #include <memory>
 #include "Option.h"
 class Game;
-class MenuState :
-	public IState
+class MenuState : public IState
 {
 	Game* mpGame;
 

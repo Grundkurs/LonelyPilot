@@ -18,6 +18,8 @@ public:
 
 	bool AddAudioBuffer(string file);
 
+	void ClearBuffers();
+
 private:
 	vector<sf::SoundBuffer> mAudioBuffers;
 	int mSoundID;
@@ -28,14 +30,18 @@ class ActiveSound
 public:
 	ActiveSound( sf::SoundBuffer & soundBuffer, bool deleteAfterDone = true );
 
+	void Play();
 	void SetVolume( const float volume );
 	void SetPitch( const float pitch );
+	void SetMinimumDistance( const float dist );
+	void SetAttenuation( const float atten );
 
 	void SetPosition( sf::Vector3f pos );
 	void SetRelativeToListener( bool relative = true );
 
 	float GetVolume() const;
 	float GetPitch() const;
+	bool GetDone() const;
 
 	sf::Vector3f GetPosition() const;
 	bool GetRelativeToListener() const;
@@ -57,6 +63,16 @@ private:
 
 typedef std::shared_ptr<ActiveSound> ManagedSound;
 typedef std::weak_ptr<ActiveSound> ManagedSoundWeak;
+
+namespace Sounds
+{
+enum Sounds
+{
+SOUND_START = 0,
+SOUND_LASER,
+SOUND_END
+};
+}
 
 class AudioManager
 {
@@ -80,7 +96,9 @@ public:
 	// need to call this each frame to remove finished sounds
 	void Update();
 
+	bool LoadAudioBuffer( int soundID, const string & file );
 private:
+	void LoadEnums();
 	// sounds
 	vector<AudioData> mSoundBuffers;
 	vector<ManagedSound> mSounds;
