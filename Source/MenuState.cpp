@@ -78,7 +78,7 @@ MenuState::MenuState( Game* pGame )
 
 MenuState::~MenuState()
 	{
-	mpGame->mAudioMan.StopMusic();
+    //mpGame->mAudioMan.StopMusic();
 	std::cout << "Destroying MenuState\n";
 	}
 
