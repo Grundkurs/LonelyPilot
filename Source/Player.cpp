@@ -9,7 +9,8 @@ Player::Player( Game* pGame )
 	mSpriteHeight( 97 ),
 	mCurrentRow( 0 ),
 	mTriggerShot(0.0f),
-	mVelocity( sf::Vector2f(0.f, 0.f) )
+    mVelocity( sf::Vector2f(0.f, 0.f) ),
+    mSpeed( sf::Vector2f (1105.f, 505.5f ) )
 	{
 	sf::IntRect rect( mCurrentRow, 0, mSpriteWidth, mSpriteHeight );
 	mSprite.setTextureRect( rect );
@@ -34,23 +35,23 @@ void Player::Update( const sf::Time& deltaFrame )
 	if( sf::Keyboard::isKeyPressed( sf::Keyboard::Left ) )
 		{
 		changeRect(1);
-		mVelocity.x -= 1105.5f * deltaFrame.asSeconds();
+        mVelocity.x -= mSpeed.x * deltaFrame.asSeconds();
 		}
 
 	if( sf::Keyboard::isKeyPressed( sf::Keyboard::Right ) )
 		{
 		changeRect(2);
-		mVelocity.x += 1105.5f * deltaFrame.asSeconds();
+        mVelocity.x += mSpeed.x * deltaFrame.asSeconds();
 		}
 
 	if( sf::Keyboard::isKeyPressed( sf::Keyboard::Up ) )
 		{
-		mVelocity.y -= 505.5f * deltaFrame.asSeconds();
+        mVelocity.y -= mSpeed.y * deltaFrame.asSeconds();
 		}
 
 	if( sf::Keyboard::isKeyPressed( sf::Keyboard::Down ) )
 		{
-		mVelocity.y += 505.5f * deltaFrame.asSeconds();
+        mVelocity.y += mSpeed.y * deltaFrame.asSeconds();
 		}
 
 	// fire lasers
