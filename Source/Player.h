@@ -21,7 +21,7 @@ friend class GameState; // TODO: hack to be able to grap mPos from GameState
 		float					mTriggerShot;
 
 public:
-								Player(Game* game);
+								Player(Game* pGame);
 								~Player();
 
 

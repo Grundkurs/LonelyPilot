@@ -9,11 +9,11 @@ using std::vector;
 
 #include "SFML/Audio.hpp"
 
-class AudioData
+class AudioBufferGroup
 {
 public:
-	AudioData( int soundID );
-	int GetSoundID() const;
+	AudioBufferGroup( int audioGroupID );
+	int GetAudioGroupID() const;
 	sf::SoundBuffer * GetRandomBuffer();
 
 	bool AddAudioBuffer(string file);
@@ -22,7 +22,7 @@ public:
 
 private:
 	vector<sf::SoundBuffer> mAudioBuffers;
-	int mSoundID;
+	int mAudioGroupID;
 };
 
 class ActiveSound
@@ -33,7 +33,7 @@ public:
 	void Play();
 	void SetVolume( const float volume );
 	void SetPitch( const float pitch );
-	void SetMinimumDistance( const float dist );
+	void SetMaxVolumeDistance( const float dist );
 	void SetAttenuation( const float atten );
 	void SetLooping( const bool loop = true );
 
@@ -65,13 +65,13 @@ private:
 typedef std::shared_ptr<ActiveSound> ManagedSound;
 typedef std::weak_ptr<ActiveSound> ManagedSoundWeak;
 
-namespace Sounds
+namespace AudioGroups
 {
-enum Sounds
+enum AudioGroups
 	{
-	SOUND_START = 0,
-	SOUND_LASER,
-	SOUND_END
+	AUDIO_START = 0,
+	AUDIO_LASER,
+	AUDIO_END
 	};
 }
 
@@ -91,7 +91,9 @@ public:
 	void SetListenerDirection( float x, float y, float z );
 	void SetListenerGlobalVolume(float volume);
 
-	ManagedSoundWeak PlaySound( int soundID, const sf::Vector3f & pos, float volume = 100.0f, float pitch = 1.0f);
+	ManagedSoundWeak PlaySound( int soundID, const sf::Vector3f & pos, float volume, float pitch, float maxVolumeDist, float attenuation);
+	ManagedSoundWeak PlaySound( int soundID, const sf::Vector3f & pos, float maxVolumeDist, float attenuation );
+	ManagedSoundWeak PlaySound( int soundID, const sf::Vector3f & pos );
 	void UnloadBuffersAndSounds();
 
 	// need to call this each frame to remove finished sounds
@@ -101,7 +103,7 @@ public:
 private:
 	void LoadEnums();
 	// sounds
-	vector<AudioData> mSoundBuffers;
+	vector<AudioBufferGroup> mSoundBuffers;
 	vector<ManagedSound> mSounds;
 
 	// music

@@ -2,8 +2,9 @@
 #include "Game.h"
 #include <iostream>
 class Game;
-Player::Player( Game* game )
-	: mpGame( game ),
+Player::Player( Game* pGame )
+	:
+	mpGame( pGame ),
 	mSpriteWidth( 56 ),
 	mSpriteHeight( 97 ),
 	mCurrentRow( 0 ),
@@ -57,7 +58,7 @@ void Player::Update( const sf::Time& deltaFrame )
 	if ( sf::Keyboard::isKeyPressed( sf::Keyboard::Space ) && mTriggerShot < mpGame->mFrameStamp.asSeconds())
 		{
 		sf::Vector2f playerPos( mSprite.getPosition() );
-		mpGame->mAudioMan.PlaySound(Sounds::SOUND_LASER, sf::Vector3f(playerPos.x,playerPos.y,0.0f));
+		mpGame->mAudioMan.PlaySound(AudioGroups::AUDIO_LASER, sf::Vector3f(playerPos.x,playerPos.y,0.0f), 15.0f, 1.0f);
 		mTriggerShot = mpGame->mFrameStamp.asSeconds() + 0.25f;
 		}
 
@@ -125,9 +126,8 @@ void Player::SetTexture( const sf::Texture& tex )
 void Player::changeRect( int row )
 	{
 	mCurrentRow = row;
-	mSprite.setTextureRect( sf::IntRect( mCurrentRow *mSpriteWidth,0,mSpriteWidth, mSpriteHeight ) );
+	mSprite.setTextureRect( sf::IntRect( mCurrentRow * mSpriteWidth,0,mSpriteWidth, mSpriteHeight ) );
 	}
-
 
 const sf::Sprite& Player::GetSprite() const
 	{
