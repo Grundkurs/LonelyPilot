@@ -28,12 +28,12 @@ DEPENDPATH += C:\SFMLMinGW\include
 LIBS += -LC:\SFMLMinGW\lib
 
 CONFIG(release, release|debug){
-LIBS += -lsfml-audio -lsfml-graphics -lsfml-network -lsfml-window -lsfml-system
+LIBS += -lsfml-audio -lsfml-graphics -lsfml-network -lsfml-window -lsfml-system -ltinyxml2
 win32: LIBS += -lsfml-main
 }
 
 CONFIG(debug, release|debug){
-LIBS += -lsfml-audio-d -lsfml-graphics-d -lsfml-network-d -lsfml-window-d -lsfml-system-d
+LIBS += -lsfml-audio-d -lsfml-graphics-d -lsfml-network-d -lsfml-window-d -lsfml-system-d -ltinyxml2
 win32: LIBS += -lsfml-main-d
 }
 

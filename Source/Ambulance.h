@@ -12,7 +12,8 @@ class Ambulance : public IEntity
 		sf::Vector2f				mPos;
 		sf::Sprite					mSprite;
 		sf::IntRect					mSpriteRect;
-		int							mWidth, mHeight;
+const 	int							mWidth;
+const 	int 						mHeight;
 		int							mCurrentFrame;
 		int							mTotalColumn;
 		float						mFrameCounter;

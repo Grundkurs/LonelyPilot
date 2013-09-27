@@ -10,7 +10,7 @@ Ambulance::Ambulance(Game* game, Player* player)
 	mWidth(85), 
 	mHeight(107),
 	mFrameCounter(0.f),
-	mMaxFrame(.33f),
+	mMaxFrame(.33f), //TODO: rename to FrameRate
 	mCurrentFrame(0)
 {
 	mSpriteRect.width = mWidth; 
