@@ -35,23 +35,14 @@ namespace LOAD_XML{
 
         }
 
-    void LoadContentString(tinyxml2::XMLDocument& doc, const std::string& Entity)
-        {
-        string str(doc.FirstChildElement( Entity.c_str() )->FirstChildElement( "PATH" )->GetText());
-
-        //Pseudo-Code for
-        //"texture.loadFromFile(path);
-        //cout << "Loading: " << str<< endl;
-        }
-
 
     void LoadContentString(tinyxml2::XMLDocument& doc, const std::string& Entity, const std::string& Attribute)
         {
             string str(doc.FirstChildElement( Entity.c_str() )->FirstChildElement( Attribute.c_str() )->GetText());
 
-        //Pseudo-Code for
-        //"texture.loadFromFile(path);
-     //   cout << "Loading: " << str << endl;
+        // Pseudo-Code for
+        // "texture.loadFromFile(path);
+        // cout << "Loading: " << str << endl;
         }
 
     int LoadContentInt(tinyxml2::XMLDocument& doc, const std::string& Entity, const std::string& Attribute)
@@ -64,6 +55,7 @@ namespace LOAD_XML{
         return number;
         }
 
+    //TODO: Write String to Float converter
    /* float LoadContentFloat(tinyxml2::XMLDocument& doc, const std::string& Entity, const std::string& Attribute)
         {
             std::string str( doc.FirstChildElement(Entity.c_str())->FirstChildElement(Attribute.c_str())->GetText() );
@@ -83,7 +75,6 @@ int main()
 		std::cout << "could not open Config-File. Terminate now."; 
 		return 1; 
 	}
-
     int height = LOAD_XML::LoadContentInt(doc, "WINDOW", "HEIGHT");
     float ratio = ((float)LOAD_XML::LoadContentInt(doc, "WINDOW", "RATIO")) / 9;
 

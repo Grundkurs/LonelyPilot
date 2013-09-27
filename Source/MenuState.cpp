@@ -19,7 +19,7 @@ MenuState::MenuState( Game* pGame )
 	{
 	string file;
 
-	file = "..\\Art\\Audio\\first_run_jingle.ogg";
+    file = "..\\Art\\Audio\\Menu.ogg";
 	pGame->mAudioMan.LoadAndPlayMusic( ToPlatformPath(file) );
 
 	file = "..\\Art\\Visual\\MainMenuParts\\Background1.jpg";
