@@ -3,19 +3,19 @@
 
 #include "StringUtilities.h"
 
-AudioData::AudioData(int soundID)
+AudioBufferGroup::AudioBufferGroup(int audioGroupID)
 	:
-	mSoundID(soundID)
+	mAudioGroupID(audioGroupID)
 	{
 
 	}
 
-int AudioData::GetSoundID() const
+int AudioBufferGroup::GetAudioGroupID() const
 	{
-	return mSoundID;
+	return mAudioGroupID;
 	}
 
-sf::SoundBuffer * AudioData::GetRandomBuffer()
+sf::SoundBuffer * AudioBufferGroup::GetRandomBuffer()
 	{
 	if ( mAudioBuffers.empty() )
 		return nullptr;
@@ -25,7 +25,7 @@ sf::SoundBuffer * AudioData::GetRandomBuffer()
 	return &mAudioBuffers.at( Random::Between(0, mAudioBuffers.size() - 1) );
 	}
 
-bool AudioData::AddAudioBuffer(string file)
+bool AudioBufferGroup::AddAudioBuffer(string file)
 	{
 	mAudioBuffers.emplace_back();
 	sf::SoundBuffer & buffer = mAudioBuffers.back();
@@ -40,7 +40,7 @@ bool AudioData::AddAudioBuffer(string file)
 		}
 	}
 
-void AudioData::ClearBuffers()
+void AudioBufferGroup::ClearBuffers()
 	{
 	mAudioBuffers.clear();
 	}
@@ -71,7 +71,7 @@ void ActiveSound::SetPitch(const float pitch)
 	mSound.setPitch(pitch);
 	}
 
-void ActiveSound::SetMinimumDistance(const float dist)
+void ActiveSound::SetMaxVolumeDistance(const float dist)
 	{
 	mSound.setMinDistance( dist );
 	}
@@ -158,7 +158,13 @@ AudioManager::AudioManager()
 	SetListenerDirection( 0.0f, -1.0f, 0.0f );
 	LoadEnums();
 	string file("../Art/Audio/lasershot.wav");
-	LoadAudioBuffer(Sounds::SOUND_LASER, ToPlatformPath(file) );
+	LoadAudioBuffer(AudioGroups::AUDIO_LASER, ToPlatformPath(file) );
+	file = "../Art/Audio/laserHigh.ogg";
+	LoadAudioBuffer(AudioGroups::AUDIO_LASER, ToPlatformPath(file) );
+	file = "../Art/Audio/laserMed.ogg";
+	LoadAudioBuffer(AudioGroups::AUDIO_LASER, ToPlatformPath(file) );
+	file = "../Art/Audio/laserLow.ogg";
+	LoadAudioBuffer(AudioGroups::AUDIO_LASER, ToPlatformPath(file) );
 	}
 
 // listener
@@ -178,13 +184,13 @@ void AudioManager::SetListenerGlobalVolume(float volume)
 	}
 
 // sounds
-ManagedSoundWeak AudioManager::PlaySound(int soundID, const sf::Vector3f &pos, float volume, float pitch)
+ManagedSoundWeak AudioManager::PlaySound(int audioGroupID, const sf::Vector3f &pos, float volume, float pitch, float maxVolumeDist, float attenuation)
 	{
 	// find sound with id
 	sf::SoundBuffer * pBuffer = nullptr;
-	for ( AudioData & pIndex : mSoundBuffers )
+	for ( AudioBufferGroup & pIndex : mSoundBuffers )
 		{
-		if ( pIndex.GetSoundID() == soundID )
+		if ( pIndex.GetAudioGroupID() == audioGroupID )
 			{
 			pBuffer = pIndex.GetRandomBuffer();
 			break;
@@ -200,7 +206,8 @@ ManagedSoundWeak AudioManager::PlaySound(int soundID, const sf::Vector3f &pos, f
 	ManagedSound managedSound( new ActiveSound(*pBuffer) );
 	managedSound->SetRelativeToListener(false);
 	// TODO: make this a parameter, and attenuation too
-	managedSound->SetMinimumDistance(15.0f);
+	managedSound->SetMaxVolumeDistance(maxVolumeDist);
+	managedSound->SetAttenuation( attenuation );
 	managedSound->SetPosition( pos );
 	//managedSound->SetBuffer( *pBuffer );
 	managedSound->SetVolume( volume );
@@ -210,6 +217,16 @@ ManagedSoundWeak AudioManager::PlaySound(int soundID, const sf::Vector3f &pos, f
 	mSounds.push_back(managedSound);
 
 	return ManagedSoundWeak(managedSound);
+	}
+
+ManagedSoundWeak AudioManager::PlaySound(int soundID, const sf::Vector3f &pos, float maxVolumeDist, float attenuation)
+	{
+	return PlaySound(soundID, pos, 100.0f, 1.0f, maxVolumeDist, attenuation);
+	}
+
+ManagedSoundWeak AudioManager::PlaySound(int soundID, const sf::Vector3f &pos)
+	{
+	return PlaySound(soundID, pos, 100.0f, 1.0f, 1.0f, 1.0f);
 	}
 
 void AudioManager::UnloadBuffersAndSounds()
@@ -275,18 +292,18 @@ void AudioManager::Update()
 
 void AudioManager::LoadEnums()
 	{
-	for ( unsigned int i = Sounds::SOUND_START + 1; i < Sounds::SOUND_END; ++i )
+	for ( unsigned int i = AudioGroups::AUDIO_START + 1; i < AudioGroups::AUDIO_END; ++i )
 		{
 		mSoundBuffers.emplace_back(i);
 		}
 	}
 
-bool AudioManager::LoadAudioBuffer(int soundID, const string &file)
+bool AudioManager::LoadAudioBuffer(int audioGroupID, const string &file)
 	{
-	AudioData * pData = nullptr;
+	AudioBufferGroup * pData = nullptr;
 	for ( unsigned int i = 0; i < mSoundBuffers.size(); ++i )
 		{
-		if ( mSoundBuffers[i].GetSoundID() == soundID )
+		if ( mSoundBuffers[i].GetAudioGroupID() == audioGroupID )
 			{
 			pData = &mSoundBuffers[i];
 			break;

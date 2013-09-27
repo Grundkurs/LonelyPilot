@@ -12,26 +12,26 @@
 #include "Ambulance.h"
 
 
-class Game; 
+class Game;
 
 typedef std::shared_ptr<IEntity> sptr_entity;
 
 class GameState : public IState
 {
-	Game* mpGame; 
-	
-    std::vector<sptr_entity> entities;
+	Game * mpGame;
+
+	std::vector<sptr_entity> entities;
 	std::shared_ptr<Player> mPlayer;
-	std::shared_ptr<Ambulance> mAmbulance; 
-	std::unique_ptr<Background> mBackground; 
+	std::shared_ptr<Ambulance> mAmbulance;
+	std::unique_ptr<Background> mBackground;
 public:
-	GameState(Game* game);
+	GameState(Game * pGame);
 	~GameState();
 
-	
+
 	 IState* ProcessStateInput(const sf::Event& event);
-	 void Update(const sf::Time& deltaFrame); 
-	 void Render(); 
+	 void Update(const sf::Time& deltaFrame);
+	 void Render();
 };
 
 

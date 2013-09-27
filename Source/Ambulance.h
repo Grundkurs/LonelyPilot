@@ -8,7 +8,7 @@ class Player;
 class Ambulance : public IEntity
 {
 		Player*						mpPlayer;
-		Game*						mpGame;
+		Game *						mpGame;
 		sf::Vector2f				mPos;
 		sf::Sprite					mSprite;
 		sf::IntRect					mSpriteRect;
@@ -19,7 +19,7 @@ class Ambulance : public IEntity
 		float						mMaxFrame;
 		float						mVelocity;
 public:
-									Ambulance(Game* game, Player* player);
+									Ambulance(Game * pGame, Player * pPlayer);
 									~Ambulance();
 
 		void						Update(const sf::Time& deltaFrame);

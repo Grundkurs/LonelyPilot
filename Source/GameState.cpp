@@ -3,9 +3,9 @@
 #include <iostream>
 
 //TODO: can I initialize entities-vector with default size like 200 star-entities and set all to nullptr? like entities[200, nullptr]
-GameState::GameState( Game* game )
+GameState::GameState( Game * pGame )
 	:
-	mpGame( game ),
+	mpGame( pGame ),
 	mPlayer( nullptr ),
 	mAmbulance( nullptr)
 	{
@@ -18,7 +18,7 @@ GameState::GameState( Game* game )
 	//initialize stars;
 	for(int i = 0; i < 150; ++i)
 		{
-		sptr_entity star( new Star(game, mPlayer) );
+		sptr_entity star( new Star(pGame, mPlayer) );
 		star->SetTexture( mpGame->mStarTexture );
 		entities.push_back( std::move(star) );
 		}
@@ -36,7 +36,6 @@ GameState::~GameState()
 
 void GameState::Update( const sf::Time& deltaFrame )
 	{
-
 	for( sptr_entity& i : entities )
 		{
 		i->Update( mpGame->mFrameDelta );

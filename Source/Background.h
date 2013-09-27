@@ -9,7 +9,7 @@ class Background :
 		sf::Vector2f			mPos;
 		sf::Sprite				mSprite;
 public:
-								Background(Game* game);
+								Background(Game * pGame);
 								~Background();
 		void					Update(const sf::Time& deltaFrame);
 		void					SetTexture(const sf::Texture& tex);

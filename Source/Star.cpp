@@ -5,9 +5,9 @@ class Game;
 
 
 
-Star::Star( Game* game, std::shared_ptr<Player>player )
+Star::Star( Game * pGame, std::shared_ptr<Player>player )
 	:
-	mpGame( game ),
+	mpGame( pGame ),
 	mPos( sf::Vector2f(0.f, 0.f) ),
 	mSpeedEnhancment( 1.0 ),
 	mPlayer( player )
