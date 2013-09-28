@@ -1,6 +1,7 @@
 #include "Game.h"
 #include "tinyxml2.h"
 #include <iostream>
+
 #include "XML.h"
 
 int main()
@@ -14,11 +15,4 @@ int main()
     int height = XML::LoadContentInt("WINDOW", "HEIGHT");
     float ratio = ((float)XML::LoadContentInt("WINDOW", "RATIO")) / 9;
 
-    //   1024   x  768 Window Resolution
-    Game game( ( height * ratio ), height);
-	if( game.Initialize() )
-		{
-		return game.Run();
-		}
-	return 1;
-	}
+    }

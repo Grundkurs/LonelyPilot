@@ -1,0 +1,19 @@
+<?xml version="1.0f"?>
+<!DOCTYPE PLAY SYSTEM play.dtd>
+< settings
+screenWidth = "1024"
+screenHeight = "768"
+windowTitle = "Lonely Pilot by Stefan & Chris"
+/>
+
+< player
+playerSpeedX = "100"
+playerSpeedY = "75"
+/>
+
+< code >
+// temporary storage of code.
+string xmlfile("../Resources/Scripts/chrisSettings.xml");
+ConfigLoader loader;
+bool result = loader.LoadFromFile( ToPlatformPath(xmlfile) );
+</code>

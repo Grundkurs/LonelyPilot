@@ -19,29 +19,29 @@ MenuState::MenuState( Game* pGame )
 	{
 	string file;
 
-    file = "..\\Art\\Audio\\Menu.ogg";
+    file = "..\\Resources\\Audio\\Menu.ogg";
 	pGame->mAudioMan.LoadAndPlayMusic( ToPlatformPath(file) );
 
-	file = "..\\Art\\Visual\\MainMenuParts\\Background1.jpg";
+	file = "..\\Resources\\Visual\\MainMenuParts\\Background1.jpg";
 
 	if( !mBackgroundTexture1.loadFromFile( ToPlatformPath(file) ) )
 		{
 		std::cout << "error loading Background-Texture\n";
 		}
 
-	file = "..\\Art\\Visual\\MainMenuParts\\Background2.jpg";
+	file = "..\\Resources\\Visual\\MainMenuParts\\Background2.jpg";
 	if( !mBackgroundTexture2.loadFromFile( ToPlatformPath(file) ) )
 		{
 		std::cout << "error loading Background-Texture\n";
 		}
 
-	file = "..\\Art\\Visual\\MainMenuParts\\Spaceship.png";
+	file = "..\\Resources\\Visual\\MainMenuParts\\Spaceship.png";
 	if( !mSpaceShipTexture.loadFromFile( ToPlatformPath(file)) )
 		{
 		std::cout << "error loading Spaceship-Texture\n";
 		}
 
-	file = "..\\Art\\Visual\\MainMenuParts\\StarStripe.jpg";
+	file = "..\\Resources\\Visual\\MainMenuParts\\StarStripe.jpg";
 	if( !mStarStripeTexture.loadFromFile( ToPlatformPath(file)) )
 		{
 		std::cout << "error loading StarStripe-Texture\n";

@@ -7,7 +7,7 @@ Option::Option( std::string name, sf::Vector2f pos, sf::Color color ) :
 	mpFront( nullptr ),
 	mpNext( nullptr )
 	{
-	string file("..\\Art\\Fonts\\Acme.ttf");
+	string file("..\\Resources\\Fonts\\Acme.ttf");
 	ToPlatformPath(file);
 	if( !mFont.loadFromFile( file ) )
 		{
