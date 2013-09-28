@@ -7,31 +7,32 @@ class Game;
 class Player : public IEntity
 {
 friend class GameState; // TODO: hack to be able to grap mPos from GameState
-		Game*					mpGame;
-		sf::Vector2f			mPos;
-		sf::Sprite				mSprite;
+        Game*					mpGame;
+        sf::Vector2f			mPos;
+        sf::Sprite				mSprite;
 
 
-		sf::IntRect				spriteRect; //56 x 97
-		const	int				mSpriteHeight;
-		const	int				mSpriteWidth;
-		int						mCurrentRow;
+        sf::IntRect				spriteRect; //56 x 97
+        const	int				mSpriteWidth;
+        const	int				mSpriteHeight;
 
-		void					changeRect(int row);
-		float					mTriggerShot;
+        int						mCurrentRow;
+        float					mTriggerShot;
+        void					changeRect(int row);
+
 
 public:
-								Player(Game* pGame);
-								~Player();
+                                Player(Game* pGame);
+                                ~Player();
 
 
-		void					SetTexture(const sf::Texture& tex);
-		void					Update(const sf::Time& deltaFrame);
-		const	sf::Sprite&		GetSprite() const;
+        void					SetTexture(const sf::Texture& tex);
+        void					Update(const sf::Time& deltaFrame);
+        const	sf::Sprite&		GetSprite() const;
 
 
-	//public fields
-	sf::Vector2f				mVelocity;
+    //public fields
+    sf::Vector2f				mVelocity;
     sf::Vector2f                mSpeed;
 
 

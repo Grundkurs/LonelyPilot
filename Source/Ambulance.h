@@ -7,26 +7,27 @@ class Player;
 #include "IEntity.h"
 class Ambulance : public IEntity
 {
-		Player*						mpPlayer;
-		Game *						mpGame;
-		sf::Vector2f				mPos;
-		sf::Sprite					mSprite;
-		sf::IntRect					mSpriteRect;
+        Game *						mpGame;
+        Player*						mpPlayer;
+        sf::Vector2f				mPos;
+        sf::Sprite					mSprite;
+        sf::IntRect					mSpriteRect;
 const 	int							mWidth;
 const 	int 						mHeight;
-		int							mCurrentFrame;
-		int							mTotalColumn;
-		float						mFrameCounter;
-		float						mMaxFrame;
-		float						mVelocity;
-public:
-									Ambulance(Game * pGame, Player * pPlayer);
-									~Ambulance();
+        int							mCurrentFrame;
+        int							mTotalColumn;
 
-		void						Update(const sf::Time& deltaFrame);
-		void						SetTexture(const sf::Texture& tex);
-		void						Animation(const sf::Time& deltaFrame);
-		void						Movement(const sf::Time& deltaFrame);
+        float						mFrameRate;
+        float						mVelocity;
+        float						mFrameCounter;
+public:
+                                    Ambulance(Game * pGame, Player * pPlayer);
+                                    ~Ambulance();
+
+        void						Update(const sf::Time& deltaFrame);
+        void						SetTexture(const sf::Texture& tex);
+        void						Animation(const sf::Time& deltaFrame);
+        void						Movement(const sf::Time& deltaFrame);
 const	sf::Sprite&					GetSprite() const;
 };
 
