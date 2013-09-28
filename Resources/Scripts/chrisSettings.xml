@@ -1,0 +1,7 @@
+<?xml version="1.0f"?>
+<!DOCTYPE PLAY SYSTEM play.dtd>
+< settings
+screenWidth = "1024"
+screenHeight = "768"
+windowTitle = "Lonely Pilot by Stefan & Chris"
+/>

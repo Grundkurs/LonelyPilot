@@ -19,7 +19,9 @@ SOURCES += main.cpp \
 	StringUtilities.cpp \
 	RandomGenerator.cpp \
 	AudioManager.cpp \
-    XML_Loader.cpp
+	XML_Loader.cpp \
+    tinyxml2.cpp \
+    ConfigLoader.cpp
 
 
 
@@ -29,12 +31,12 @@ DEPENDPATH += C:\SFMLMinGW\include
 LIBS += -LC:\SFMLMinGW\lib
 
 CONFIG(release, release|debug){
-LIBS += -lsfml-audio -lsfml-graphics -lsfml-network -lsfml-window -lsfml-system -ltinyxml2
+LIBS += -lsfml-audio -lsfml-graphics -lsfml-network -lsfml-window -lsfml-system
 win32: LIBS += -lsfml-main
 }
 
 CONFIG(debug, release|debug){
-LIBS += -lsfml-audio-d -lsfml-graphics-d -lsfml-network-d -lsfml-window-d -lsfml-system-d -ltinyxml2
+LIBS += -lsfml-audio-d -lsfml-graphics-d -lsfml-network-d -lsfml-window-d -lsfml-system-d
 win32: LIBS += -lsfml-main-d
 }
 
@@ -53,4 +55,6 @@ HEADERS += \
 	StringUtilities.h \
 	RandomGenerator.h \
 	AudioManager.h \
-    XML_Loader.h
+	XML_Loader.h \
+    tinyxml2.h \
+    ConfigLoader.h

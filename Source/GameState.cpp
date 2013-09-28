@@ -26,8 +26,8 @@ GameState::GameState( Game * pGame )
 	mBackground = std::unique_ptr<Background>( new Background(mpGame) );
 	mBackground->SetTexture( mpGame->mBackgroundTexture );
 
-    string file = "..\\Art\\Audio\\first_run_jingle.ogg";
-    mpGame->mAudioMan.LoadAndPlayMusic( ToPlatformPath(file) );
+	string file = "..\\Resources\\Audio\\first_run_jingle.ogg";
+	mpGame->mAudioMan.LoadAndPlayMusic( ToPlatformPath(file) );
 
 	//_background->_sprite.setScale((16/9), (16/9));
 	}
