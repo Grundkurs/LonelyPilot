@@ -19,7 +19,7 @@ SOURCES += main.cpp \
 	StringUtilities.cpp \
 	RandomGenerator.cpp \
 	AudioManager.cpp \
-    XML_Loader.cpp
+    XML.cpp
 
 
 
@@ -53,4 +53,4 @@ HEADERS += \
 	StringUtilities.h \
 	RandomGenerator.h \
 	AudioManager.h \
-    XML_Loader.h
+    XML.h
