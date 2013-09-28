@@ -1,6 +1,12 @@
 #include "Player.h"
 #include "Game.h"
+
+#include "VectorUtilities.h"
+
 #include <iostream>
+
+#include "SFML/System.hpp"
+
 class Game;
 Player::Player( Game* pGame )
 	:
@@ -33,26 +39,31 @@ void Player::Update( const sf::Time& deltaFrame )
 	changeRect(0);
 //---------------------------------------------------
 	//basic controls
+	bool controlsMoving = false;
 	if( sf::Keyboard::isKeyPressed( sf::Keyboard::Left ) )
 		{
 		changeRect(1);
 		mVelocity.x -= mSpeed.x * deltaFrame.asSeconds();
+		controlsMoving = true;
 		}
 
 	if( sf::Keyboard::isKeyPressed( sf::Keyboard::Right ) )
 		{
 		changeRect(2);
 		mVelocity.x += mSpeed.x * deltaFrame.asSeconds();
+		controlsMoving = true;
 		}
 
 	if( sf::Keyboard::isKeyPressed( sf::Keyboard::Up ) )
 		{
 		mVelocity.y -= mSpeed.y * deltaFrame.asSeconds();
+		controlsMoving = true;
 		}
 
 	if( sf::Keyboard::isKeyPressed( sf::Keyboard::Down ) )
 		{
 		mVelocity.y += mSpeed.y * deltaFrame.asSeconds();
+		controlsMoving = true;
 		}
 
 	// fire lasers
@@ -116,7 +127,30 @@ void Player::Update( const sf::Time& deltaFrame )
 		}
 	//--------------------------------------------------------------------------
 
+
 	mPos += mVelocity * deltaFrame.asSeconds();
+
+	if ( !controlsMoving )
+		{
+		// NOTE: you could make seperate slow down rates for x and y
+		static float slowDownRate = 100.0f;
+		sf::Vector2f oppositeDir( -mVelocity );
+		Normalize(oppositeDir);
+
+		oppositeDir *= (slowDownRate * deltaFrame.asSeconds());
+
+		if ( abs( mVelocity.x ) <= abs(oppositeDir.x ) )
+			{
+			mVelocity.x = 0.0f;
+			oppositeDir.x = 0.0f;
+			}
+		if ( abs( mVelocity.y ) <= abs(oppositeDir.y ) )
+			{
+			mVelocity.y = 0.0f;
+			oppositeDir.y = 0.0f;
+			}
+		mVelocity += oppositeDir;
+		}
 	mSprite.setPosition( mPos );
 	}
 

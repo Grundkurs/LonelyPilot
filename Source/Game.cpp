@@ -3,6 +3,7 @@
 #include "RandomGenerator.h"
 #include "StringUtilities.h"
 
+
 Game::Game()
 	:
 	mRenderWindow( ),

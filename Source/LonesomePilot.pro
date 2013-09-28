@@ -21,7 +21,8 @@ SOURCES += main.cpp \
 	AudioManager.cpp \
         XML.cpp \
         tinyxml2.cpp \
-    ConfigLoader.cpp
+    ConfigLoader.cpp \
+    VectorUtilities.cpp
 
 
 INCLUDEPATH += C:\SFMLMinGW\include
@@ -56,4 +57,5 @@ HEADERS += \
         XML.h \
 	XML_Loader.h \
         tinyxml2.h \
-        ConfigLoader.h
+        ConfigLoader.h \
+    VectorUtilities.h
