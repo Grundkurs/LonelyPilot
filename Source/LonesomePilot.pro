@@ -18,7 +18,8 @@ SOURCES += main.cpp \
 	Ambulance.cpp \
 	StringUtilities.cpp \
 	RandomGenerator.cpp \
-	AudioManager.cpp
+	AudioManager.cpp \
+    XML_Loader.cpp
 
 
 
@@ -51,4 +52,5 @@ HEADERS += \
 	Ambulance.h \
 	StringUtilities.h \
 	RandomGenerator.h \
-	AudioManager.h
+	AudioManager.h \
+    XML_Loader.h
