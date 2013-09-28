@@ -21,26 +21,22 @@ Ambulance::Ambulance(Game * pGame, Player * pPlayer)
 
 Ambulance::~Ambulance()
 	{
-		std::cout << "deleting Ambulance\n";
+	std::cout << "deleting Ambulance\n";
 	}
-
-
-
 
 void Ambulance::Update(const sf::Time& deltaFrame)
 	{
-		Animation(deltaFrame);
-		Movement(deltaFrame);
-
-}
+	Animation(deltaFrame);
+	Movement(deltaFrame);
+	}
 
 void Ambulance::SetTexture(const sf::Texture& tex)
 	{
-		mSprite.setTexture(tex);
+	mSprite.setTexture(tex);
 	}
 const sf::Sprite& Ambulance::GetSprite() const
 	{
-		return mSprite;
+	return mSprite;
 	}
 
 

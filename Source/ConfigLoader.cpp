@@ -2,6 +2,9 @@
 
 #include "tinyxml2.h"
 using namespace tinyxml2;
+
+#include <iostream>
+using std::cout;
 #include <exception>
 #include <stdexcept>
 
@@ -28,39 +31,46 @@ bool ConfigLoader::LoadFromFile(const string &file)
 	{
 	XMLDocument doc;
 	XMLError error = doc.LoadFile( file.c_str() );
-	if ( error != XML_NO_ERROR )
+	switch(error)
+		{
+		case(tinyxml2::XML_NO_ERROR):
+			{
+			cout << "XML-File loaded successful\n";
+			break;
+			}
+		case(tinyxml2::XML_ERROR_FILE_COULD_NOT_BE_OPENED):
+			{
+			cout << "could not open file\n";
+			return false;
+			}
+		case(tinyxml2::XML_ERROR_FILE_NOT_FOUND):
+			{
+			cout << "file not found\n";
+			return false;
+			}
+		default:
+			{
+			cout << "unknown error\n";
+			return false;
+			}
+		} // End of Switch
+
+	XMLElement * pGameSettings = doc.FirstChildElement("settings");
+
+	if ( !pGameSettings )
+		return false;
+
+	if ( pGameSettings->QueryIntAttribute("screenWidth", &mScreenWidth) )
 		{
 		return false;
 		}
 
-	XMLElement * pSettings = doc.FirstChildElement("settings");
-
-	if ( !pSettings )
-		return false;
-
-
-	// this way will over write the fields with 0 if there
-	// was error on parse and/or conversion.
-//	mScreenWidth = pSettings->IntAttribute("screenWidth");
-//	mScreenHeight = pSettings->IntAttribute("screenHeight");
-//	mWindowTitle = pSettings->Attribute("windowTitle");
-
-	// this way has better error detection,
-	// if an error happened the fields value is not changed
-	// so the defaults are still contained.
-	// this code doesn't need to throw since the values
-	// have been set to default in ctor.
-	if ( pSettings->QueryIntAttribute("screenWidth", &mScreenWidth) )
+	if ( pGameSettings->QueryIntAttribute("screenHeight", &mScreenHeight) )
 		{
 		return false;
 		}
 
-	if ( pSettings->QueryIntAttribute("screenHeight", &mScreenHeight) )
-		{
-		return false;
-		}
-
-	mWindowTitle = pSettings->Attribute("windowTitle");
+	mWindowTitle = pGameSettings->Attribute("windowTitle");
 
 	XMLElement * pPlayerSettings = doc.FirstChildElement("player");
 	if ( !pPlayerSettings )

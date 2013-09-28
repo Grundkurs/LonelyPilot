@@ -9,12 +9,13 @@ Player::Player( Game* pGame )
 	mSpriteHeight( 97 ),
 	mCurrentRow( 0 ),
 	mTriggerShot(0.0f),
-    mVelocity( sf::Vector2f(0.f, 0.f) ),
-    mSpeed( sf::Vector2f (1105.f, 505.5f ) )
+	mVelocity( sf::Vector2f(0.f, 0.f) ),
+	mSpeed( sf::Vector2f (1105.f, 505.5f ) )
 	{
+	sf::Vector2u size = pGame->mRenderWindow.getSize();
 	sf::IntRect rect( mCurrentRow, 0, mSpriteWidth, mSpriteHeight );
 	mSprite.setTextureRect( rect );
-	mSprite.setPosition( ( (mpGame->mWidth/2) - (mSpriteWidth/2)), ((mpGame->mHeight/2) - (mSpriteHeight/2) ) );
+	mSprite.setPosition( ( (size.x/2) - (mSpriteWidth/2)), ((size.y/2) - (mSpriteHeight/2) ) );
 
 	//set current position-Variable to the one the sprite has been setted to.
 	mPos = mSprite.getPosition();
@@ -35,23 +36,23 @@ void Player::Update( const sf::Time& deltaFrame )
 	if( sf::Keyboard::isKeyPressed( sf::Keyboard::Left ) )
 		{
 		changeRect(1);
-        mVelocity.x -= mSpeed.x * deltaFrame.asSeconds();
+		mVelocity.x -= mSpeed.x * deltaFrame.asSeconds();
 		}
 
 	if( sf::Keyboard::isKeyPressed( sf::Keyboard::Right ) )
 		{
 		changeRect(2);
-        mVelocity.x += mSpeed.x * deltaFrame.asSeconds();
+		mVelocity.x += mSpeed.x * deltaFrame.asSeconds();
 		}
 
 	if( sf::Keyboard::isKeyPressed( sf::Keyboard::Up ) )
 		{
-        mVelocity.y -= mSpeed.y * deltaFrame.asSeconds();
+		mVelocity.y -= mSpeed.y * deltaFrame.asSeconds();
 		}
 
 	if( sf::Keyboard::isKeyPressed( sf::Keyboard::Down ) )
 		{
-        mVelocity.y += mSpeed.y * deltaFrame.asSeconds();
+		mVelocity.y += mSpeed.y * deltaFrame.asSeconds();
 		}
 
 	// fire lasers
@@ -85,6 +86,7 @@ void Player::Update( const sf::Time& deltaFrame )
 
 	//--------------------------------------------------------------------------
 	//boarder collision
+	sf::Vector2u size = mpGame->mRenderWindow.getSize();
 	mPos = ( mSprite.getPosition() );
 	if( mPos.x < 0 )
 		{
@@ -93,9 +95,9 @@ void Player::Update( const sf::Time& deltaFrame )
 		mVelocity.x *= -0.5f;
 		}
 	//if right side of ship is outside screen
-	else if( ( mPos.x + mSpriteWidth ) > mpGame->mWidth )
+	else if( ( mPos.x + mSpriteWidth ) > size.x )
 		{
-		mPos.x = ( mpGame->mWidth - mSpriteWidth );
+		mPos.x = ( size.x - mSpriteWidth );
 		//inverse direction and slow down when touching border
 		mVelocity.x *= -0.5f;
 		}
@@ -106,9 +108,9 @@ void Player::Update( const sf::Time& deltaFrame )
 		mSprite.setPosition( mPos );
 		mVelocity.y *= -0.5f;
 		}
-	else if ( ( mPos.y + mSpriteHeight ) > mpGame->mHeight )
+	else if ( ( mPos.y + mSpriteHeight ) > size.y )
 		{
-		mPos.y = ( mpGame->mHeight - mSpriteHeight );
+		mPos.y = ( size.y - mSpriteHeight );
 		mVelocity.y *= -0.5f;
 		mSprite.setPosition( mPos );
 		}

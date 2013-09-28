@@ -157,13 +157,13 @@ AudioManager::AudioManager()
 	mMusic.setPosition(0.0f,0.0f,0.0f);
 	SetListenerDirection( 0.0f, -1.0f, 0.0f );
 	LoadEnums();
-	string file("../Art/Audio/lasershot.wav");
+	string file("../Resources/Audio/lasershot.wav");
 	LoadAudioBuffer(AudioGroups::AUDIO_LASER, ToPlatformPath(file) );
-	file = "../Art/Audio/laserHigh.ogg";
+	file = "../Resources/Audio/laserHigh.ogg";
 	LoadAudioBuffer(AudioGroups::AUDIO_LASER, ToPlatformPath(file) );
-	file = "../Art/Audio/laserMed.ogg";
+	file = "../Resources/Audio/laserMed.ogg";
 	LoadAudioBuffer(AudioGroups::AUDIO_LASER, ToPlatformPath(file) );
-	file = "../Art/Audio/laserLow.ogg";
+	file = "../Resources/Audio/laserLow.ogg";
 	LoadAudioBuffer(AudioGroups::AUDIO_LASER, ToPlatformPath(file) );
 	}
 

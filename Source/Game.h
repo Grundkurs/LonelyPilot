@@ -6,6 +6,7 @@
 #include "MenuState.h"
 #include "RandomNumberGenerator.h"
 #include "AudioManager.h"
+#include "ConfigLoader.h"
 
 #include <iostream>
 
@@ -46,7 +47,7 @@ class Game
 {								//private copy constructor, prevents that Game can be copied
 								Game(const Game& game);
 public:
-								Game(int width, int height);
+								Game();
 								~Game(void);
 
 		bool					Initialize();
@@ -56,7 +57,6 @@ public:
 
 		//Fields
 		RandomNumberGenerator	mRandomNumGenerator;
-		int						mWidth, mHeight;
 		sf::Clock				mStartClock;
 		sf::Time				mFrameDelta;
 		sf::Time				mFrameStamp;
@@ -73,6 +73,8 @@ public:
 		sf::Texture				mPlayerTexture;
 		sf::Texture				mBackgroundTexture;
 		sf::Texture				mAmbulanceTexture;
+
+		ConfigLoader mConfig;
 
 		AudioManager mAudioMan;
 };

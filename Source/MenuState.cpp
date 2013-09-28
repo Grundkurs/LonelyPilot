@@ -17,9 +17,10 @@ MenuState::MenuState( Game* pGame )
 	mShipDirectionChangeTrigger(0.0f),
 	mpCurrentOption( nullptr )
 	{
+	mpGame->mConfig; // here is the config
 	string file;
 
-    file = "..\\Resources\\Audio\\Menu.ogg";
+	file = "..\\Resources\\Audio\\Menu.ogg";
 	pGame->mAudioMan.LoadAndPlayMusic( ToPlatformPath(file) );
 
 	file = "..\\Resources\\Visual\\MainMenuParts\\Background1.jpg";
@@ -57,16 +58,18 @@ MenuState::MenuState( Game* pGame )
 	mStarStripeSprite.setTexture(mStarStripeTexture);
 	mStarStripeSprite.setPosition( sf::Vector2f(1024.f, 100.f) );
 
-	int rectHeight = mpGame->mHeight;
-	int rectWidth = mpGame->mWidth /3;
+	sf::Vector2u size = mpGame->mRenderWindow.getSize();
+	int rectHeight = size.y;
+	int rectWidth = size.x / 3;
 	mRectShape.setFillColor( sf::Color(255,165,0) );
 	mRectShape.setSize( sf::Vector2f(rectWidth,rectHeight) );
-	mRectShape.setPosition( sf::Vector2f((mpGame->mWidth - rectWidth), (mpGame->mHeight - rectHeight) ) );
+	mRectShape.setPosition( sf::Vector2f((size.x - rectWidth), (size.y - rectHeight) ) );
 
 	//Setup Menu-Options
-	sPtr_NewGame = std::shared_ptr<Option>( new Option("New Game", sf::Vector2f(mpGame->mWidth -mpGame->mWidth/4, 100), sf::Color::Red) );
-	sPtr_Options =  std::shared_ptr<Option>( new Option("Options", sf::Vector2f(mpGame->mWidth - mpGame->mWidth/4, 300), sf::Color::Black) );
-	sPtr_Exit = std::shared_ptr<Option>( new Option("Exit", sf::Vector2f(mpGame->mWidth - mpGame->mWidth/4, 500), sf::Color::Black) );
+
+	sPtr_NewGame = std::shared_ptr<Option>( new Option("New Game", sf::Vector2f(size.x - size.x / 4, 100), sf::Color::Red) );
+	sPtr_Options =  std::shared_ptr<Option>( new Option("Options", sf::Vector2f(size.x - size.x / 4, 300), sf::Color::Black) );
+	sPtr_Exit = std::shared_ptr<Option>( new Option("Exit", sf::Vector2f(size.x - size.x / 4, 500), sf::Color::Black) );
 	mpCurrentOption = sPtr_NewGame.get();
 	sPtr_NewGame->ConnectNext( sPtr_Options.get() );
 	sPtr_Options->ConnectFront( sPtr_NewGame.get() );
@@ -78,7 +81,7 @@ MenuState::MenuState( Game* pGame )
 
 MenuState::~MenuState()
 	{
-    //mpGame->mAudioMan.StopMusic();
+	//mpGame->mAudioMan.StopMusic();
 	std::cout << "Destroying MenuState\n";
 	}
 
@@ -199,8 +202,8 @@ void MenuState::Update( const sf::Time& deltaFrame )
 	//if x-position smaller than width of stripe-texture + random-amount
 	if(newPosition.x < -( (int)mStarStripeTexture.getSize().x + ( mpGame->mRandomNumGenerator.getRandomInt(15000) ) ) )
 		{
-		newPosition.x = mpGame->mWidth + mpGame->mRandomNumGenerator.getRandomInt( 15000 );
-		newPosition.y = mpGame->mRandomNumGenerator.getRandomInt( mpGame->mHeight );
+		newPosition.x = windowSize.x + mpGame->mRandomNumGenerator.getRandomInt( 15000 );
+		newPosition.y = mpGame->mRandomNumGenerator.getRandomInt( windowSize.y );
 		}
 	mStarStripeSprite.setPosition( newPosition );
 

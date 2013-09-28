@@ -3,11 +3,9 @@
 #include "RandomGenerator.h"
 #include "StringUtilities.h"
 
-Game::Game( int width, int height )
+Game::Game()
 	:
-	mRenderWindow( sf::VideoMode(width, height), "Space Game Shooter v1.0" ),
-	mWidth( width ),
-	mHeight( height ),
+	mRenderWindow( ),
 	mpCurrentState( nullptr ),
 	mSwitchStateInput( .05f ),
 	mAudioMan()
@@ -16,7 +14,7 @@ Game::Game( int width, int height )
 	mStartClock.restart();
 	Random::Seed();
 
-	mpCurrentState.reset(new MenuState(this));
+	//mpCurrentState.reset(new MenuState(this));
 	}
 
 Game::~Game()
@@ -27,6 +25,17 @@ Game::~Game()
 
 bool Game::Initialize()
 	{
+	string file("../Resources/Scripts/chrisSettings.xml");
+
+	if ( !mConfig.LoadFromFile( ToPlatformPath(file) ) )
+		{//this message is redunant since the LoadFromFile will print error message
+		std::cout << "Failed to load config";
+		return false;
+		}
+
+	mRenderWindow.create(sf::VideoMode(mConfig.GetScreenWidth(), mConfig.GetScreenHeight()), mConfig.GetWindowTitle() );
+	mRenderWindow.display();
+
 	if( !mRenderWindow.isOpen() )
 		{
 		std::cout << "could not open mRenderWindow\n";
@@ -35,7 +44,7 @@ bool Game::Initialize()
 
 	std::cout << "mRenderWindow opened successfully\n";
 
-	string file("..\\Resources\\Visual\\Star.png");
+	file = ("..\\Resources\\Visual\\Star.png");
 
 	if( !mStarTexture.loadFromFile(ToPlatformPath(file)) )
 		{
@@ -68,6 +77,8 @@ bool Game::Initialize()
 		std::cout << "error loading Ambulance-Texture!";
 		}
 	std::cout << "successfully loaded ambulance-Texture!\n";
+
+	mpCurrentState.reset(new MenuState(this));
 
 	return true;
 	}

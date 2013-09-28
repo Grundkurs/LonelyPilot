@@ -13,8 +13,10 @@ Star::Star( Game * pGame, std::shared_ptr<Player>player )
 	mPlayer( player )
 	{
 
-	float xPos = mpGame->mRandomNumGenerator.getRandomInt( mpGame->mWidth + 30 );
-	float yPos = mpGame->mRandomNumGenerator.getRandomInt( mpGame->mHeight + 400 );
+	sf::Vector2u size = mpGame->mRenderWindow.getSize();
+
+	float xPos = mpGame->mRandomNumGenerator.getRandomInt( size.x + 30 );
+	float yPos = mpGame->mRandomNumGenerator.getRandomInt( size.y + 400 );
 	mSprite.setPosition( xPos, yPos );
 	mPos.x = xPos;
 	mPos.y = yPos;
@@ -41,6 +43,7 @@ Star::~Star()
 void Star::Update( const sf::Time& deltaFrame )
 	{
 	sf::Vector2f newPos = mSprite.getPosition();
+	sf::Vector2u size = mpGame->mRenderWindow.getSize();
 
 	//bind star-movement to player-speed
 	newPos.y += ( -mPlayer->mVelocity.y) * deltaFrame.asSeconds();
@@ -50,7 +53,7 @@ void Star::Update( const sf::Time& deltaFrame )
 	newPos += mSpeed * deltaFrame.asSeconds();
 
 	//offset of 20 pixels at top and bottom (788 instead of 768 for bottom and -20 instead of 0 for top)
-	if( newPos.y > ( mpGame->mHeight + 400 ) )
+	if( newPos.y > ( size.y + 400 ) )
 		{
 		newPos.y = -40.f;
 		}
