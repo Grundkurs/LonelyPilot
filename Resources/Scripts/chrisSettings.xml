@@ -12,6 +12,7 @@ playerSpeedY = "75"
 />
 
 < code >
+// temporary storage of code.
 string xmlfile("../Resources/Scripts/chrisSettings.xml");
 ConfigLoader loader;
 bool result = loader.LoadFromFile( ToPlatformPath(xmlfile) );
