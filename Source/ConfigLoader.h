@@ -16,15 +16,24 @@ public:
 
 	bool LoadFromFile( const string & file );
 
-	int GetScreenWidth();
-	int GetScreenHeight();
+	// Game Settings
+	int GetScreenWidth() const;
+	int GetScreenHeight() const;
+	const string & GetWindowTitle() const;
 
-	const string & GetWindowTitle();
+	// Player Settings
+	float GetPlayerSpeedX() const;
+	float GetPlayerSpeedY() const;
+
 private:
+	// Game Settings
 	int mScreenWidth;
 	int mScreenHeight;
-
 	string mWindowTitle;
+
+	// Player Settings
+	float mPlayerSpeedX;
+	float mPlayerSpeedY;
 };
 
 #endif // CONFIGLOADER_H

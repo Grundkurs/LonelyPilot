@@ -9,7 +9,9 @@ ConfigLoader::ConfigLoader()
 	:
 	mScreenWidth(800),
 	mScreenHeight(600),
-	mWindowTitle("SFML Game.")
+	mWindowTitle("SFML Game."),
+	mPlayerSpeedX(10),
+	mPlayerSpeedY(5)
 	{
 
 	}
@@ -31,7 +33,7 @@ bool ConfigLoader::LoadFromFile(const string &file)
 		return false;
 		}
 
-	XMLElement * pSettings = doc.FirstChildElement();
+	XMLElement * pSettings = doc.FirstChildElement("settings");
 
 	if ( !pSettings )
 		return false;
@@ -59,20 +61,47 @@ bool ConfigLoader::LoadFromFile(const string &file)
 		}
 
 	mWindowTitle = pSettings->Attribute("windowTitle");
+
+	XMLElement * pPlayerSettings = doc.FirstChildElement("player");
+	if ( !pPlayerSettings )
+		{
+		return false;
+		}
+
+	if ( pPlayerSettings->QueryFloatAttribute("playerSpeedX", &mPlayerSpeedX) )
+		{
+		return false;
+		}
+
+	if ( pPlayerSettings->QueryFloatAttribute("playerSpeedY", &mPlayerSpeedY) )
+		{
+		return false;
+		}
+
 	return true;
 	}
 
-int ConfigLoader::GetScreenWidth()
+int ConfigLoader::GetScreenWidth() const
 	{
 	return mScreenWidth;
 	}
 
-int ConfigLoader::GetScreenHeight()
+int ConfigLoader::GetScreenHeight() const
 	{
 	return mScreenHeight;
 	}
 
-const std::string & ConfigLoader::GetWindowTitle()
+const std::string & ConfigLoader::GetWindowTitle() const
 	{
 	return mWindowTitle;
+	}
+
+float ConfigLoader::GetPlayerSpeedX() const
+	{
+	return mPlayerSpeedX;
+	}
+
+float ConfigLoader::GetPlayerSpeedY() const
+	{
+	return mPlayerSpeedY;
 	}
