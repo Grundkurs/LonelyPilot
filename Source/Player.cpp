@@ -126,31 +126,13 @@ void Player::Update( const sf::Time& deltaFrame )
 		mSprite.setPosition( mPos );
 		}
 	//--------------------------------------------------------------------------
-
-
-	mPos += mVelocity * deltaFrame.asSeconds();
-
+	// Inertia
 	if ( !controlsMoving )
 		{
-		// NOTE: you could make seperate slow down rates for x and y
-		static float slowDownRate = 100.0f;
-		sf::Vector2f oppositeDir( -mVelocity );
-		Normalize(oppositeDir);
-
-		oppositeDir *= (slowDownRate * deltaFrame.asSeconds());
-
-		if ( abs( mVelocity.x ) <= abs(oppositeDir.x ) )
-			{
-			mVelocity.x = 0.0f;
-			oppositeDir.x = 0.0f;
-			}
-		if ( abs( mVelocity.y ) <= abs(oppositeDir.y ) )
-			{
-			mVelocity.y = 0.0f;
-			oppositeDir.y = 0.0f;
-			}
-		mVelocity += oppositeDir;
+		mVelocity += Inertia( mVelocity, 100.0f, deltaFrame.asSeconds() );
 		}
+
+	mPos += mVelocity * deltaFrame.asSeconds();
 	mSprite.setPosition( mPos );
 	}
 
