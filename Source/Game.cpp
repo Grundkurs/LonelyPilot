@@ -9,7 +9,6 @@ Game::Game()
 	mRenderWindow( ),
     uPtr_CurrentState( nullptr ),
     mCurrState(State::Menu),
-    mOldState(mCurrState),
 	mAudioMan()
 	{
 	//start Clock;
