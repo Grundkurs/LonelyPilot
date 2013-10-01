@@ -17,8 +17,9 @@ friend class GameState; // TODO: hack to be able to grap mPos from GameState
         const	int				mSpriteHeight;
 
         int						mCurrentRow;
+        int                     mCurrentColumn;
         float					mTriggerShot;
-        void					changeRect(int row);
+
 
 
 public:

@@ -14,12 +14,13 @@ Player::Player( Game* pGame )
 	mSpriteWidth( 56 ),
 	mSpriteHeight( 97 ),
 	mCurrentRow( 0 ),
+    mCurrentColumn( 0 ),
 	mTriggerShot(0.0f),
 	mVelocity( sf::Vector2f(0.f, 0.f) ),
 	mSpeed( sf::Vector2f (1105.f, 505.5f ) )
 	{
 	sf::Vector2u size = pGame->mRenderWindow.getSize();
-	sf::IntRect rect( mCurrentRow, 0, mSpriteWidth, mSpriteHeight );
+    sf::IntRect rect( mCurrentRow, mCurrentColumn, mSpriteWidth, mSpriteHeight );
 	mSprite.setTextureRect( rect );
 	mSprite.setPosition( ( (size.x/2) - (mSpriteWidth/2)), ((size.y/2) - (mSpriteHeight/2) ) );
 
@@ -36,21 +37,22 @@ Player::~Player()
 
 void Player::Update( const sf::Time& deltaFrame )
 	{
-	changeRect(0);
+    mCurrentRow = 0;
+    mCurrentColumn = 0;
 //---------------------------------------------------
 	//basic controls
 	bool controlsMoving = false;
 
 	if( sf::Keyboard::isKeyPressed( sf::Keyboard::Left ) )
 		{
-		changeRect(1);
+        mCurrentRow = 1;
 		mVelocity.x -= mSpeed.x * deltaFrame.asSeconds();
 		controlsMoving = true;
 		}
 
 	if( sf::Keyboard::isKeyPressed( sf::Keyboard::Right ) )
 		{
-		changeRect(2);
+        mCurrentRow = 2;
 		mVelocity.x += mSpeed.x * deltaFrame.asSeconds();
 		controlsMoving = true;
 		}
@@ -68,12 +70,17 @@ void Player::Update( const sf::Time& deltaFrame )
 		}
 
 	// fire lasers
-	if ( sf::Keyboard::isKeyPressed( sf::Keyboard::Space ) && mTriggerShot < mpGame->mFrameStamp.asSeconds())
-		{
-		sf::Vector2f playerPos( mSprite.getPosition() );
-		mpGame->mAudioMan.PlaySound(AudioGroups::AUDIO_LASER, sf::Vector3f(playerPos.x,playerPos.y,0.0f), 15.0f, 1.0f);
-		mTriggerShot = mpGame->mFrameStamp.asSeconds() + 0.25f;
-		}
+    if ( sf::Keyboard::isKeyPressed( sf::Keyboard::Space ))
+        {
+        mCurrentColumn = 1;
+        if(mTriggerShot < mpGame->mFrameStamp.asSeconds())
+            {
+            mCurrentColumn = 0;  //causes shooting-fire flickering
+            sf::Vector2f playerPos( mSprite.getPosition() );
+            mpGame->mAudioMan.PlaySound(AudioGroups::AUDIO_LASER, sf::Vector3f(playerPos.x,playerPos.y,0.0f), 15.0f, 1.0f);
+            mTriggerShot = mpGame->mFrameStamp.asSeconds() + 0.25f;
+            }
+        }
 
 //--------------------------------------------------------------------------
 	//limit MaxSpeed
@@ -135,6 +142,8 @@ void Player::Update( const sf::Time& deltaFrame )
 
 	mPos += mVelocity * deltaFrame.asSeconds();
 	mSprite.setPosition( mPos );
+
+    mSprite.setTextureRect( sf::IntRect( mCurrentRow * mSpriteWidth,mCurrentColumn * mSpriteHeight,mSpriteWidth, mSpriteHeight ) );
 	}
 
 void Player::SetTexture( const sf::Texture& tex )
@@ -142,11 +151,6 @@ void Player::SetTexture( const sf::Texture& tex )
 	mSprite.setTexture( tex );
 	}
 
-void Player::changeRect( int row )
-	{
-	mCurrentRow = row;
-	mSprite.setTextureRect( sf::IntRect( mCurrentRow * mSpriteWidth,0,mSpriteWidth, mSpriteHeight ) );
-	}
 
 const sf::Sprite& Player::GetSprite() const
 	{

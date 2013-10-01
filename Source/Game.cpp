@@ -55,7 +55,7 @@ bool Game::Initialize()
 
 	std::cout << "Star loaded successfully\n";
 
-	file = "..\\Resources\\Visual\\PlayerSheet.png";
+    file = "..\\Resources\\Visual\\PlayerSheet2.png";
 	if( !mPlayerTexture.loadFromFile(ToPlatformPath(file)) )
 		{
 		std::cout << "error loading player-Texture\n";
