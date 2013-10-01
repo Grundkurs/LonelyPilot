@@ -3,6 +3,15 @@
 #include "SFML/Graphics.hpp"
 
 class Game;
+
+enum class State
+    {
+        Menu,
+        Game
+
+    };
+
+
 class IState
 {
 protected:
@@ -10,11 +19,11 @@ protected:
 
 public:
 
-	virtual ~IState();
+        virtual             ~IState();
+const	virtual	State		GetStateInput() = 0;
 
-	virtual IState* ProcessStateInput(const sf::Event& event) = 0;
-	virtual void Update(const sf::Time& deltaFrame) = 0;
-	virtual void Render() = 0;
+        virtual void        Update(const sf::Time& deltaFrame) = 0;
+        virtual void        Render() = 0;
 };
 
 #endif //ISTATE_H

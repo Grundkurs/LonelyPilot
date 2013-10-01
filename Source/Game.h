@@ -7,42 +7,10 @@
 #include "RandomNumberGenerator.h"
 #include "AudioManager.h"
 #include "ConfigLoader.h"
-
+#include "inputinterval.h"
 #include <iostream>
 
 
-class SwitchStateInput
-{
-private:
-    float mPress_Button_Trigger;
-    const float PRESS_RELEASE_TIME;
-public:
-    SwitchStateInput(float pressRelease)
-        :
-
-        mPress_Button_Trigger(0.f),
-        PRESS_RELEASE_TIME(pressRelease)
-        {}
-
-    void process(const sf::Time& frameDelta)
-        {
-        mPress_Button_Trigger += frameDelta.asSeconds();
-        }
-
-    void reset()
-        {
-        mPress_Button_Trigger = 0.f;
-        }
-
-    bool canChange()
-        {
-        if(mPress_Button_Trigger > PRESS_RELEASE_TIME)
-            {
-            return true;
-            }
-        return false;
-        }
-};
 
 class Game
 {								//private copy constructor, prevents that Game can be copied
@@ -65,10 +33,11 @@ public:
 
         //IState*					mpCurrentState;
         //IState*					mpPreviousState;
-        std::unique_ptr<IState> mpCurrentState;
+        std::unique_ptr<IState> uPtr_CurrentState;
+        State                   mCurrState;
+        State                   mOldState;
 
-        SwitchStateInput		mSwitchStateInput;
-
+        InputInterval           mInputInterval;
 
 
         sf::Texture				mStarTexture;

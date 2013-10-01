@@ -7,7 +7,8 @@ GameState::GameState( Game * pGame )
 	:
 	mpGame( pGame ),
 	mPlayer( nullptr ),
-	mAmbulance( nullptr)
+    mAmbulance( nullptr),
+    mState(State::Game)
 	{
 	mPlayer = std::shared_ptr<Player>( new Player(mpGame) );
 	mPlayer->SetTexture( mpGame->mPlayerTexture );
@@ -80,12 +81,14 @@ void GameState::Render()
 
 	}
 
-IState* GameState::ProcessStateInput( const sf::Event& event )
-	{
-	if(sf::Keyboard::isKeyPressed( sf::Keyboard::Escape ) )
-		{
-		mpGame->mSwitchStateInput.reset();
-		return new MenuState( mpGame );
-		}
-	return this;
-	}
+const State GameState::GetStateInput()
+    {
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+            {
+                return State::Menu;
+            }
+
+        return mState;
+    }
+
+

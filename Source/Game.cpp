@@ -7,14 +7,15 @@
 Game::Game()
 	:
 	mRenderWindow( ),
-	mpCurrentState( nullptr ),
-	mSwitchStateInput( .05f ),
+    uPtr_CurrentState( nullptr ),
+    mCurrState(State::Menu),
+    mOldState(mCurrState),
 	mAudioMan()
 	{
 	//start Clock;
 	mStartClock.restart();
 	Random::Seed();
-
+    mOldState = mCurrState;
 	//mpCurrentState.reset(new MenuState(this));
 	}
 
@@ -79,7 +80,7 @@ bool Game::Initialize()
 		}
 	std::cout << "successfully loaded ambulance-Texture!\n";
 
-	mpCurrentState.reset(new MenuState(this));
+    uPtr_CurrentState.reset(new MenuState(this));
 
 	return true;
 	}
@@ -96,8 +97,8 @@ int Game::Run()
 		mFrameStamp = currentTime;
 
 		ProcessHandle();
-		mpCurrentState->Update(mFrameDelta);
-		mpCurrentState->Render();
+        uPtr_CurrentState->Update(mFrameDelta);
+        uPtr_CurrentState->Render();
 
 		mAudioMan.Update();
 		}
@@ -106,7 +107,8 @@ int Game::Run()
 
 void Game::ProcessHandle()
 	{
-	mSwitchStateInput.process( mFrameDelta );
+
+    mInputInterval.Update(mFrameDelta);
 	//_press_Button_Trigger += mFrameDelta.asSeconds();
 
 	sf::Event event;
@@ -119,15 +121,36 @@ void Game::ProcessHandle()
 			mRenderWindow.close();
 			}
 
-		if( mSwitchStateInput.canChange() )
-			{
-			//Input commands depends on current State
-			IState * pNewState = mpCurrentState->ProcessStateInput(event);
-			if ( pNewState != mpCurrentState.get() )
-				{
-				mpCurrentState.reset(pNewState);
-				}
-			}
+        if(mInputInterval.CanPressButton())
+           {
+            mCurrState = uPtr_CurrentState->GetStateInput();
+           if(mCurrState != mOldState)
+                {
+                mOldState = mCurrState;
+                switch (mCurrState)
+                    {
+                     case (State::Game):
+                         {
+                         if(uPtr_CurrentState)
+                            {
+                             uPtr_CurrentState.reset(new GameState(this));
+                             }
+                         break;
+                         }
+                     case (State::Menu):
+                         {
+                         if(uPtr_CurrentState)
+                             {
+                             uPtr_CurrentState.reset(new MenuState(this));
+                             }
+                         break;
+                         }
+
+                       } //end of switch
+                   }
+            }
+
+
 
 		}//end of mRenderWindow.pollEvent
 

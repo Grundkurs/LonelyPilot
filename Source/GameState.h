@@ -20,18 +20,19 @@ class GameState : public IState
 {
 	Game * mpGame;
 
-	std::vector<sptr_entity> entities;
-	std::shared_ptr<Player> mPlayer;
-	std::shared_ptr<Ambulance> mAmbulance;
-	std::unique_ptr<Background> mBackground;
+    std::vector<sptr_entity>        entities;
+    std::shared_ptr<Player>         mPlayer;
+    std::shared_ptr<Ambulance>      mAmbulance;
+    std::unique_ptr<Background>     mBackground;
+const   State                       mState;
+
 public:
-	GameState(Game * pGame);
-	~GameState();
+                                    GameState(Game * pGame);
+                                    ~GameState();
+const   State                       GetStateInput();
 
-
-	 IState* ProcessStateInput(const sf::Event& event);
-	 void Update(const sf::Time& deltaFrame);
-	 void Render();
+        void                        Update(const sf::Time& deltaFrame);
+        void                        Render();
 };
 
 

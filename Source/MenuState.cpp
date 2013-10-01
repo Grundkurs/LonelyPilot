@@ -15,7 +15,8 @@ MenuState::MenuState( Game* pGame )
     mpGame( pGame ),
     mSpaceShipVelocity( 100.f ),
     mShipDirectionChangeTrigger(0.0f),
-    mpCurrentOption( nullptr )
+    mpCurrentOption( nullptr ),
+    mState(State::Menu)
     {
     string file;
 
@@ -85,15 +86,14 @@ MenuState::~MenuState()
     }
 
 
-IState* MenuState::ProcessStateInput( const sf::Event& event )
+const State MenuState::GetStateInput()
     {
-    //TODO: Change this Check to ENUM (its faster!)
     if( mpCurrentOption->mString == "New Game" )
         {
         if( sf::Keyboard::isKeyPressed(sf::Keyboard::Return) )
             {
-            mpGame->mSwitchStateInput.reset();
-            return new GameState( mpGame );
+            mpGame->mInputInterval.Reset();
+            return State::Game;
             }
         }
     else if( mpCurrentOption->mString == "Exit" )
@@ -106,13 +106,13 @@ IState* MenuState::ProcessStateInput( const sf::Event& event )
 
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
         {
-        mpGame->mSwitchStateInput.reset();
+        mpGame->mInputInterval.Reset();
         mpGame->mRenderWindow.close();
         }
 
     if( sf::Keyboard::isKeyPressed(sf::Keyboard::Down) )
         {
-         mpGame->mSwitchStateInput.reset();
+         mpGame->mInputInterval.Reset();
          if( mpCurrentOption->mpNext )
             {
             mpCurrentOption = mpCurrentOption->GoNext();
@@ -122,15 +122,19 @@ IState* MenuState::ProcessStateInput( const sf::Event& event )
 
     if( sf::Keyboard::isKeyPressed(sf::Keyboard::Up) )
         {
-         mpGame->mSwitchStateInput.reset();
+         mpGame->mInputInterval.Reset();
          if( mpCurrentOption->mpFront )
             {
              mpCurrentOption= mpCurrentOption->GoFront();
              }
 
         }
-    return this;
+
+        return mState;
     }
+
+
+
 void MenuState::Update( const sf::Time& deltaFrame )
     {
     /**Background
