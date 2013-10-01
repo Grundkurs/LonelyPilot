@@ -92,7 +92,7 @@ const State MenuState::GetStateInput()
         {
         if( sf::Keyboard::isKeyPressed(sf::Keyboard::Return) )
             {
-            mpGame->mInputInterval.Reset();
+
             return State::Game;
             }
         }
@@ -106,7 +106,7 @@ const State MenuState::GetStateInput()
 
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
         {
-        mpGame->mInputInterval.Reset();
+
         mpGame->mRenderWindow.close();
         }
 

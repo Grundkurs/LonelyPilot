@@ -124,14 +124,16 @@ void Game::ProcessHandle()
            {
             mCurrState = uPtr_CurrentState->GetStateInput();
            if(mCurrState != mOldState)
-                {
-                mOldState = mCurrState;
-                switch (mCurrState)
+               {
+               mInputInterval.Reset();
+               mOldState = mCurrState;
+               switch (mCurrState)
                     {
                      case (State::Game):
                          {
                          if(uPtr_CurrentState)
                             {
+                             uPtr_CurrentState.reset(nullptr);
                              uPtr_CurrentState.reset(new GameState(this));
                              }
                          break;
@@ -140,6 +142,7 @@ void Game::ProcessHandle()
                          {
                          if(uPtr_CurrentState)
                              {
+                             uPtr_CurrentState.reset(nullptr);
                              uPtr_CurrentState.reset(new MenuState(this));
                              }
                          break;
