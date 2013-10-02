@@ -7,9 +7,16 @@ windowTitle = "Lonely Pilot by Stefan & Chris"
 />
 
 < player
-playerSpeedX = "100"
-playerSpeedY = "75"
+TexturePath = "..\\Resources\\Visual\\PlayerSheet2.png" 
+SpeedX = "1105.0"
+SpeedY =  "505.5"
 />
+
+< star
+TexturePath = "..\\Resources\\Visual\\Star.png"
+AmountOfStars = "150"
+/>
+
 
 < code >
 // temporary storage of code.

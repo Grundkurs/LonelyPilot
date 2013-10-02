@@ -2,6 +2,9 @@
 #define CONFIGLOADER_H
 
 #include <string>
+#include <SFML/Graphics.hpp>
+
+
 using std::string;
 
 // STEFAN don't look at this class until you've made your own.
@@ -24,6 +27,12 @@ public:
 	// Player Settings
 	float GetPlayerSpeedX() const;
 	float GetPlayerSpeedY() const;
+    sf::Vector2f GetPlayerSpeed();
+    std::string GetPlayerTexPath();
+
+    //Star Settings
+    int GetStarAmount();
+    std::string GetStarTexPath();
 
 private:
 	// Game Settings
@@ -34,6 +43,11 @@ private:
 	// Player Settings
 	float mPlayerSpeedX;
 	float mPlayerSpeedY;
+    std::string mPlayerTexPath;
+
+    // Star Settings
+    int mStarAmount;
+    std::string mStarTexPath;
 };
 
 #endif // CONFIGLOADER_H

@@ -55,6 +55,7 @@ bool ConfigLoader::LoadFromFile(const string &file)
 			}
 		} // End of Switch
 
+    //Game Settings
 	XMLElement * pGameSettings = doc.FirstChildElement("settings");
 
 	if ( !pGameSettings )
@@ -72,24 +73,40 @@ bool ConfigLoader::LoadFromFile(const string &file)
 
 	mWindowTitle = pGameSettings->Attribute("windowTitle");
 
+    // Player Settings
 	XMLElement * pPlayerSettings = doc.FirstChildElement("player");
 	if ( !pPlayerSettings )
 		{
 		return false;
 		}
 
-	if ( pPlayerSettings->QueryFloatAttribute("playerSpeedX", &mPlayerSpeedX) )
+    if ( pPlayerSettings->QueryFloatAttribute("SpeedX", &mPlayerSpeedX) )
 		{
 		return false;
 		}
 
-	if ( pPlayerSettings->QueryFloatAttribute("playerSpeedY", &mPlayerSpeedY) )
+    if ( pPlayerSettings->QueryFloatAttribute("SpeedY", &mPlayerSpeedY) )
 		{
 		return false;
 		}
+    mPlayerTexPath = pPlayerSettings->Attribute("TexturePath");
+
+    XMLElement* pStarSettings = doc.FirstChildElement("star");
+    if( !pStarSettings  )
+        {
+        return false;
+        }
+
+    if(pStarSettings->QueryIntAttribute("AmountOfStars",&mStarAmount ))
+        {
+        return false;
+        }
+
+    mStarTexPath = pStarSettings->Attribute("TexturePath");
 
 	return true;
-	}
+    } //end of Initialize();
+
 
 int ConfigLoader::GetScreenWidth() const
 	{
@@ -106,6 +123,8 @@ const std::string & ConfigLoader::GetWindowTitle() const
 	return mWindowTitle;
 	}
 
+
+//player
 float ConfigLoader::GetPlayerSpeedX() const
 	{
 	return mPlayerSpeedX;
@@ -115,3 +134,24 @@ float ConfigLoader::GetPlayerSpeedY() const
 	{
 	return mPlayerSpeedY;
 	}
+
+sf::Vector2f ConfigLoader::GetPlayerSpeed()
+    {
+    return sf::Vector2f(mPlayerSpeedX, mPlayerSpeedY);
+    }
+
+std::string ConfigLoader::GetPlayerTexPath()
+    {
+    return mPlayerTexPath;
+    }
+
+//Star
+
+int ConfigLoader::GetStarAmount()
+    {
+    return mStarAmount;
+    }
+std::string ConfigLoader::GetStarTexPath()
+    {
+    return mStarTexPath;
+    }

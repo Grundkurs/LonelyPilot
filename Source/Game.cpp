@@ -45,8 +45,8 @@ bool Game::Initialize()
 
 	std::cout << "mRenderWindow opened successfully\n";
 
-	file = ("..\\Resources\\Visual\\Star.png");
-
+    //file = ("..\\Resources\\Visual\\Star.png");
+    file = mConfig.GetStarTexPath();
 	if( !mStarTexture.loadFromFile(ToPlatformPath(file)) )
 		{
 		std::cout << "error loading Star-Texture\n";
@@ -55,8 +55,9 @@ bool Game::Initialize()
 
 	std::cout << "Star loaded successfully\n";
 
-    file = "..\\Resources\\Visual\\PlayerSheet2.png";
-	if( !mPlayerTexture.loadFromFile(ToPlatformPath(file)) )
+    //file = "..\\Resources\\Visual\\PlayerSheet2.png";
+    file = mConfig.GetPlayerTexPath();
+    if( !mPlayerTexture.loadFromFile(ToPlatformPath(file)) )
 		{
 		std::cout << "error loading player-Texture\n";
 		return false;

@@ -16,9 +16,10 @@ Player::Player( Game* pGame )
 	mCurrentRow( 0 ),
     mCurrentColumn( 0 ),
 	mTriggerShot(0.0f),
-	mVelocity( sf::Vector2f(0.f, 0.f) ),
-	mSpeed( sf::Vector2f (1105.f, 505.5f ) )
+    mVelocity( sf::Vector2f(0.f, 0.f) ),
+    mSpeed( mpGame->mConfig.GetPlayerSpeed() )
 	{
+
 	sf::Vector2u size = pGame->mRenderWindow.getSize();
     sf::IntRect rect( mCurrentRow, mCurrentColumn, mSpriteWidth, mSpriteHeight );
 	mSprite.setTextureRect( rect );
