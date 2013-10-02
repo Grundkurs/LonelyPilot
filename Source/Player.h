@@ -19,6 +19,7 @@ friend class GameState; // TODO: hack to be able to grap mPos from GameState
         int						mCurrentRow;
         int                     mCurrentColumn;
         float					mTriggerShot;
+        float                   mCollisionBumper;
 
 
 

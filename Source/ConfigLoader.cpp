@@ -89,6 +89,12 @@ bool ConfigLoader::LoadFromFile(const string &file)
 		{
 		return false;
 		}
+
+    if ( pPlayerSettings->QueryFloatAttribute("CollisionBumper", &mPlayerCollisionBumper) )
+        {
+        return false;
+        }
+
     mPlayerTexPath = pPlayerSettings->Attribute("TexturePath");
 
     XMLElement* pStarSettings = doc.FirstChildElement("star");
@@ -134,6 +140,11 @@ float ConfigLoader::GetPlayerSpeedY() const
 	{
 	return mPlayerSpeedY;
 	}
+
+float ConfigLoader::GetPlayerCollisionBumper()
+    {
+    return mPlayerCollisionBumper;
+    }
 
 sf::Vector2f ConfigLoader::GetPlayerSpeed()
     {

@@ -17,7 +17,8 @@ Player::Player( Game* pGame )
     mCurrentColumn( 0 ),
 	mTriggerShot(0.0f),
     mVelocity( sf::Vector2f(0.f, 0.f) ),
-    mSpeed( mpGame->mConfig.GetPlayerSpeed() )
+    mSpeed( mpGame->mConfig.GetPlayerSpeed() ),
+    mCollisionBumper(mpGame->mConfig.GetPlayerCollisionBumper())
 	{
 
 	sf::Vector2u size = pGame->mRenderWindow.getSize();
@@ -112,26 +113,26 @@ void Player::Update( const sf::Time& deltaFrame )
 		{
 		mPos.x = 1;
 		//inverse direction and slow down when touching border
-		mVelocity.x *= -0.5f;
+        mVelocity.x *= -mCollisionBumper;
 		}
 	//if right side of ship is outside screen
 	else if( ( mPos.x + mSpriteWidth ) > size.x )
 		{
 		mPos.x = ( size.x - mSpriteWidth );
 		//inverse direction and slow down when touching border
-		mVelocity.x *= -0.5f;
+        mVelocity.x *= -mCollisionBumper;
 		}
 
 	if ( mPos.y < 1 )
 		{
 		mPos.y = 1;
 		mSprite.setPosition( mPos );
-		mVelocity.y *= -0.5f;
+        mVelocity.y *= -mCollisionBumper;
 		}
 	else if ( ( mPos.y + mSpriteHeight ) > size.y )
 		{
 		mPos.y = ( size.y - mSpriteHeight );
-		mVelocity.y *= -0.5f;
+        mVelocity.y *= -mCollisionBumper;
 		mSprite.setPosition( mPos );
 		}
 	//--------------------------------------------------------------------------

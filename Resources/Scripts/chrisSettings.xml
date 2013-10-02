@@ -10,6 +10,7 @@ windowTitle = "Lonely Pilot by Stefan & Chris"
 TexturePath = "..\\Resources\\Visual\\PlayerSheet2.png" 
 SpeedX = "1105.0"
 SpeedY =  "505.5"
+CollisionBumper = "0.2"
 />
 
 < star

@@ -27,6 +27,7 @@ public:
 	// Player Settings
 	float GetPlayerSpeedX() const;
 	float GetPlayerSpeedY() const;
+    float GetPlayerCollisionBumper();
     sf::Vector2f GetPlayerSpeed();
     std::string GetPlayerTexPath();
 
@@ -44,6 +45,7 @@ private:
 	float mPlayerSpeedX;
 	float mPlayerSpeedY;
     std::string mPlayerTexPath;
+    float mPlayerCollisionBumper;
 
     // Star Settings
     int mStarAmount;
