@@ -96,6 +96,7 @@ bool ConfigLoader::LoadFromFile(const string &file)
         }
 
     mPlayerTexPath = pPlayerSettings->Attribute("TexturePath");
+    mPlayerTexFrontPath = pPlayerSettings->Attribute("TextureFrontPath");
 
     XMLElement* pStarSettings = doc.FirstChildElement("star");
     if( !pStarSettings  )
@@ -154,6 +155,10 @@ sf::Vector2f ConfigLoader::GetPlayerSpeed()
 std::string ConfigLoader::GetPlayerTexPath()
     {
     return mPlayerTexPath;
+    }
+std::string ConfigLoader::GetPlayerTexFrontPath()
+    {
+    return mPlayerTexFrontPath;
     }
 
 //Star

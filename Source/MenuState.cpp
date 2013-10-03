@@ -92,9 +92,9 @@ const State MenuState::GetStateInput()
         {
         if( sf::Keyboard::isKeyPressed(sf::Keyboard::Return) )
             {
-
-            return State::Game;
+                return State::Game;
             }
+
         }
     else if( mpCurrentOption->mString == "Exit" )
         {

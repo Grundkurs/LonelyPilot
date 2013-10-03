@@ -27,6 +27,9 @@ private:
             std::shared_ptr<Option>		sPtr_Exit;
 
             Option*						mpCurrentOption;
+
+            sf::Sprite					mSpaceShipSprite;
+            sf::Texture                 mSpaceShipTex;
 };
 
 #endif // OPTIONSTATE_H

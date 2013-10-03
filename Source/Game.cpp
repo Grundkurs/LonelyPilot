@@ -7,21 +7,19 @@
 Game::Game()
 	:
 	mRenderWindow( ),
-    uPtr_CurrentState( nullptr ),
     mCurrState(State::Menu),
-	mAudioMan()
+    mAudioMan(),
+    uPtr_CurrentState(nullptr)
 	{
 	//start Clock;
 	mStartClock.restart();
 	Random::Seed();
     mOldState = mCurrState;
-    uPtr_CurrentState.reset(new MenuState(this));
 	}
 
 Game::~Game()
 	{
-
-	}
+    }
 
 
 bool Game::Initialize()
@@ -80,7 +78,7 @@ bool Game::Initialize()
 		}
 	std::cout << "successfully loaded ambulance-Texture!\n";
 
-    uPtr_CurrentState.reset(new MenuState(this));
+     uPtr_CurrentState.reset(new MenuState(this));
 
 	return true;
 	}
@@ -127,35 +125,32 @@ void Game::ProcessHandle()
            if(mCurrState != mOldState)
                {
                mInputInterval.Reset();
-               mOldState = mCurrState;
+
                switch (mCurrState)
                     {
                      case (State::Game):
                          {
-                         if(uPtr_CurrentState)
-                            {
-                             uPtr_CurrentState.reset(nullptr);
-                             uPtr_CurrentState.reset(new GameState(this));
-                             }
+                         uPtr_CurrentState.reset(nullptr);
+                         uPtr_CurrentState.reset(new GameState(this));
                          break;
                          }
+
                      case (State::Menu):
                          {
-                         if(uPtr_CurrentState)
-                             {
-                             uPtr_CurrentState.reset(nullptr);
-                             uPtr_CurrentState.reset(new MenuState(this));
-                             }
+                         uPtr_CurrentState.reset(nullptr);
+                         uPtr_CurrentState.reset(new MenuState(this));
                          break;
                          }
                     case (State::Options):
                         {
+
                         uPtr_CurrentState.reset(nullptr);
                         uPtr_CurrentState.reset(new OptionState(this));
-                        break;
+                         break;
                         }
 
-                       } //end of switch
+                      } //end of switch
+                     mOldState = mCurrState;
                    }
             }
 

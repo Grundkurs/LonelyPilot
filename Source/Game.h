@@ -32,15 +32,16 @@ public:
         sf::Time				mFrameDelta;
         sf::Time				mFrameStamp;
 
-        //IState*					mpCurrentState;
-        //IState*					mpPreviousState;
+
+
         std::unique_ptr<IState> uPtr_CurrentState;
+
         State                   mCurrState;
         State                   mOldState;
 
         InputInterval           mInputInterval;
 
-
+        //Content
         sf::Texture				mStarTexture;
         sf::Texture				mPlayerTexture;
         sf::Texture				mBackgroundTexture;

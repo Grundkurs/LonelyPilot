@@ -8,6 +8,7 @@ windowTitle = "Lonely Pilot by Stefan & Chris"
 
 < player
 TexturePath = "..\\Resources\\Visual\\PlayerSheet2.png" 
+TextureFrontPath = "..\\Resources\\Visual\\OptionsMenuParts\\Spaceship.png"
 SpeedX = "1105.0"
 SpeedY =  "505.5"
 CollisionBumper = "0.2"

@@ -2,6 +2,9 @@
 
 OptionState::OptionState(Game *pGame) : mpGame(pGame), mState(State::Options)
     {
+    mSpaceShipTex.loadFromFile(mpGame->mConfig.GetPlayerTexFrontPath());
+    mSpaceShipSprite.setTexture(mSpaceShipTex);
+    mSpaceShipSprite.setPosition(sf::Vector2f(100.f,100.f));
     sf::Vector2u size = mpGame->mRenderWindow.getSize();
     int rectHeight = size.y;
     int rectWidth = size.x / 3;
@@ -33,5 +36,6 @@ void OptionState::Render()
     {
     mpGame->mRenderWindow.clear(sf::Color::Black);
     mpGame->mRenderWindow.draw(mRectShape);
+    mpGame->mRenderWindow.draw(mSpaceShipSprite);
     mpGame->mRenderWindow.display();
     }
