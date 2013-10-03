@@ -30,6 +30,7 @@ const   State                       GetStateInput();
         float                       mStarStripeDirectionChangeTrigger;
 
         std::shared_ptr<Option>		sPtr_NewGame;
+        std::shared_ptr<Option>     sPtr_ResumeGame;
         std::shared_ptr<Option>		sPtr_Options;
         std::shared_ptr<Option>		sPtr_Exit;
 

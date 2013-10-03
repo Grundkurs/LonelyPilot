@@ -22,9 +22,9 @@ private:
 
             Game*                       mpGame;
     const	State                       mState;
-            std::shared_ptr<Option>		sPtr_NewGame;
-            std::shared_ptr<Option>		sPtr_Options;
-            std::shared_ptr<Option>		sPtr_Exit;
+            std::shared_ptr<Option>		sPtr_Back;
+            std::shared_ptr<Option>		sPtr_Save;
+            std::shared_ptr<Option>		sPtr_Load;
 
             Option*						mpCurrentOption;
 

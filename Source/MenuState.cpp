@@ -68,14 +68,16 @@ MenuState::MenuState( Game* pGame )
     //Setup Menu-Options
 
     sPtr_NewGame = std::shared_ptr<Option>( new Option("New Game", sf::Vector2f(size.x - size.x / 4, 100), sf::Color::Red) );
+    sPtr_ResumeGame = std::shared_ptr<Option>(new Option("Resume Game", sf::Vector2f(size.x - size.x/4, 200),sf::Color::Black));
     sPtr_Options =  std::shared_ptr<Option>( new Option("Options", sf::Vector2f(size.x - size.x / 4, 300), sf::Color::Black) );
-    sPtr_Exit = std::shared_ptr<Option>( new Option("Exit", sf::Vector2f(size.x - size.x / 4, 500), sf::Color::Black) );
+    sPtr_Exit = std::shared_ptr<Option>( new Option("Exit", sf::Vector2f(size.x - size.x / 4, 400), sf::Color::Black) );
     mpCurrentOption = sPtr_NewGame.get();
-    sPtr_NewGame->ConnectNext( sPtr_Options.get() );
-    sPtr_Options->ConnectFront( sPtr_NewGame.get() );
-    sPtr_Options->ConnectNext( sPtr_Exit.get() );
+    sPtr_NewGame->ConnectNext( sPtr_ResumeGame.get() );
+    sPtr_ResumeGame->ConnectFront( sPtr_NewGame.get() );
+    sPtr_ResumeGame->ConnectNext( sPtr_Options.get() );
+    sPtr_Options->ConnectFront(sPtr_ResumeGame.get());
+    sPtr_Options->ConnectNext(sPtr_Exit.get());
     sPtr_Exit->ConnectFront(sPtr_Options.get());
-
     }
 
 
@@ -94,6 +96,10 @@ const State MenuState::GetStateInput()
             {
                 return State::Game;
             }
+
+        }
+    else if(mpCurrentOption->mString == "Resume Game")
+        {
 
         }
     else if( mpCurrentOption->mString == "Exit" )
@@ -230,6 +236,7 @@ void MenuState::Render()
     mpGame->mRenderWindow.draw( mStarStripeSprite );
     mpGame->mRenderWindow.draw( mRectShape );
     mpGame->mRenderWindow.draw( sPtr_NewGame->mText );
+    mpGame->mRenderWindow.draw( sPtr_ResumeGame->mText);
     mpGame->mRenderWindow.draw( sPtr_Options->mText );
     mpGame->mRenderWindow.draw( sPtr_Exit->mText );
     mpGame->mRenderWindow.display();
