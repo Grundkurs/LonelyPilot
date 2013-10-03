@@ -148,6 +148,11 @@ void Game::ProcessHandle()
                              }
                          break;
                          }
+                    case (State::Options):
+                        {
+                        uPtr_CurrentState.reset(nullptr);
+                        uPtr_CurrentState.reset(new OptionState(this));
+                        }
 
                        } //end of switch
                    }

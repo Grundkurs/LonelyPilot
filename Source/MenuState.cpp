@@ -103,6 +103,13 @@ const State MenuState::GetStateInput()
             mpGame->mRenderWindow.close();
             }
         }
+    else if (mpCurrentOption->mString == "Options")
+        {
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
+            {
+            return State::Options;
+            }
+        }
 
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
         {

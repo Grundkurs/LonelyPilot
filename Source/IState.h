@@ -7,7 +7,8 @@ class Game;
 enum class State
     {
         Menu,
-        Game
+        Game,
+        Options
 
     };
 

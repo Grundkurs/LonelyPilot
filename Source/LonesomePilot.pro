@@ -23,7 +23,8 @@ SOURCES += main.cpp \
         tinyxml2.cpp \
     ConfigLoader.cpp \
     VectorUtilities.cpp \
-    InputInterval.cpp
+    InputInterval.cpp \
+    Optionstate.cpp
 
 
 INCLUDEPATH += C:\SFMLMinGW\include
@@ -61,4 +62,5 @@ HEADERS += \
         ConfigLoader.h \
     VectorUtilities.h \
     inputinterval.h \
-    InputInterval.h
+    InputInterval.h \
+    Optionstate.h

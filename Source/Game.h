@@ -4,6 +4,7 @@
 #include "IState.h"
 #include "GameState.h"
 #include "MenuState.h"
+#include "Optionstate.h"
 #include "RandomNumberGenerator.h"
 #include "AudioManager.h"
 #include "ConfigLoader.h"
