@@ -5,6 +5,7 @@
 #include "MenuState.h"
 #include <memory>
 #include "Option.h"
+#include "SFML/Graphics.hpp"
 
 class Game;
 class OptionState : public IState
@@ -17,7 +18,7 @@ public:
             void						Update(const sf::Time& deltaFrame);
             void						Render();
 private:
-
+            sf::RectangleShape          mRectShape;
 
             Game*                       mpGame;
     const	State                       mState;

@@ -15,7 +15,7 @@ Game::Game()
 	mStartClock.restart();
 	Random::Seed();
     mOldState = mCurrState;
-	//mpCurrentState.reset(new MenuState(this));
+    uPtr_CurrentState.reset(new MenuState(this));
 	}
 
 Game::~Game()
@@ -152,6 +152,7 @@ void Game::ProcessHandle()
                         {
                         uPtr_CurrentState.reset(nullptr);
                         uPtr_CurrentState.reset(new OptionState(this));
+                        break;
                         }
 
                        } //end of switch
