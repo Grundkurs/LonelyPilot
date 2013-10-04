@@ -132,7 +132,7 @@ void Game::ProcessHandle()
                     {
                      case (State::Game):
                          {
-
+                        uPtr_CurrentState.reset();
                         uPtr_CurrentState = std::shared_ptr<IState>(new GameState(this));
                         uPtr_CurrentState->SetResumeProperty(false);
                         uPtr_RunningState = uPtr_CurrentState;
@@ -143,9 +143,15 @@ void Game::ProcessHandle()
 
                      case(State::Resume):
                            {
-                            uPtr_CurrentState.reset();
+                            uPtr_CurrentState.reset(); //because CurrentState will here always be MenuState, you can delete it
+
+                            //set GameState stored in RunningState-Pointer to Resume, so next cycle it returns
+                            //State::Resume instead of State::Game, which would otherwise create a new GameState. Because
+                            //this doesnt happen and mOldState stays same as mCurrentState, switch-statement will not be invoked
+                            //and CurrentState that is set to the stored/old GameState will be updated and rendered
                             uPtr_RunningState->SetResumeProperty(true);
-                            uPtr_CurrentState = uPtr_RunningState;
+
+                            uPtr_CurrentState = uPtr_RunningState;    //assign it to currentState.
 
 
 
