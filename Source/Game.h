@@ -34,8 +34,8 @@ public:
 
 
 
-        std::unique_ptr<IState> uPtr_CurrentState;
-
+        std::shared_ptr<IState> uPtr_CurrentState;
+        std::shared_ptr<IState> uPtr_RunningState;
         State                   mCurrState;
         State                   mOldState;
 

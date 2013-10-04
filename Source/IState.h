@@ -8,6 +8,7 @@ enum class State
     {
         Menu,
         Game,
+        Resume,
         Options
 
     };
@@ -25,6 +26,7 @@ const	virtual	State		GetStateInput() = 0;
 
         virtual void        Update(const sf::Time& deltaFrame) = 0;
         virtual void        Render() = 0;
+        virtual void        SetResumeProperty(bool resume) = 0;
 };
 
 #endif //ISTATE_H

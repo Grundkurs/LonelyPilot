@@ -27,7 +27,7 @@ OptionState::OptionState(Game *pGame) : mpGame(pGame), mState(State::Options)
 
 OptionState::~OptionState()
     {
-    std::cout << "deleting OptionState\n";
+    std::cout << "destroying OptionState\n";
     }
 
 const State OptionState::GetStateInput()
@@ -61,7 +61,7 @@ const State OptionState::GetStateInput()
 
         }
 
-        return mState;
+
 
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
         {
@@ -83,3 +83,5 @@ void OptionState::Render()
     mpGame->mRenderWindow.draw(mSpaceShipSprite);
     mpGame->mRenderWindow.display();
     }
+
+void OptionState::SetResumeProperty(bool resume){}

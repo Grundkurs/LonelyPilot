@@ -3,9 +3,9 @@
 #include <iostream>
 #include "StringUtilities.h"
 //TODO: can I initialize entities-vector with default size like 200 star-entities and set all to nullptr? like entities[200, nullptr]
-GameState::GameState( Game * pGame )
+GameState::GameState( Game * pGame)
 	:
-	mpGame( pGame ),
+    mpGame( pGame ),
 	mPlayer( nullptr ),
     mAmbulance( nullptr),
     mState(State::Game)
@@ -88,7 +88,12 @@ const State GameState::GetStateInput()
                 return State::Menu;
             }
 
-        return mState;
+        return mResumedGame ? State::Resume : State::Game;
+
     }
 
 
+void GameState::SetResumeProperty(bool resume)
+    {
+    mResumedGame = resume;
+    }

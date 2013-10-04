@@ -19,6 +19,7 @@ const   State                       GetStateInput();
 
         void						Update(const sf::Time& deltaFrame);
         void						Render();
+        void                        SetResumeProperty(bool resume);
 
         sf::Sprite					mBackgroundSprite1;
         sf::Sprite					mBackgroundSprite2;

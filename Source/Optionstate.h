@@ -17,6 +17,7 @@ public:
     const   State                       GetStateInput();
             void						Update(const sf::Time& deltaFrame);
             void						Render();
+            void                        SetResumeProperty(bool resume);
 private:
             sf::RectangleShape          mRectShape;
 

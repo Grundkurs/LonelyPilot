@@ -100,7 +100,13 @@ const State MenuState::GetStateInput()
         }
     else if(mpCurrentOption->mString == "Resume Game")
         {
-
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
+            {
+            if(mpGame->uPtr_RunningState)
+                {
+                return State::Resume;
+                }
+            }
         }
     else if( mpCurrentOption->mString == "Exit" )
         {
@@ -241,3 +247,6 @@ void MenuState::Render()
     mpGame->mRenderWindow.draw( sPtr_Exit->mText );
     mpGame->mRenderWindow.display();
     }
+
+
+void MenuState::SetResumeProperty(bool resume){}

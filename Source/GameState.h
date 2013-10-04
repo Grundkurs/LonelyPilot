@@ -18,7 +18,8 @@ typedef std::shared_ptr<IEntity> sptr_entity;
 
 class GameState : public IState
 {
-	Game * mpGame;
+    Game*                           mpGame;
+    bool                            mResumedGame;
 
     std::vector<sptr_entity>        entities;
     std::shared_ptr<Player>         mPlayer;
@@ -27,12 +28,13 @@ class GameState : public IState
 const   State                       mState;
 
 public:
-                                    GameState(Game * pGame);
+                                    GameState( Game* pGame);
                                     ~GameState();
 const   State                       GetStateInput();
 
         void                        Update(const sf::Time& deltaFrame);
         void                        Render();
+        void                        SetResumeProperty(bool resume);
 };
 
 

@@ -9,7 +9,8 @@ Game::Game()
 	mRenderWindow( ),
     mCurrState(State::Menu),
     mAudioMan(),
-    uPtr_CurrentState(nullptr)
+    uPtr_CurrentState(nullptr),
+    uPtr_RunningState(nullptr)
 	{
 	//start Clock;
 	mStartClock.restart();
@@ -121,8 +122,9 @@ void Game::ProcessHandle()
 
         if(mInputInterval.CanPressButton())
            {
-            mCurrState = uPtr_CurrentState->GetStateInput();
-           if(mCurrState != mOldState)
+            mCurrState = uPtr_CurrentState->GetStateInput(); //get global State-Input
+
+            if(mCurrState != mOldState) //if State changed, check...
                {
                mInputInterval.Reset();
 
@@ -130,22 +132,43 @@ void Game::ProcessHandle()
                     {
                      case (State::Game):
                          {
-                         uPtr_CurrentState.reset(nullptr);
-                         uPtr_CurrentState.reset(new GameState(this));
+
+                        uPtr_CurrentState = std::shared_ptr<IState>(new GameState(this));
+                        uPtr_CurrentState->SetResumeProperty(false);
+                        uPtr_RunningState = uPtr_CurrentState;
+
+
                          break;
                          }
 
+                     case(State::Resume):
+                           {
+                            uPtr_CurrentState.reset();
+                            uPtr_RunningState->SetResumeProperty(true);
+                            uPtr_CurrentState = uPtr_RunningState;
+
+
+
+                           break;
+                           }
+
                      case (State::Menu):
                          {
-                         uPtr_CurrentState.reset(nullptr);
-                         uPtr_CurrentState.reset(new MenuState(this));
-                         break;
+                        if(mOldState == State::Game)
+                            {
+                            uPtr_CurrentState = std::shared_ptr<IState>(new MenuState(this));
+                            break;
+                            }
+                        uPtr_CurrentState.reset();
+                        uPtr_CurrentState = std::shared_ptr<IState>(new MenuState(this));
+                        break;
+
                          }
                     case (State::Options):
                         {
 
-                        uPtr_CurrentState.reset(nullptr);
-                        uPtr_CurrentState.reset(new OptionState(this));
+                         uPtr_CurrentState.reset();
+                         uPtr_CurrentState = std::shared_ptr<IState>(new OptionState(this));
                          break;
                         }
 
