@@ -25,11 +25,10 @@ Game::~Game()
 
 bool Game::Initialize()
 	{
-	string file("../Resources/Scripts/chrisSettings.xml");
+    string file("..\\Resources\\Scripts\\Bla.xml");
 
 	if ( !mConfig.LoadFromFile( ToPlatformPath(file) ) )
-		{//this message is redunant since the LoadFromFile will print error message
-		std::cout << "Failed to load config";
+        {
 		return false;
 		}
 
