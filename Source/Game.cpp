@@ -25,7 +25,7 @@ Game::~Game()
 
 bool Game::Initialize()
 	{
-    string file("..\\Resources\\Scripts\\Bla.xml");
+    string file("..\\Resources\\Scripts\\Settings.xml");
 
 	if ( !mConfig.LoadFromFile( ToPlatformPath(file) ) )
         {
