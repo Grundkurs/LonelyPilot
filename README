@@ -2,7 +2,13 @@ Lonely Pilot
 ------------
 2013 by Stefan Vukusic & Chris Leisure
 
-
+Compiling
+You need SFML 2.1 Headers and Libs to compile the code. 
+Put the corresponding sfml-dlls (also Openal32.dll and libsndfile-1.dll) in the build-folder. If compiling with MinGW you'll need...
+libgcc_s_dw2-1.dll
+libstdc++-6.dll 
+mingwm10.dll 
+...too. You can get them from your mingw/bin folder. 
 
 
 Controls:
