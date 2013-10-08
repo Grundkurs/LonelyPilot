@@ -8,12 +8,7 @@
 
 int main()
     {
-    string file("../Resources/Scripts/config.xml");
-    if(!XML::Init_XML_File(ToPlatformPath(file)))
-        {
-        std::cout << "could not open Config-File. Terminate now.";
-        return 1;
-        }
+
     Game game;
 
     if(game.Initialize())

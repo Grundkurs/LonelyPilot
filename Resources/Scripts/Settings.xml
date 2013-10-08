@@ -1,20 +1,20 @@
 <?xml version="1.0f"?>
 <!DOCTYPE PLAY SYSTEM play.dtd>
-< settings
-screenWidth = "1024"
-screenHeight = "768"
-windowTitle = "Lonely Pilot by Stefan & Chris"
-/>
+<settings>
+	<windowTitle>Lonely Pilot v1.0</windowTitle>
+	<screenWidth>1024</screenWidth>
+	<screenHeight>768</screenHeight>
+</settings>
 
-< player
-TexturePath = "..\\Resources\\Visual\\PlayerSheet2.png" 
-TextureFrontPath = "..\\Resources\\Visual\\OptionsMenuParts\\Spaceship.png"
-SpeedX = "1305.0"
-SpeedY =  "405.5"
-CollisionBumper = "0.2"
-/>
+<player>
+	<texturePath>..\\Resources\\Visual\\PlayerSheet2.png</texturePath>
+	<textureFrontPath>..\\Resources\\Visual\\OptionsMenuParts\\Spaceship.png</textureFrontPath>
+	<speedX>1305.0</speedX>
+	<speedY>405.5</speedY>
+	<collisionBumper>0.2</collisionBumper>
+</player>
 
-< star
-TexturePath = "..\\Resources\\Visual\\Star.png"
-AmountOfStars = "150"
-/>
+<star>
+<texturePath>..\\Resources\\Visual\\Star.png</texturePath>
+<amountOfStars>150</amountOfStars>
+</star>

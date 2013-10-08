@@ -27,7 +27,7 @@ bool Game::Initialize()
 	{
     string file("..\\Resources\\Scripts\\Settings.xml");
 
-	if ( !mConfig.LoadFromFile( ToPlatformPath(file) ) )
+    if ( !mConfig.LoadFromFile( ToPlatformPath(file) ) )
         {
 		return false;
 		}

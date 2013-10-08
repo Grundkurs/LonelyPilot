@@ -59,19 +59,26 @@ bool ConfigLoader::LoadFromFile(const string &file)
 	XMLElement * pGameSettings = doc.FirstChildElement("settings");
 
 	if ( !pGameSettings )
+        {
 		return false;
+        }
 
-	if ( pGameSettings->QueryIntAttribute("screenWidth", &mScreenWidth) )
-		{
-		return false;
-		}
+    mWindowTitle = pGameSettings->FirstChildElement("windowTitle")->GetText();
 
-	if ( pGameSettings->QueryIntAttribute("screenHeight", &mScreenHeight) )
-		{
-		return false;
-		}
 
-	mWindowTitle = pGameSettings->Attribute("windowTitle");
+
+    if( pGameSettings->FirstChildElement("screenWidth")->QueryIntText(&mScreenWidth) )
+        {
+        cout << "could not load screen Width";
+        return false;
+        }
+
+
+    if( pGameSettings->FirstChildElement("screenHeight")->QueryIntText(&mScreenHeight) )
+        {
+        return false;
+        }
+
 
     // Player Settings
 	XMLElement * pPlayerSettings = doc.FirstChildElement("player");
@@ -80,23 +87,25 @@ bool ConfigLoader::LoadFromFile(const string &file)
 		return false;
 		}
 
-    if ( pPlayerSettings->QueryFloatAttribute("SpeedX", &mPlayerSpeedX) )
+    mPlayerTexPath = pPlayerSettings->FirstChildElement("texturePath")->GetText();
+    mPlayerTexFrontPath = pPlayerSettings->FirstChildElement("textureFrontPath")->GetText();
+
+    if ( pPlayerSettings->FirstChildElement("speedX")->QueryFloatText(&mPlayerSpeedX) )
 		{
 		return false;
 		}
 
-    if ( pPlayerSettings->QueryFloatAttribute("SpeedY", &mPlayerSpeedY) )
-		{
-		return false;
-		}
-
-    if ( pPlayerSettings->QueryFloatAttribute("CollisionBumper", &mPlayerCollisionBumper) )
+    if ( pPlayerSettings->FirstChildElement("speedY")->QueryFloatText(&mPlayerSpeedY) )
         {
         return false;
         }
 
-    mPlayerTexPath = pPlayerSettings->Attribute("TexturePath");
-    mPlayerTexFrontPath = pPlayerSettings->Attribute("TextureFrontPath");
+    if ( pPlayerSettings->FirstChildElement("collisionBumper")->QueryFloatText(&mPlayerCollisionBumper) )
+        {
+        return false;
+        }
+
+
 
     XMLElement* pStarSettings = doc.FirstChildElement("star");
     if( !pStarSettings  )
@@ -104,12 +113,12 @@ bool ConfigLoader::LoadFromFile(const string &file)
         return false;
         }
 
-    if(pStarSettings->QueryIntAttribute("AmountOfStars",&mStarAmount ))
+    if(pStarSettings->FirstChildElement("amountOfStars")->QueryIntText(&mStarAmount ))
         {
         return false;
         }
 
-    mStarTexPath = pStarSettings->Attribute("TexturePath");
+    mStarTexPath = pStarSettings->FirstChildElement("texturePath")->GetText();
 
 	return true;
     } //end of Initialize();

@@ -61,6 +61,5 @@ HEADERS += \
         tinyxml2.h \
         ConfigLoader.h \
     VectorUtilities.h \
-    inputinterval.h \
     InputInterval.h \
     Optionstate.h

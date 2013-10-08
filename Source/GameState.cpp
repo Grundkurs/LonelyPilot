@@ -17,7 +17,7 @@ GameState::GameState( Game * pGame)
 	mAmbulance->SetTexture(mpGame->mAmbulanceTexture);
 
 	//initialize stars;
-	for(int i = 0; i < 150; ++i)
+    for(int i = 0; i < mpGame->mConfig.GetStarAmount(); ++i)
 		{
 		sptr_entity star( new Star(pGame, mPlayer) );
 		star->SetTexture( mpGame->mStarTexture );
