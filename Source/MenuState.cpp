@@ -67,10 +67,10 @@ MenuState::MenuState( Game* pGame )
 
     //Setup Menu-Options
 
-    sPtr_NewGame = std::shared_ptr<Option>( new Option("New Game", sf::Vector2f(size.x - size.x / 4, 100), sf::Color::Red) );
-    sPtr_ResumeGame = std::shared_ptr<Option>(new Option("Resume Game", sf::Vector2f(size.x - size.x/4, 200),sf::Color::Black));
-    sPtr_Options =  std::shared_ptr<Option>( new Option("Options", sf::Vector2f(size.x - size.x / 4, 300), sf::Color::Black) );
-    sPtr_Exit = std::shared_ptr<Option>( new Option("Exit", sf::Vector2f(size.x - size.x / 4, 400), sf::Color::Black) );
+    sPtr_NewGame = std::shared_ptr<Option>( new Option(OptionName::NEW, sf::Vector2f(size.x - size.x / 4, 100), sf::Color::Red) );
+    sPtr_ResumeGame = std::shared_ptr<Option>(new Option(OptionName::RESUME, sf::Vector2f(size.x - size.x/4, 200),sf::Color::Black));
+    sPtr_Options =  std::shared_ptr<Option>( new Option(OptionName::OPTIONS, sf::Vector2f(size.x - size.x / 4, 300), sf::Color::Black) );
+    sPtr_Exit = std::shared_ptr<Option>( new Option(OptionName::EXIT, sf::Vector2f(size.x - size.x / 4, 400), sf::Color::Black) );
     mpCurrentOption = sPtr_NewGame.get();
     sPtr_NewGame->ConnectNext( sPtr_ResumeGame.get() );
     sPtr_ResumeGame->ConnectFront( sPtr_NewGame.get() );
@@ -90,7 +90,7 @@ MenuState::~MenuState()
 
 const State MenuState::GetStateInput()
     {
-    if( mpCurrentOption->mString == "New Game" )
+    if( mpCurrentOption->mOptionName == OptionName::NEW )
         {
         if( sf::Keyboard::isKeyPressed(sf::Keyboard::Return) )
             {
@@ -98,7 +98,7 @@ const State MenuState::GetStateInput()
             }
 
         }
-    else if(mpCurrentOption->mString == "Resume Game")
+    else if(mpCurrentOption->mOptionName == OptionName::RESUME)
         {
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
             {
@@ -108,14 +108,14 @@ const State MenuState::GetStateInput()
                 }
             }
         }
-    else if( mpCurrentOption->mString == "Exit" )
+    else if( mpCurrentOption->mOptionName == OptionName::EXIT)
         {
         if( sf::Keyboard::isKeyPressed(sf::Keyboard::Return) )
             {
             mpGame->mRenderWindow.close();
             }
         }
-    else if (mpCurrentOption->mString == "Options")
+    else if (mpCurrentOption->mOptionName == OptionName::OPTIONS)
         {
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
             {

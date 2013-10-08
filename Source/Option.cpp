@@ -1,18 +1,61 @@
 #include "Option.h"
 #include "StringUtilities.h"
 
-Option::Option( std::string name, sf::Vector2f pos, sf::Color color ) :
+Option::Option( OptionName option, sf::Vector2f pos, sf::Color color ) :
 	mColor( color ),
-	mString( name ),
+    mOptionName( option),
 	mpFront( nullptr ),
 	mpNext( nullptr )
 	{
 	string file("..\\Resources\\Fonts\\Acme.ttf");
-	ToPlatformPath(file);
-	if( !mFont.loadFromFile( file ) )
+
+    if( !mFont.loadFromFile( ToPlatformPath(file) ) )
 		{
 		std::cout << "could not load font!\n";
 		}
+    switch (mOptionName)
+    {
+    case(OptionName::BACK):
+        {
+        mString = "Back";
+        break;
+        }
+    case(OptionName::EXIT):
+        {
+        mString = "Exit";
+        break;
+        }
+    case(OptionName::LOAD):
+        {
+        mString = "Load";
+        break;
+        }
+    case(OptionName::NEW):
+        {
+        mString = "New";
+        break;
+        }
+    case(OptionName::OPTIONS):
+        {
+        mString = "Options";
+        break;
+        }
+    case(OptionName::RESUME):
+        {
+        mString = "Resume";
+        break;
+        }
+    case(OptionName::SAVE):
+        {
+        mString = "Save";
+        break;
+        }
+    default:
+        mString = "Unknown Option";
+        break;
+    }
+
+
 	mText.setPosition( pos );
 	mText.setFont( mFont );
 	mText.setColor( mColor );

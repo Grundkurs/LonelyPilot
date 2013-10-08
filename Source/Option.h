@@ -4,16 +4,26 @@
 #include <iostream>
 #include <string>
 
+enum class OptionName
+{
+    NEW,
+    RESUME,
+    OPTIONS,
+    EXIT,
+    SAVE,
+    LOAD,
+    BACK
+};
 class Option
 {
 public:
-							Option(std::string name, sf::Vector2f pos, sf::Color color);
+                            Option(OptionName option, sf::Vector2f pos, sf::Color color);
 							~Option();
 		sf::Text			mText;
 		sf::Font			mFont;
 		sf::Color			mColor;
 		std::string			mString;
-
+        OptionName          mOptionName;
 		Option*				mpFront;
 		Option*				mpNext;
 

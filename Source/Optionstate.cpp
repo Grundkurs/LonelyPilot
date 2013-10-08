@@ -13,9 +13,9 @@ OptionState::OptionState(Game *pGame) : mpGame(pGame), mState(State::Options)
     mRectShape.setPosition( sf::Vector2f((size.x - rectWidth), (size.y - rectHeight) ) );
 
 
-    sPtr_Back = std::shared_ptr<Option>( new Option("Back", sf::Vector2f(size.x - size.x / 4, 100), sf::Color::Red) );
-    sPtr_Save = std::shared_ptr<Option>(new Option("Save", sf::Vector2f(size.x - size.x/4, 200),sf::Color::Black));
-    sPtr_Load =  std::shared_ptr<Option>( new Option("Load", sf::Vector2f(size.x - size.x / 4, 300), sf::Color::Black) );
+    sPtr_Back = std::shared_ptr<Option>( new Option(OptionName::BACK, sf::Vector2f(size.x - size.x / 4, 100), sf::Color::Red) );
+    sPtr_Save = std::shared_ptr<Option>(new Option(OptionName::SAVE, sf::Vector2f(size.x - size.x/4, 200),sf::Color::Black));
+    sPtr_Load =  std::shared_ptr<Option>( new Option(OptionName::LOAD, sf::Vector2f(size.x - size.x / 4, 300), sf::Color::Black) );
 
     mpCurrentOption = sPtr_Back.get();
     sPtr_Back->ConnectNext(sPtr_Save.get());
@@ -33,7 +33,7 @@ OptionState::~OptionState()
 const State OptionState::GetStateInput()
     {
 
-    if(mpCurrentOption->mString == "Back")
+    if(mpCurrentOption->mOptionName == OptionName::BACK)
         {
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
             {
