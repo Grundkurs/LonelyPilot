@@ -6,9 +6,11 @@
 	<screenHeight>768</screenHeight>
 </settings>
 
+
 <player>
 	<texturePath>..\\Resources\\Visual\\PlayerSheet2.png</texturePath>
 	<textureFrontPath>..\\Resources\\Visual\\OptionsMenuParts\\Spaceship.png</textureFrontPath>
+	<textureLasersPath>..\\Resources\\Visual\\lasers.png</textureLasersPath>
 	<speedX>1305.0</speedX>
 	<speedY>405.5</speedY>
 	<collisionBumper>0.2</collisionBumper>

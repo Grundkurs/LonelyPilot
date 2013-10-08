@@ -24,7 +24,8 @@ SOURCES += main.cpp \
     ConfigLoader.cpp \
     VectorUtilities.cpp \
     InputInterval.cpp \
-    Optionstate.cpp
+    Optionstate.cpp \
+    Laser.cpp
 
 
 INCLUDEPATH += C:\SFMLMinGW\include
@@ -62,4 +63,5 @@ HEADERS += \
         ConfigLoader.h \
     VectorUtilities.h \
     InputInterval.h \
-    Optionstate.h
+    Optionstate.h \
+    Laser.h

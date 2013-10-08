@@ -89,6 +89,7 @@ bool ConfigLoader::LoadFromFile(const string &file)
 
     mPlayerTexPath = pPlayerSettings->FirstChildElement("texturePath")->GetText();
     mPlayerTexFrontPath = pPlayerSettings->FirstChildElement("textureFrontPath")->GetText();
+    mTextureLasersPath = pPlayerSettings->FirstChildElement("textureLasersPath")->GetText();
 
     if ( pPlayerSettings->FirstChildElement("speedX")->QueryFloatText(&mPlayerSpeedX) )
 		{
@@ -161,13 +162,18 @@ sf::Vector2f ConfigLoader::GetPlayerSpeed()
     return sf::Vector2f(mPlayerSpeedX, mPlayerSpeedY);
     }
 
-std::string ConfigLoader::GetPlayerTexPath()
+std::string& ConfigLoader::GetPlayerTexPath()
     {
     return mPlayerTexPath;
     }
-std::string ConfigLoader::GetPlayerTexFrontPath()
+std::string& ConfigLoader::GetPlayerTexFrontPath()
     {
     return mPlayerTexFrontPath;
+    }
+
+std::string& ConfigLoader::GetTextureLasersPath()
+    {
+     return mTextureLasersPath;
     }
 
 //Star

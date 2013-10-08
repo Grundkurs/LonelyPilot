@@ -53,6 +53,14 @@ bool Game::Initialize()
 
 	std::cout << "Star loaded successfully\n";
 
+        file = mConfig.GetTextureLasersPath();
+
+        if(!mLaserTexture.loadFromFile(ToPlatformPath(file) ) )
+            {
+            std::cout << "could not load laser textures\n";
+            return false;
+            }
+
     //file = "..\\Resources\\Visual\\PlayerSheet2.png";
     file = mConfig.GetPlayerTexPath();
     if( !mPlayerTexture.loadFromFile(ToPlatformPath(file)) )
