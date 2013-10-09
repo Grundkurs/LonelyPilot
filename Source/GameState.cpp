@@ -1,7 +1,9 @@
 #include "GameState.h"
 #include "Game.h"
 #include <iostream>
+#include <memory>
 #include "StringUtilities.h"
+
 //TODO: can I initialize entities-vector with default size like 200 star-entities and set all to nullptr? like entities[200, nullptr]
 GameState::GameState( Game * pGame)
 	:
@@ -19,19 +21,18 @@ GameState::GameState( Game * pGame)
 	//initialize stars;
     for(int i = 0; i < mpGame->mConfig.GetStarAmount(); ++i)
 		{
-		sptr_entity star( new Star(pGame, mPlayer) );
+        sptr_Entity star( new Star(pGame, mPlayer) );
 		star->SetTexture( mpGame->mStarTexture );
 		entities.push_back( std::move(star) );
 		}
-
+    //initialize BackgroundPicture
 	mBackground = std::unique_ptr<Background>( new Background(mpGame) );
 	mBackground->SetTexture( mpGame->mBackgroundTexture );
 
 	string file = "..\\Resources\\Audio\\first_run_jingle.ogg";
 	mpGame->mAudioMan.LoadAndPlayMusic( ToPlatformPath(file) );
 
-	//_background->_sprite.setScale((16/9), (16/9));
-	}
+    }
 
 GameState::~GameState()
 	{
@@ -40,10 +41,27 @@ GameState::~GameState()
 
 void GameState::Update( const sf::Time& deltaFrame )
 	{
-	for( sptr_entity& i : entities )
+    for( sptr_Entity& i : entities )
 		{
 		i->Update( mpGame->mFrameDelta );
 		}
+
+    for(auto i = laserShots.begin(); i != laserShots.end();)
+        {
+        i->Update(mpGame->mFrameDelta);
+
+         if(i->GetSprite().getPosition().y < -600)
+            {
+             std::swap(*i, laserShots.back());
+             laserShots.pop_back();
+             break;
+            }
+         else
+         {
+             ++i;
+         }
+
+        }
 
 	if ( mPlayer )
 		mPlayer->Update( mpGame->mFrameDelta );
@@ -56,6 +74,9 @@ void GameState::Update( const sf::Time& deltaFrame )
 		sf::Vector2f playerPos( mPlayer->GetSprite().getPosition() );
 		mpGame->mAudioMan.SetListenerPosition( playerPos.x, playerPos.y, 0.0f );
 		}
+
+
+    //Clean Up if needed;
 	}
 
 
@@ -66,10 +87,15 @@ void GameState::Render()
 		//first draw background, than everything else
 	mpGame->mRenderWindow.draw( mBackground->GetSprite() );
 
-	for( sptr_entity& i : entities )
+    for( sptr_Entity& i : entities )
 		{
 		mpGame->mRenderWindow.draw( i->GetSprite() );
 		}
+
+    for (Laser& i : laserShots)
+        {
+        mpGame->mRenderWindow.draw(i.GetSprite());
+        }
 
 	if ( mPlayer )
 		mpGame->mRenderWindow.draw( mPlayer->GetSprite() );
@@ -99,7 +125,9 @@ void GameState::SetResumeProperty(bool resume)
     }
 
 
-void GameState::ShootLaser(int DamageBoost)
+void GameState::ShootLaser(bool leftSide, int DamageBoost)
     {
-
+    Laser shot(mPlayer.get(),leftSide, DamageBoost);
+    shot.SetTexture(mpGame->mLaserTexture);
+    laserShots.push_back(shot);
     }

@@ -84,7 +84,8 @@ void Player::Update( const sf::Time& deltaFrame )
             sf::Vector2f playerPos( mSprite.getPosition() );
             mpGame->mAudioMan.PlaySound(AudioGroups::AUDIO_LASER, sf::Vector3f(playerPos.x,playerPos.y,0.0f), 15.0f, 1.0f);
             mTriggerShot = mpGame->mFrameStamp.asSeconds() + 0.25f;
-            mpGameState->ShootLaser(mDamageBoost);
+            mpGameState->ShootLaser(true,mDamageBoost);
+            mpGameState->ShootLaser(false,mDamageBoost);
 
             }
         }

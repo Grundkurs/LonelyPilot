@@ -10,18 +10,22 @@
 #include "Player.h"
 #include "Background.h"
 #include "Ambulance.h"
+#include "Laser.h"
 
 
 class Game;
 
-typedef std::shared_ptr<IEntity> sptr_entity;
+typedef std::shared_ptr<IEntity> sptr_Entity;
+
 
 class GameState : public IState
 {
     Game*                           mpGame;
     bool                            mResumedGame;
 
-    std::vector<sptr_entity>        entities;
+    std::vector<sptr_Entity>        entities;
+    std::vector<Laser>               laserShots;
+
     std::shared_ptr<Player>         mPlayer;
     std::shared_ptr<Ambulance>      mAmbulance;
     std::unique_ptr<Background>     mBackground;
@@ -35,7 +39,8 @@ const   State                       GetStateInput();
         void                        Update(const sf::Time& deltaFrame);
         void                        Render();
         void                        SetResumeProperty(bool resume);
-        void                        ShootLaser(int DamageBoost);
+        void                        ShootLaser(bool leftSide, int DamageBoost);
+        void                        CleanUpLaser(std::vector<Laser>& laserShots);
 };
 
 
