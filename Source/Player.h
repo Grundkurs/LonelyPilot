@@ -3,11 +3,13 @@
 
 #include "IEntity.h"
 class Game;
+class GameState;
 
 class Player : public IEntity
 {
 friend class GameState; // TODO: hack to be able to grap mPos from GameState
         Game*					mpGame;
+        GameState*              mpGameState;
         sf::Vector2f			mPos;
         sf::Sprite				mSprite;
 
@@ -20,11 +22,12 @@ friend class GameState; // TODO: hack to be able to grap mPos from GameState
         int                     mCurrentColumn;
         float					mTriggerShot;
         float                   mCollisionBumper;
-
+        float                   mMaxSpeed;
+        int                     mDamageBoost;
 
 
 public:
-                                Player(Game* pGame);
+                                Player(Game* pGame, GameState* pGameState);
                                 ~Player();
 
 

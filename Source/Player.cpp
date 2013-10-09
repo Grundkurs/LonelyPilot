@@ -8,9 +8,10 @@
 #include "SFML/System.hpp"
 
 class Game;
-Player::Player( Game* pGame )
+Player::Player( Game* pGame, GameState* pGameState )
 	:
 	mpGame( pGame ),
+    mpGameState(pGameState),
 	mSpriteWidth( 56 ),
 	mSpriteHeight( 97 ),
 	mCurrentRow( 0 ),
@@ -18,7 +19,9 @@ Player::Player( Game* pGame )
 	mTriggerShot(0.0f),
     mVelocity( sf::Vector2f(0.f, 0.f) ),
     mSpeed( mpGame->mConfig.GetPlayerSpeed() ),
-    mCollisionBumper(mpGame->mConfig.GetPlayerCollisionBumper())
+    mCollisionBumper(mpGame->mConfig.GetPlayerCollisionBumper()),
+    mMaxSpeed(mpGame->mConfig.GetPlayerMaxSpeed()),
+    mDamageBoost(0)
 	{
 
 	sf::Vector2u size = pGame->mRenderWindow.getSize();
@@ -81,28 +84,30 @@ void Player::Update( const sf::Time& deltaFrame )
             sf::Vector2f playerPos( mSprite.getPosition() );
             mpGame->mAudioMan.PlaySound(AudioGroups::AUDIO_LASER, sf::Vector3f(playerPos.x,playerPos.y,0.0f), 15.0f, 1.0f);
             mTriggerShot = mpGame->mFrameStamp.asSeconds() + 0.25f;
+            mpGameState->ShootLaser(mDamageBoost);
+
             }
         }
 
 //--------------------------------------------------------------------------
 	//limit MaxSpeed
 
-	if( mVelocity.x > 400.f )
+    if( mVelocity.x > mMaxSpeed )
 		{
-		mVelocity.x = 400.f;
+        mVelocity.x = mMaxSpeed;
 		}
-	if( mVelocity.x < -400.f )
+    if( mVelocity.x < -mMaxSpeed )
 		{
-		mVelocity.x = -400.f;
+        mVelocity.x = -mMaxSpeed;
 		}
 
-	if( mVelocity.y > 400.f )
+    if( mVelocity.y > mMaxSpeed )
 		{
-		mVelocity.y = 400.f;
+        mVelocity.y = mMaxSpeed;
 		}
-	if( mVelocity.y < -400.f )
+    if( mVelocity.y < -mMaxSpeed)
 		{
-		mVelocity.y = -400.f;
+        mVelocity.y = -mMaxSpeed;
 		}
 
 	//--------------------------------------------------------------------------

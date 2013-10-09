@@ -11,8 +11,9 @@
 	<texturePath>..\\Resources\\Visual\\PlayerSheet2.png</texturePath>
 	<textureFrontPath>..\\Resources\\Visual\\OptionsMenuParts\\Spaceship.png</textureFrontPath>
 	<textureLasersPath>..\\Resources\\Visual\\lasers.png</textureLasersPath>
-	<speedX>1305.0</speedX>
-	<speedY>405.5</speedY>
+	<speedX>1805.0</speedX>
+	<speedY>255.5</speedY>
+	<maxSpeed>600.0</maxSpeed>
 	<collisionBumper>0.2</collisionBumper>
 </player>
 

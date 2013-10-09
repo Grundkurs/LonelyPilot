@@ -53,9 +53,8 @@ bool Game::Initialize()
 
 	std::cout << "Star loaded successfully\n";
 
-        file = mConfig.GetTextureLasersPath();
-
-        if(!mLaserTexture.loadFromFile(ToPlatformPath(file) ) )
+     file = mConfig.GetTextureLasersPath();
+     if(!mLaserTexture.loadFromFile(ToPlatformPath(file) ) )
             {
             std::cout << "could not load laser textures\n";
             return false;
@@ -144,7 +143,6 @@ void Game::ProcessHandle()
                         uPtr_CurrentState->SetResumeProperty(false);
                         uPtr_RunningState = uPtr_CurrentState;
 
-
                          break;
                          }
 
@@ -168,7 +166,7 @@ void Game::ProcessHandle()
                      case (State::Menu):
                          {
                         if(mOldState == State::Game)
-                            {
+                            { //if coming from GameState, dont delete currentState
                             uPtr_CurrentState = std::shared_ptr<IState>(new MenuState(this));
                             break;
                             }

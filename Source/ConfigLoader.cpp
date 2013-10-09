@@ -106,7 +106,10 @@ bool ConfigLoader::LoadFromFile(const string &file)
         return false;
         }
 
-
+    if ( pPlayerSettings->FirstChildElement("maxSpeed")->QueryFloatText(&mPlayerMaxSpeed) )
+        {
+        return false;
+        }
 
     XMLElement* pStarSettings = doc.FirstChildElement("star");
     if( !pStarSettings  )
@@ -155,6 +158,10 @@ float ConfigLoader::GetPlayerSpeedY() const
 float ConfigLoader::GetPlayerCollisionBumper()
     {
     return mPlayerCollisionBumper;
+    }
+float ConfigLoader::GetPlayerMaxSpeed()
+    {
+    return mPlayerMaxSpeed;
     }
 
 sf::Vector2f ConfigLoader::GetPlayerSpeed()

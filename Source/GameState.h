@@ -35,6 +35,7 @@ const   State                       GetStateInput();
         void                        Update(const sf::Time& deltaFrame);
         void                        Render();
         void                        SetResumeProperty(bool resume);
+        void                        ShootLaser(int DamageBoost);
 };
 
 

@@ -28,6 +28,7 @@ public:
 	float GetPlayerSpeedX() const;
 	float GetPlayerSpeedY() const;
     float GetPlayerCollisionBumper();
+    float GetPlayerMaxSpeed();
     sf::Vector2f GetPlayerSpeed();
     std::string& GetPlayerTexPath();
     std::string& GetPlayerTexFrontPath();
@@ -46,6 +47,7 @@ private:
 	// Player Settings
 	float mPlayerSpeedX;
 	float mPlayerSpeedY;
+    float mPlayerMaxSpeed;
     std::string mPlayerTexPath;
     std::string mPlayerTexFrontPath;
     std::string mTextureLasersPath;

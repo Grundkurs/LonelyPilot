@@ -10,7 +10,7 @@ GameState::GameState( Game * pGame)
     mAmbulance( nullptr),
     mState(State::Game)
 	{
-	mPlayer = std::shared_ptr<Player>( new Player(mpGame) );
+    mPlayer = std::shared_ptr<Player>( new Player(mpGame, this) );
 	mPlayer->SetTexture( mpGame->mPlayerTexture );
 
 	mAmbulance = std::shared_ptr<Ambulance>(new Ambulance(mpGame, mPlayer.get()) );
@@ -96,4 +96,10 @@ const State GameState::GetStateInput()
 void GameState::SetResumeProperty(bool resume)
     {
     mResumedGame = resume;
+    }
+
+
+void GameState::ShootLaser(int DamageBoost)
+    {
+
     }
