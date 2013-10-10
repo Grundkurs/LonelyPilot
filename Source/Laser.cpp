@@ -6,11 +6,12 @@ Laser::Laser(Player* pPlayer, bool leftSide, int damageBoost)
       mPlayer(pPlayer)
     {
     sf::Vector2f defaultPos = pPlayer->GetSprite().getPosition();
+    defaultPos.x += 5; //adjust laser-position a bit
     sf::IntRect rect(0, 0, 7, 48);
 
     if(!leftSide) //make second shot appear on right side
     {
-        defaultPos.x += pPlayer->GetSprite().getLocalBounds().width;
+        defaultPos.x += (pPlayer->GetSprite().getLocalBounds().width - 15);
     }
     //adjust exact position where lasershot has to appear!
     mSprite.setPosition(defaultPos);
