@@ -111,6 +111,12 @@ bool ConfigLoader::LoadFromFile(const string &file)
         return false;
         }
 
+
+    if ( pPlayerSettings->FirstChildElement("damageBoost")->QueryIntText(&mPlayerDamageBoost) )
+        {
+        return false;
+        }
+
     XMLElement* pStarSettings = doc.FirstChildElement("star");
     if( !pStarSettings  )
         {
@@ -145,25 +151,32 @@ const std::string & ConfigLoader::GetWindowTitle() const
 
 
 //player
-float ConfigLoader::GetPlayerSpeedX() const
+float& ConfigLoader::GetPlayerSpeedX()
 	{
 	return mPlayerSpeedX;
 	}
 
-float ConfigLoader::GetPlayerSpeedY() const
+float& ConfigLoader::GetPlayerSpeedY()
 	{
 	return mPlayerSpeedY;
 	}
 
-float ConfigLoader::GetPlayerCollisionBumper()
+float& ConfigLoader::GetPlayerCollisionBumper()
     {
     return mPlayerCollisionBumper;
     }
-float ConfigLoader::GetPlayerMaxSpeed()
+float& ConfigLoader::GetPlayerMaxSpeed()
     {
     return mPlayerMaxSpeed;
     }
-
+int& ConfigLoader::GetPlayerDamageBoost()
+    {
+    if(mPlayerDamageBoost < 0 || mPlayerDamageBoost > 4)
+        {
+        mPlayerDamageBoost = 0;
+        }
+    return mPlayerDamageBoost;
+    }
 sf::Vector2f ConfigLoader::GetPlayerSpeed()
     {
     return sf::Vector2f(mPlayerSpeedX, mPlayerSpeedY);
@@ -185,11 +198,11 @@ std::string& ConfigLoader::GetTextureLasersPath()
 
 //Star
 
-int ConfigLoader::GetStarAmount()
+int& ConfigLoader::GetStarAmount()
     {
     return mStarAmount;
     }
-std::string ConfigLoader::GetStarTexPath()
+std::string& ConfigLoader::GetStarTexPath()
     {
     return mStarTexPath;
     }

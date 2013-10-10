@@ -22,6 +22,8 @@ public:
 private:
         Player*                     mPlayer;
         sf::Sprite                  mSprite;
+        int                         mSpriteWidth;
+        int                         mSpriteHeight;
 
 
 };

@@ -25,18 +25,19 @@ public:
 	const string & GetWindowTitle() const;
 
 	// Player Settings
-	float GetPlayerSpeedX() const;
-	float GetPlayerSpeedY() const;
-    float GetPlayerCollisionBumper();
-    float GetPlayerMaxSpeed();
+    float& GetPlayerSpeedX() ;
+    float& GetPlayerSpeedY() ;
+    float& GetPlayerCollisionBumper();
+    float& GetPlayerMaxSpeed();
+    int&   GetPlayerDamageBoost();
     sf::Vector2f GetPlayerSpeed();
     std::string& GetPlayerTexPath();
     std::string& GetPlayerTexFrontPath();
     std::string& GetTextureLasersPath();
 
     //Star Settings
-    int GetStarAmount();
-    std::string GetStarTexPath();
+    int& GetStarAmount();
+    std::string& GetStarTexPath();
 
 private:
 	// Game Settings
@@ -52,6 +53,7 @@ private:
     std::string mPlayerTexFrontPath;
     std::string mTextureLasersPath;
     float mPlayerCollisionBumper;
+    int mPlayerDamageBoost;
 
     // Star Settings
     int mStarAmount;

@@ -3,11 +3,13 @@
 #include <iostream>
 Laser::Laser(Player* pPlayer, bool leftSide, int damageBoost)
     :
-      mPlayer(pPlayer)
+      mPlayer(pPlayer),
+      mSpriteWidth(7),
+      mSpriteHeight(48)
     {
     sf::Vector2f defaultPos = pPlayer->GetSprite().getPosition();
     defaultPos.x += 5; //adjust laser-position a bit
-    sf::IntRect rect(0, 0, 7, 48);
+    sf::IntRect rect((damageBoost * mSpriteWidth), 0, 7, 48);
 
     if(!leftSide) //make second shot appear on right side
     {

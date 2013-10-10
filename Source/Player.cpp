@@ -21,7 +21,7 @@ Player::Player( Game* pGame, GameState* pGameState )
     mSpeed( mpGame->mConfig.GetPlayerSpeed() ),
     mCollisionBumper(mpGame->mConfig.GetPlayerCollisionBumper()),
     mMaxSpeed(mpGame->mConfig.GetPlayerMaxSpeed()),
-    mDamageBoost(0)
+    mDamageBoost(mpGame->mConfig.GetPlayerDamageBoost())
 	{
 
 	sf::Vector2u size = pGame->mRenderWindow.getSize();

@@ -15,6 +15,7 @@
 	<speedY>255.5</speedY>
 	<maxSpeed>600.0</maxSpeed>
 	<collisionBumper>0.2</collisionBumper>
+	<damageBoost>1</damageBoost>
 </player>
 
 <star>
