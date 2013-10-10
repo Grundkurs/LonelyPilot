@@ -15,4 +15,5 @@ mingwm10.dll
 Controls:
 Arrowkeys - Controls
 Space     - Fire Laser
+1,2,3,4   - Switch Laser
 ESC       - Leave Game / Exit Game
