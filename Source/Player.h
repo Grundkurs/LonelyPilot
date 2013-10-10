@@ -34,6 +34,7 @@ public:
         void					SetTexture(const sf::Texture& tex);
         void					Update(const sf::Time& deltaFrame);
         const	sf::Sprite&		GetSprite() const;
+        void                    SwitchDamageBoost(int choice);
 
 
     //public fields

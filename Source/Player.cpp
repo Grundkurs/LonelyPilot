@@ -89,6 +89,26 @@ void Player::Update( const sf::Time& deltaFrame )
 
             }
         }
+    //change to switch Statement
+    if ( sf::Keyboard::isKeyPressed( sf::Keyboard::Num1 ))
+        {
+        SwitchDamageBoost(0);
+        }
+    if ( sf::Keyboard::isKeyPressed( sf::Keyboard::Num2 ))
+        {
+        SwitchDamageBoost(1);
+        }
+    if ( sf::Keyboard::isKeyPressed( sf::Keyboard::Num3 ))
+        {
+        SwitchDamageBoost(2);
+        }
+    if ( sf::Keyboard::isKeyPressed( sf::Keyboard::Num4 ))
+        {
+        SwitchDamageBoost(3);
+        }
+
+
+
 
 //--------------------------------------------------------------------------
 	//limit MaxSpeed
@@ -164,3 +184,13 @@ const sf::Sprite& Player::GetSprite() const
 	{
 	return mSprite;
 	}
+
+
+void Player::SwitchDamageBoost(int choice)
+    {
+    if(choice < 0 || choice > 4)
+        {
+        return;
+        }
+    mDamageBoost = choice;
+    }
