@@ -11,7 +11,7 @@
 #include "Background.h"
 #include "Ambulance.h"
 #include "Laser.h"
-
+#include "Baldus.h"
 
 class Game;
 
@@ -28,6 +28,7 @@ class GameState : public IState
 
     std::shared_ptr<Player>         mPlayer;
     std::shared_ptr<Ambulance>      mAmbulance;
+    std::shared_ptr<Baldus>         mBaldus;
     std::unique_ptr<Background>     mBackground;
 const   State                       mState;
 

@@ -85,6 +85,15 @@ bool Game::Initialize()
 		}
 	std::cout << "successfully loaded ambulance-Texture!\n";
 
+    file = "..\\Resources\\Visual\\BaldusSheet.png";
+    if(!mBaldusTexture.loadFromFile(ToPlatformPath(file)))
+        {
+        std::cout << "error loading Baldus Texture\n";
+        return false;
+        }
+    std::cout << "successfully loaded baldus-texture\n";
+
+
      uPtr_CurrentState.reset(new MenuState(this));
 
 	return true;

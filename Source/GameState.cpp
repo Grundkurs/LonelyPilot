@@ -18,6 +18,9 @@ GameState::GameState( Game * pGame)
 	mAmbulance = std::shared_ptr<Ambulance>(new Ambulance(mpGame, mPlayer.get()) );
 	mAmbulance->SetTexture(mpGame->mAmbulanceTexture);
 
+    mBaldus = std::shared_ptr<Baldus>(new Baldus(mpGame, mPlayer.get() ) );
+    mBaldus->SetTexture(mpGame->mBaldusTexture);
+
 	//initialize stars;
     for(int i = 0; i < mpGame->mConfig.GetStarAmount(); ++i)
 		{
@@ -69,6 +72,11 @@ void GameState::Update( const sf::Time& deltaFrame )
 	if ( mAmbulance )
 		mAmbulance->Update( mpGame->mFrameDelta );
 
+    if(mBaldus)
+        {
+        mBaldus->Update((mpGame->mFrameDelta));
+        }
+
 	if ( mPlayer )
 		{
 		sf::Vector2f playerPos( mPlayer->GetSprite().getPosition() );
@@ -102,6 +110,11 @@ void GameState::Render()
 
 	if ( mAmbulance )
 		mpGame->mRenderWindow.draw( mAmbulance->GetSprite() );
+
+    if( mBaldus)
+        {
+        mpGame->mRenderWindow.draw(mBaldus->GetSprite());
+        }
 
 	mpGame->mRenderWindow.display();
 

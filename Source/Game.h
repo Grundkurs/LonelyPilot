@@ -46,7 +46,9 @@ public:
         sf::Texture				mPlayerTexture;
         sf::Texture				mBackgroundTexture;
         sf::Texture				mAmbulanceTexture;
+        sf::Texture             mBaldusTexture;
         sf::Texture             mLaserTexture;
+
 
         ConfigLoader mConfig;
 

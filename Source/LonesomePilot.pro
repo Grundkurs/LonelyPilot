@@ -25,7 +25,8 @@ SOURCES += main.cpp \
     VectorUtilities.cpp \
     InputInterval.cpp \
     Optionstate.cpp \
-    Laser.cpp
+    Laser.cpp \
+    Baldus.cpp
 
 
 INCLUDEPATH += C:\SFMLMinGW\include
@@ -64,4 +65,5 @@ HEADERS += \
     VectorUtilities.h \
     InputInterval.h \
     Optionstate.h \
-    Laser.h
+    Laser.h \
+    Baldus.h
