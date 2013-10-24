@@ -4,7 +4,6 @@
 
 #include <iostream>
 
-#include "XML.h"
 
 int main()
     {

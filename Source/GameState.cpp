@@ -53,7 +53,15 @@ void GameState::Update( const sf::Time& deltaFrame )
         {
         i->Update(mpGame->mFrameDelta);
 
-         if(i->GetSprite().getPosition().y < -600)
+		//if laser hits enemy
+		if (i->GetSprite().getGlobalBounds().intersects(mBaldus->GetSprite().getGlobalBounds() ) )
+		{
+			//TODO: Enemy got hit
+			std::swap(*i, laserShots.back());
+			laserShots.pop_back();
+			break;
+		}
+         if(i->GetSprite().getPosition().y < -200)
             {
              std::swap(*i, laserShots.back());
              laserShots.pop_back();
