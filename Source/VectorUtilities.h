@@ -11,6 +11,7 @@ inline float Dot( sf::Vector2f & vec1, sf::Vector2f & vec2 )
 
 inline sf::Vector2f & Normalize( sf::Vector2f & vec )
 	{
+	//Chris Solution
 	float length = sqrt(Dot(vec,vec) );
 	if ( length == 0.0f )
 		{
@@ -19,6 +20,17 @@ inline sf::Vector2f & Normalize( sf::Vector2f & vec )
 		return vec;
 		}
 	vec /= length;
+	
+	return vec;
+	
+	}
+
+inline sf::Vector2f& normalizzze(sf::Vector2f& vec)
+	{
+	sf::Vector2f normalized; 
+	
+	
+
 	return vec;
 	}
 

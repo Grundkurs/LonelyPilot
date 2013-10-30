@@ -1,6 +1,7 @@
 #ifndef BALDUS_H
 #define BALDUS_H
 #include "IEntity.h"
+#include "VectorUtilities.h"
 class Game;
 class Player;
 
