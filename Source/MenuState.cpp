@@ -13,16 +13,16 @@ class Game;
 MenuState::MenuState( Game* pGame )
     :
     mpGame( pGame ),
-    mSpaceShipVelocity( 100.f ),
+    mSpaceShipVelocity( 50.f ),
     mShipDirectionChangeTrigger(0.0f),
     mpCurrentOption( nullptr ),
     mState(State::Menu)
     {
     string file;
 
-    file = "..\\Resources\\Audio\\Menu.ogg";
+    /*file = "..\\Resources\\Audio\\Menu.ogg";
     pGame->mAudioMan.LoadAndPlayMusic( ToPlatformPath(file) );
-
+*/
     file = "..\\Resources\\Visual\\MainMenuParts\\Background1.jpg";
 
     if( !mBackgroundTexture1.loadFromFile( ToPlatformPath(file) ) )
@@ -174,11 +174,11 @@ void MenuState::Update( const sf::Time& deltaFrame )
     //the variable negative. Example: "-windowSize.x" would not work
     sf::Vector2f windowSize (mpGame->mRenderWindow.getSize());
 
-    newPosition.x -= 5.f * deltaFrame.asSeconds();
+    newPosition.x -= 10.f * deltaFrame.asSeconds();
     mBackgroundSprite1.setPosition( newPosition );
 
     newPosition = mBackgroundSprite2.getPosition();
-    newPosition.x -= 5.f * deltaFrame.asSeconds();
+    newPosition.x -= 10.f * deltaFrame.asSeconds();
     mBackgroundSprite2.setPosition( newPosition );
 
     if( mBackgroundSprite1.getPosition().x < -windowSize.x )

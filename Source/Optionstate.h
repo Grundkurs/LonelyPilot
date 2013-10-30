@@ -6,6 +6,7 @@
 #include <memory>
 #include "Option.h"
 #include "SFML/Graphics.hpp"
+#include "StringUtilities.h"
 
 class Game;
 class OptionState : public IState
@@ -30,7 +31,15 @@ private:
             Option*						mpCurrentOption;
 
             sf::Sprite					mSpaceShipSprite;
+			sf::Sprite					mBackgroundSprite1;
+			sf::Sprite					mBackgroundSprite2;
+			sf::Sprite					mStarStripeSprite;
+
             sf::Texture                 mSpaceShipTex;
+			sf::Texture					mBackgroundTexture1;
+			sf::Texture					mBackgroundTexture2;
+			sf::Texture					mStarStripeTexture;
+
 };
 
 #endif // OPTIONSTATE_H
