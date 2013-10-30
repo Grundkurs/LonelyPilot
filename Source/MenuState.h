@@ -23,6 +23,7 @@ const   State                       GetStateInput();
 
         sf::Sprite					mBackgroundSprite1;
         sf::Sprite					mBackgroundSprite2;
+		sf::Sprite					mLogo; 
         sf::Sprite					mSpaceShipSprite;
         sf::Sprite					mStarStripeSprite;
         sf::RectangleShape			mRectShape;
@@ -41,6 +42,7 @@ const   State                       GetStateInput();
         sf::Texture					mBackgroundTexture2;
         sf::Texture					mSpaceShipTexture;
         sf::Texture					mStarStripeTexture;
+		sf::Texture					mLogoTexture; 
 
 };
 

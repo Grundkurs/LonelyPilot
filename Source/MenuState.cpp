@@ -36,6 +36,12 @@ MenuState::MenuState( Game* pGame )
         std::cout << "error loading Background-Texture\n";
         }
 
+	file = "..\\Resources\\Visual\\Lonely Pilot Logo.png";
+	if (!mLogoTexture.loadFromFile(ToPlatformPath(file)))
+	{
+		std::cout << "error loading Logo-Texture\n";
+	}
+	
     file = "..\\Resources\\Visual\\MainMenuParts\\Spaceship.png";
     if( !mSpaceShipTexture.loadFromFile( ToPlatformPath(file)) )
         {
@@ -50,10 +56,12 @@ MenuState::MenuState( Game* pGame )
 
     mSpaceShipSprite.setTexture( mSpaceShipTexture );
     mSpaceShipSprite.setPosition( sf::Vector2f(0.f, 250.f) );
-    mBackgroundSprite1.setTexture(mBackgroundTexture1);
 
+    mBackgroundSprite1.setTexture(mBackgroundTexture1);
     mBackgroundSprite2.setTexture( mBackgroundTexture2 );
     mBackgroundSprite2.setPosition( sf::Vector2f(1024.f, 0.f) );
+
+	mLogo.setTexture(mLogoTexture);
 
     mStarStripeSprite.setTexture(mStarStripeTexture);
     mStarStripeSprite.setPosition( sf::Vector2f(1024.f, 100.f) );
@@ -245,6 +253,7 @@ void MenuState::Render()
     mpGame->mRenderWindow.draw( sPtr_ResumeGame->mText);
     mpGame->mRenderWindow.draw( sPtr_Options->mText );
     mpGame->mRenderWindow.draw( sPtr_Exit->mText );
+	mpGame->mRenderWindow.draw( mLogo );
     mpGame->mRenderWindow.display();
     }
 
