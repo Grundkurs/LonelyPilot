@@ -2,20 +2,17 @@
 #include "Game.h"
 #include "Player.h"
 
-Baldus::Baldus(Game * pGame, Player * pPlayer)
-    :
-    mpGame(pGame),
-    mpPlayer(pPlayer),
-    mWidth(89),
-    mHeight(107),
-    mCurrentColumn(0),
-    mCurrentRow(0),
-    mFrameRate(.030f), 
-    mVelocity(50.f),
-    mFrameCounter(0.f),
-	mHealth(100),
-	misAlive(true)
+Baldus::Baldus(Game * pGame, Player * pPlayer) : Enemy(89,107)
 {
+	mpGame = pGame ;
+	mpPlayer = pPlayer;
+	mCurrentColumn = 0 ;
+	mCurrentRow = 0;
+	mFrameRate = .030f;
+	mVelocity = 50.f ;
+	mFrameCounter = 0.f ;
+	mHealth = 100 ;
+	misAlive = true ;
     mSpriteRect.width = mWidth;
     mSpriteRect.height = mHeight;
     mSprite.setPosition(sf::Vector2f(400.f, -400.f));
