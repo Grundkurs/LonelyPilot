@@ -32,9 +32,9 @@ GameState::GameState( Game * pGame)
 	mBackground = std::unique_ptr<Background>( new Background(mpGame) );
 	mBackground->SetTexture( mpGame->mBackgroundTexture );
 
-	string file = "..\\Resources\\Audio\\first_run_jingle.ogg";
+	/*string file = "..\\Resources\\Audio\\first_run_jingle.ogg";
 	mpGame->mAudioMan.LoadAndPlayMusic( ToPlatformPath(file) );
-
+*/
     }
 
 GameState::~GameState()

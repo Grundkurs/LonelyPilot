@@ -10,13 +10,13 @@ Baldus::Baldus(Game * pGame, Player * pPlayer)
     mHeight(107),
     mCurrentColumn(0),
     mCurrentRow(0),
-    mFrameRate(.030f), //TODO: rename to FrameRate
+    mFrameRate(.030f), 
     mVelocity(50.f),
     mFrameCounter(0.f)
 {
     mSpriteRect.width = mWidth;
     mSpriteRect.height = mHeight;
-    mSprite.setPosition(sf::Vector2f(400.f, 400.f));
+    mSprite.setPosition(sf::Vector2f(400.f, -400.f));
 }
 
 
@@ -47,13 +47,13 @@ void Baldus::Movement(const sf::Time& deltaFrame)
     sf::Vector2f newPos = mSprite.getPosition();
     sf::Vector2f chaseDirection(mpPlayer->GetSprite().getPosition() - newPos);
 	//TODO: chaseDirection must be normalized before it gets added to newPos in line 56, write a own normalize-function!
-	chaseDirection = Normalize(chaseDirection);
+	Normalize(chaseDirection);
     //bind movement to player-speed
     newPos.y += ( -mpPlayer->mVelocity.y) * deltaFrame.asSeconds();
     newPos.x += ( -mpPlayer->mVelocity.x) * deltaFrame.asSeconds() * 0.2f; //x-movement of stars 5x slower than y-movement
 
     //chase player
-	newPos += (chaseDirection * deltaFrame.asSeconds()) * (float)100;
+	newPos += (chaseDirection * deltaFrame.asSeconds()) * (float)150;
 	
     mSprite.setPosition(newPos);
     }
