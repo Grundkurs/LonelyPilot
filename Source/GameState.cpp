@@ -52,15 +52,20 @@ void GameState::Update( const sf::Time& deltaFrame )
     for(auto i = laserShots.begin(); i != laserShots.end();)
         {
         i->Update(mpGame->mFrameDelta);
+		//if baldus exists
+		if (mBaldus)
+			{
+			//and got hit by laser 
+			if (i->GetSprite().getGlobalBounds().intersects(mBaldus->GetSprite().getGlobalBounds()))
+				{
+					//TODO: Enemy got hit
+				mBaldus->HitPoint(mPlayer->getDamageBoost());
 
-		//if laser hits enemy
-		if (i->GetSprite().getGlobalBounds().intersects(mBaldus->GetSprite().getGlobalBounds() ) )
-		{
-			//TODO: Enemy got hit
-			std::swap(*i, laserShots.back());
-			laserShots.pop_back();
-			break;
-		}
+				std::swap(*i, laserShots.back());
+				laserShots.pop_back();
+				break;
+				}
+			}
          if(i->GetSprite().getPosition().y < -200)
             {
              std::swap(*i, laserShots.back());
@@ -83,6 +88,10 @@ void GameState::Update( const sf::Time& deltaFrame )
     if(mBaldus)
         {
         mBaldus->Update((mpGame->mFrameDelta));
+		if (!mBaldus->isAlive())
+			{
+			mBaldus.reset();
+			}
         }
 
 	if ( mPlayer )

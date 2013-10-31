@@ -12,7 +12,9 @@ Baldus::Baldus(Game * pGame, Player * pPlayer)
     mCurrentRow(0),
     mFrameRate(.030f), 
     mVelocity(50.f),
-    mFrameCounter(0.f)
+    mFrameCounter(0.f),
+	mHealth(100),
+	misAlive(true)
 {
     mSpriteRect.width = mWidth;
     mSpriteRect.height = mHeight;
@@ -83,3 +85,20 @@ void Baldus::Animation(const sf::Time& deltaFrame)
         mSprite.setTextureRect(sf::IntRect(mCurrentColumn * mWidth, mCurrentRow *mHeight, mWidth, mHeight));
 
     }
+
+void Baldus::HitPoint(int damageRate)
+	{
+	int result = mHealth - damageRate;
+	if (result <= 0)
+		{
+		mHealth = 0;
+		misAlive = false;
+		mSprite.scale(sf::Vector2f(0.5f, 0.5f));
+		}
+	else
+		{
+		mHealth = result;
+		}
+	}
+
+bool Baldus::isAlive(){ return misAlive;  }

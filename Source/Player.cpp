@@ -21,6 +21,7 @@ Player::Player( Game* pGame, GameState* pGameState )
     mSpeed( mpGame->mConfig.GetPlayerSpeed() ),
     mCollisionBumper(mpGame->mConfig.GetPlayerCollisionBumper()),
     mMaxSpeed(mpGame->mConfig.GetPlayerMaxSpeed()),
+	mCurrentWeapon(Weapon::Blue),
     mDamageBoost(mpGame->mConfig.GetPlayerDamageBoost())
 	{
 
@@ -84,27 +85,31 @@ void Player::Update( const sf::Time& deltaFrame )
             sf::Vector2f playerPos( mSprite.getPosition() );
             mpGame->mAudioMan.PlaySound(AudioGroups::AUDIO_LASER, sf::Vector3f(playerPos.x,playerPos.y,0.0f), 15.0f, 1.0f);
             mTriggerShot = mpGame->mFrameStamp.asSeconds() + 0.25f;
-            mpGameState->ShootLaser(true,mDamageBoost);
-            mpGameState->ShootLaser(false,mDamageBoost);
+            mpGameState->ShootLaser(true,(int)mCurrentWeapon);
+            mpGameState->ShootLaser(false,(int)mCurrentWeapon);
 
             }
         }
     //change to switch Statement
     if ( sf::Keyboard::isKeyPressed( sf::Keyboard::Num1 ))
         {
-        SwitchDamageBoost(0);
+        SwitchDamageBoost(2);
+		mCurrentWeapon = Weapon::Blue;
         }
     if ( sf::Keyboard::isKeyPressed( sf::Keyboard::Num2 ))
         {
-        SwitchDamageBoost(1);
+        SwitchDamageBoost(6);
+		mCurrentWeapon = Weapon::Green;
         }
     if ( sf::Keyboard::isKeyPressed( sf::Keyboard::Num3 ))
         {
-        SwitchDamageBoost(2);
+        SwitchDamageBoost(12);
+		mCurrentWeapon = Weapon::Purple;
         }
     if ( sf::Keyboard::isKeyPressed( sf::Keyboard::Num4 ))
         {
-        SwitchDamageBoost(3);
+        SwitchDamageBoost(18);
+		mCurrentWeapon = Weapon::Red;
         }
 
 
@@ -186,11 +191,7 @@ const sf::Sprite& Player::GetSprite() const
 	}
 
 
-void Player::SwitchDamageBoost(int choice)
+void Player::SwitchDamageBoost(int damage)
     {
-    if(choice < 0 || choice > 4)
-        {
-        return;
-        }
-    mDamageBoost = choice;
+    mDamageBoost = damage;
     }

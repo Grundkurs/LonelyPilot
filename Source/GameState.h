@@ -32,6 +32,7 @@ class GameState : public IState
     std::unique_ptr<Background>     mBackground;
 const   State                       mState;
 
+
 public:
                                     GameState( Game* pGame);
                                     ~GameState();

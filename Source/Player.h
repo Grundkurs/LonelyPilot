@@ -5,6 +5,15 @@
 class Game;
 class GameState;
 
+
+enum class Weapon	
+	{
+	Blue, 
+	Green,
+	Purple,
+	Red
+	};
+
 class Player : public IEntity
 {
 friend class GameState; // TODO: hack to be able to grap mPos from GameState
@@ -24,13 +33,14 @@ friend class GameState; // TODO: hack to be able to grap mPos from GameState
         float                   mCollisionBumper;
         float                   mMaxSpeed;
         int                     mDamageBoost;
+		Weapon					mCurrentWeapon;
 
 
 public:
                                 Player(Game* pGame, GameState* pGameState);
                                 ~Player();
 
-
+inline  int						getDamageBoost(){ return mDamageBoost; }
         void					SetTexture(const sf::Texture& tex);
         void					Update(const sf::Time& deltaFrame);
         const	sf::Sprite&		GetSprite() const;
