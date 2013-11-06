@@ -1,7 +1,7 @@
 #include "Laser.h"
 #include "Player.h"
 #include <iostream>
-Laser::Laser(Player* pPlayer, bool leftSide, int damageBoost)
+Laser::Laser(Player* pPlayer, bool leftSide, Weapon weapon)
     :
       mPlayer(pPlayer),
       mSpriteWidth(7),
@@ -9,7 +9,9 @@ Laser::Laser(Player* pPlayer, bool leftSide, int damageBoost)
     {
     sf::Vector2f defaultPos = pPlayer->GetSprite().getPosition();
     defaultPos.x += 5; //adjust laser-position a bit
-    sf::IntRect rect((damageBoost * mSpriteWidth), 0, 7, 48);
+	
+	int currentLaser = (int)weapon;
+    sf::IntRect rect((currentLaser * mSpriteWidth), 0, 7, 48);
 
     if(!leftSide) //make second shot appear on right side
     {

@@ -90,7 +90,6 @@ void Baldus::HitPoint(int damageRate)
 		{
 		mHealth = 0;
 		misAlive = false;
-		mSprite.scale(sf::Vector2f(0.5f, 0.5f));
 		}
 	else
 		{

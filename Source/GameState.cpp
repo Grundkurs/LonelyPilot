@@ -155,9 +155,9 @@ void GameState::SetResumeProperty(bool resume)
     }
 
 
-void GameState::ShootLaser(bool leftSide, int DamageBoost)
+void GameState::ShootLaser(bool leftSide, Weapon weapon)
     {
-    Laser shot(mPlayer.get(),leftSide, DamageBoost);
+    Laser shot(mPlayer.get(),leftSide, weapon);
     shot.SetTexture(mpGame->mLaserTexture);
     laserShots.push_back(shot);
     }

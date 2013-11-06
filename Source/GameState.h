@@ -41,7 +41,7 @@ const   State                       GetStateInput();
         void                        Update(const sf::Time& deltaFrame);
         void                        Render();
         void                        SetResumeProperty(bool resume);
-        void                        ShootLaser(bool leftSide, int DamageBoost);
+        void                        ShootLaser(bool leftSide, Weapon weapon);
         void                        CleanUpLaser(std::vector<Laser>& laserShots);
 };
 

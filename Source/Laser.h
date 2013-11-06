@@ -5,13 +5,14 @@
 
 
 class Player;
+enum class Weapon;
 class Laser : public IEntity
 {
 
 
 
 public:
-                                    Laser(Player* pPlayer, bool leftSide, int damageBoost);
+									Laser(Player* pPlayer, bool leftSide, Weapon weapon);
                                     ~Laser();
         void                        Update(const sf::Time& deltaFrame);
         void                        SetTexture(const sf::Texture& tex);

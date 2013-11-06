@@ -15,7 +15,7 @@ Ambulance::Ambulance(Game * pGame, Player * pPlayer)
     {
     mSpriteRect.width = mWidth;
     mSpriteRect.height = mHeight;
-    mSprite.setPosition(sf::Vector2f(100.f, 100.f));
+    mSprite.setPosition(sf::Vector2f(100.f, -500.f)); //start Position
     }
 
 
