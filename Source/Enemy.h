@@ -22,6 +22,7 @@ public:
 			int                         mCurrentRow;
 			int							mHealth;
 			bool						misAlive;
+			bool						misShutDown;
 
 			float						mFrameRate;
 			float						mVelocity;
@@ -29,6 +30,7 @@ public:
 public:
 
 virtual		bool						isAlive() = 0;
+virtual		bool						shutDown() = 0; 
 virtual		void						Update(const sf::Time& deltaFrame) = 0;
 virtual		void						SetTexture(const sf::Texture& tex) = 0;
 virtual		void						Animation(const sf::Time& deltaFrame) = 0;

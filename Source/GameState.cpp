@@ -88,7 +88,7 @@ void GameState::Update( const sf::Time& deltaFrame )
     if(mBaldus)
         {
         mBaldus->Update((mpGame->mFrameDelta));
-		if (!mBaldus->isAlive())
+		if (mBaldus->shutDown())
 			{
 			mBaldus.reset();
 			}

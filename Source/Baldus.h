@@ -13,6 +13,7 @@ class Baldus : public Enemy
                                     Baldus(Game * pGame, Player * pPlayer);
                                     ~Baldus();
 		bool						isAlive();
+		bool						shutDown();
 		void						Update(const sf::Time& deltaFrame);
 		void						SetTexture(const sf::Texture& tex);
 		void						Animation(const sf::Time& deltaFrame);

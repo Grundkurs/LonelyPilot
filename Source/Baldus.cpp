@@ -13,6 +13,7 @@ Baldus::Baldus(Game * pGame, Player * pPlayer) : Enemy(89,107)
 	mFrameCounter = 0.f ;
 	mHealth = 100 ;
 	misAlive = true ;
+	misShutDown = false; 
     mSpriteRect.width = mWidth;
     mSpriteRect.height = mHeight;
     mSprite.setPosition(sf::Vector2f(400.f, -400.f));
@@ -57,31 +58,68 @@ void Baldus::Movement(const sf::Time& deltaFrame)
     mSprite.setPosition(newPos);
     }
 
+bool Baldus::shutDown(){ return misShutDown; }
 void Baldus::Animation(const sf::Time& deltaFrame)
     {
         //Animation related
         //------------------------------------------
-        mFrameCounter += deltaFrame.asSeconds();
+	
+	if (!misAlive)
+	{
+		//Destroy Sequence; 
 
-        if(mFrameCounter > mFrameRate)
-            {
-                ++mCurrentColumn;
 
-                if(mCurrentColumn >= 4)
-                    {
-                        mCurrentColumn = 0;
-                        ++mCurrentRow;
-                    }
-                if(mCurrentRow > 1)
-                {
-                    mCurrentColumn = 0;
-                    mCurrentRow = 0;
-                }
-                mFrameCounter = 0;
-            }
-        mSprite.setTextureRect(sf::IntRect(mCurrentColumn * mWidth, mCurrentRow *mHeight, mWidth, mHeight));
+		mFrameCounter += deltaFrame.asSeconds();
 
-    }
+		if (mFrameCounter > mFrameRate)
+		{
+			++mCurrentColumn;
+			//4
+			if (mCurrentColumn >= 4)
+			{
+				mCurrentColumn = 0;
+				++mCurrentRow;
+			}			//1
+			if (mCurrentRow > 3)
+			{
+				mCurrentColumn = 0;
+				misShutDown = true; //if end of animation, kill sprite
+			}
+			mFrameCounter = 0;
+
+
+		}
+	}
+	else
+		{
+
+
+			//at end of Sequence, destroy ship
+			//misShutDown = true; 
+			//end of isAlive
+
+			mFrameCounter += deltaFrame.asSeconds();
+
+			if (mFrameCounter > mFrameRate)
+				{
+					++mCurrentColumn;
+					//4
+					if (mCurrentColumn >= 4)
+					{
+						mCurrentColumn = 0;
+						++mCurrentRow;
+					}			//1
+					if (mCurrentRow > 1)
+					{
+						mCurrentColumn = 0;
+						mCurrentRow = 0;
+					}
+					mFrameCounter = 0;
+				}
+			
+		} // end of else-statement
+	mSprite.setTextureRect(sf::IntRect(mCurrentColumn * mWidth, mCurrentRow *mHeight, mWidth, mHeight));
+   }
 
 void Baldus::HitPoint(int damageRate)
 	{
