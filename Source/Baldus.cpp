@@ -63,14 +63,11 @@ void Baldus::Animation(const sf::Time& deltaFrame)
     {
         //Animation related
         //------------------------------------------
-	
+	mFrameCounter += deltaFrame.asSeconds();
+
 	if (!misAlive)
 	{
 		//Destroy Sequence; 
-
-
-		mFrameCounter += deltaFrame.asSeconds();
-
 		if (mFrameCounter > mFrameRate)
 		{
 			++mCurrentColumn;
@@ -89,33 +86,26 @@ void Baldus::Animation(const sf::Time& deltaFrame)
 
 
 		}
-	}
-	else
+	}else
 		{
 
 
-			//at end of Sequence, destroy ship
-			//misShutDown = true; 
-			//end of isAlive
-
-			mFrameCounter += deltaFrame.asSeconds();
-
-			if (mFrameCounter > mFrameRate)
+		if (mFrameCounter > mFrameRate)
+			{
+				++mCurrentColumn;
+				//4
+				if (mCurrentColumn >= 4)
 				{
-					++mCurrentColumn;
-					//4
-					if (mCurrentColumn >= 4)
-					{
-						mCurrentColumn = 0;
-						++mCurrentRow;
-					}			//1
-					if (mCurrentRow > 1)
-					{
-						mCurrentColumn = 0;
-						mCurrentRow = 0;
-					}
-					mFrameCounter = 0;
+					mCurrentColumn = 0;
+					++mCurrentRow;
+				}			//1
+				if (mCurrentRow > 1)
+				{
+					mCurrentColumn = 0;
+					mCurrentRow = 0;
 				}
+				mFrameCounter = 0;
+			}
 			
 		} // end of else-statement
 	mSprite.setTextureRect(sf::IntRect(mCurrentColumn * mWidth, mCurrentRow *mHeight, mWidth, mHeight));
