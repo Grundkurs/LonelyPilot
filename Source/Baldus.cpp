@@ -68,7 +68,8 @@ void Baldus::Animation(const sf::Time& deltaFrame)
 	{
 		//Destroy Sequence; 
 		if (mCurrentRow < 2) mCurrentRow = 2; //in destroy-sequence, mCurrentRow should always be at least in second animation-row
-		mFrameRate = .050f; //make explosion-animation a bit slower than the normal animation (looks much better!);
+		
+		mFrameRate = 0.055f; //make explosion-animation a bit slower than the normal animation (looks much better!);
 		mFrameCounter += deltaFrame.asSeconds();
 
 		if (mFrameCounter > mFrameRate)
@@ -124,9 +125,10 @@ void Baldus::Animation(const sf::Time& deltaFrame)
 void Baldus::HitPoint(int damageRate)
 	{
 	int result = mHealth - damageRate;
-	if (result <= 0)
+	if (result <= 0) // enemy dies
 		{
 		mHealth = 0;
+		mCurrentColumn = 0;  //set Animation-Column to 0 so the Destroy-Animation start at beginning and not somewhere in the middle of spriteSheet
 		misAlive = false;
 		}
 	else
