@@ -39,6 +39,9 @@ public:
     int& GetStarAmount();
     std::string& GetStarTexPath();
 
+	//enemies Settings
+	std::string& GetBaldusTexPath();
+
 private:
 	// Game Settings
 	int mScreenWidth;
@@ -58,6 +61,10 @@ private:
     // Star Settings
     int mStarAmount;
     std::string mStarTexPath;
+
+	// Enemy Settings
+	std::string mBaldusTexPath; 
+	
 };
 
 #endif // CONFIGLOADER_H

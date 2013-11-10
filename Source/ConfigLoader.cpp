@@ -129,6 +129,12 @@ bool ConfigLoader::LoadFromFile(const string &file)
         }
 
     mStarTexPath = pStarSettings->FirstChildElement("texturePath")->GetText();
+	XMLElement * pEnemiesSettings = doc.FirstChildElement("enemies");
+	if (!pEnemiesSettings)
+	{
+		return false;
+	}
+	mBaldusTexPath = pEnemiesSettings->FirstChildElement("BaldusTexturePath")->GetText(); 
 
 	return true;
     } //end of Initialize();
@@ -206,3 +212,6 @@ std::string& ConfigLoader::GetStarTexPath()
     {
     return mStarTexPath;
     }
+
+
+std::string& ConfigLoader::GetBaldusTexPath(){ return mBaldusTexPath; }

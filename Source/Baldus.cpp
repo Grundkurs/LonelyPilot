@@ -63,11 +63,14 @@ void Baldus::Animation(const sf::Time& deltaFrame)
     {
         //Animation related
         //------------------------------------------
-	mFrameCounter += deltaFrame.asSeconds();
-
+	
 	if (!misAlive)
 	{
 		//Destroy Sequence; 
+		if (mCurrentRow < 2) mCurrentRow = 2; //in destroy-sequence, mCurrentRow should always be at least in second animation-row
+		mFrameRate = .050f; //make explosion-animation a bit slower than the normal animation (looks much better!);
+		mFrameCounter += deltaFrame.asSeconds();
+
 		if (mFrameCounter > mFrameRate)
 		{
 			++mCurrentColumn;
@@ -86,26 +89,33 @@ void Baldus::Animation(const sf::Time& deltaFrame)
 
 
 		}
-	}else
+	}
+	else
 		{
 
 
-		if (mFrameCounter > mFrameRate)
-			{
-				++mCurrentColumn;
-				//4
-				if (mCurrentColumn >= 4)
+			//at end of Sequence, destroy ship
+			//misShutDown = true; 
+			//end of isAlive
+
+			mFrameCounter += deltaFrame.asSeconds();
+
+			if (mFrameCounter > mFrameRate)
 				{
-					mCurrentColumn = 0;
-					++mCurrentRow;
-				}			//1
-				if (mCurrentRow > 1)
-				{
-					mCurrentColumn = 0;
-					mCurrentRow = 0;
+					++mCurrentColumn;
+					//4
+					if (mCurrentColumn >= 4)
+					{
+						mCurrentColumn = 0;
+						++mCurrentRow;
+					}			//1
+					if (mCurrentRow > 1)
+					{
+						mCurrentColumn = 0;
+						mCurrentRow = 0;
+					}
+					mFrameCounter = 0;
 				}
-				mFrameCounter = 0;
-			}
 			
 		} // end of else-statement
 	mSprite.setTextureRect(sf::IntRect(mCurrentColumn * mWidth, mCurrentRow *mHeight, mWidth, mHeight));
