@@ -29,6 +29,7 @@ bool Game::Initialize()
 
     if ( !mConfig.LoadFromFile( ToPlatformPath(file) ) )
         {
+        std::cout << "fail to load something";
 		return false;
 		}
 

@@ -22,3 +22,7 @@
 <texturePath>..\\Resources\\Visual\\Star.png</texturePath>
 <amountOfStars>150</amountOfStars>
 </star>
+
+<enemies>
+<BaldusTexturePath>..\\Resources\\Visual\\BaldusSheet4.png</BaldusTexturePath>
+</enemies>

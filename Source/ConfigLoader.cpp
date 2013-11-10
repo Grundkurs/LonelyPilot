@@ -60,6 +60,7 @@ bool ConfigLoader::LoadFromFile(const string &file)
 
 	if ( !pGameSettings )
         {
+        std::cout << "no Settings in XML-File";
 		return false;
         }
 
