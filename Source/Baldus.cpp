@@ -13,29 +13,29 @@ Baldus::Baldus(Game * pGame, Player * pPlayer) : Enemy(89,107)
 	mFrameCounter = 0.f ;
 	mHealth = 100 ;
 	misAlive = true ;
-	misShutDown = false; 
-    mSpriteRect.width = mWidth;
-    mSpriteRect.height = mHeight;
-    mSprite.setPosition(sf::Vector2f(400.f, -400.f));
+	misShutDown = false;
+	mSpriteRect.width = mWidth;
+	mSpriteRect.height = mHeight;
+	mSprite.setPosition(sf::Vector2f(400.f, -400.f));
 }
 
 
 Baldus::~Baldus()
-    {}
+	{}
 void Baldus::Update(const sf::Time& deltaFrame)
-    {
-    Animation(deltaFrame);
-    Movement(deltaFrame);
-    }
+	{
+	Animation(deltaFrame);
+	Movement(deltaFrame);
+	}
 
 void Baldus::SetTexture(const sf::Texture& tex)
-    {
-    mSprite.setTexture(tex);
-    }
+	{
+	mSprite.setTexture(tex);
+	}
 const sf::Sprite& Baldus::GetSprite() const
-    {
-    return mSprite;
-    }
+	{
+	return mSprite;
+	}
 
 
 
@@ -43,32 +43,32 @@ const sf::Sprite& Baldus::GetSprite() const
 
 
 void Baldus::Movement(const sf::Time& deltaFrame)
-    {
-    sf::Vector2f newPos = mSprite.getPosition();
-    sf::Vector2f chaseDirection(mpPlayer->GetSprite().getPosition() - newPos);
+	{
+	sf::Vector2f newPos = mSprite.getPosition();
+	sf::Vector2f chaseDirection(mpPlayer->GetSprite().getPosition() - newPos);
 	//TODO: chaseDirection must be normalized before it gets added to newPos in line 56, write a own normalize-function!
 	Normalize(chaseDirection);
-    //bind movement to player-speed
-    newPos.y += ( -mpPlayer->mVelocity.y) * deltaFrame.asSeconds();
-    newPos.x += ( -mpPlayer->mVelocity.x) * deltaFrame.asSeconds() * 0.2f; //x-movement of stars 5x slower than y-movement
+	//bind movement to player-speed
+	newPos.y += ( -mpPlayer->mVelocity.y) * deltaFrame.asSeconds();
+	newPos.x += ( -mpPlayer->mVelocity.x) * deltaFrame.asSeconds() * 0.2f; //x-movement of stars 5x slower than y-movement
 
-    //chase player
+	//chase player
 	newPos += (chaseDirection * deltaFrame.asSeconds()) * (float)150;
-	
-    mSprite.setPosition(newPos);
-    }
+
+	mSprite.setPosition(newPos);
+	}
 
 bool Baldus::shutDown(){ return misShutDown; }
 void Baldus::Animation(const sf::Time& deltaFrame)
-    {
-        //Animation related
-        //------------------------------------------
-	
+	{
+		//Animation related
+		//------------------------------------------
+
 	if (!misAlive)
 	{
-		//Destroy Sequence; 
+		//Destroy Sequence;
 		if (mCurrentRow < 2) mCurrentRow = 2; //in destroy-sequence, mCurrentRow should always be at least in second animation-row
-		
+
 		mFrameRate = 0.055f; //make explosion-animation a bit slower than the normal animation (looks much better!);
 		mFrameCounter += deltaFrame.asSeconds();
 
@@ -96,7 +96,7 @@ void Baldus::Animation(const sf::Time& deltaFrame)
 
 
 			//at end of Sequence, destroy ship
-			//misShutDown = true; 
+			//misShutDown = true;
 			//end of isAlive
 
 			mFrameCounter += deltaFrame.asSeconds();
@@ -117,7 +117,7 @@ void Baldus::Animation(const sf::Time& deltaFrame)
 					}
 					mFrameCounter = 0;
 				}
-			
+
 		} // end of else-statement
 	mSprite.setTextureRect(sf::IntRect(mCurrentColumn * mWidth, mCurrentRow *mHeight, mWidth, mHeight));
    }

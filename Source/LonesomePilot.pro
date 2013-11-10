@@ -26,7 +26,8 @@ SOURCES += main.cpp \
     InputInterval.cpp \
     Optionstate.cpp \
     Laser.cpp \
-    Baldus.cpp
+    Baldus.cpp \
+    Enemy.cpp
 
 
 INCLUDEPATH += C:\SFMLMinGW\include
@@ -66,4 +67,5 @@ HEADERS += \
     InputInterval.h \
     Optionstate.h \
     Laser.h \
-    Baldus.h
+    Baldus.h \
+    Enemy.h
