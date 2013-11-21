@@ -5,11 +5,12 @@
 #include "StringUtilities.h"
 
 //TODO: can I initialize entities-vector with default size like 200 star-entities and set all to nullptr? like entities[200, nullptr]
-GameState::GameState( Game * pGame)
-	:
-    mpGame( pGame ),
-	mPlayer( nullptr ),
-    mAmbulance( nullptr),
+GameState::GameState(Game * pGame)
+:
+	mpGame(pGame),
+	mPlayer(nullptr),
+	mAmbulance(nullptr),
+	mExplosionParticles(0),
     mState(State::Game)
 	{
     mPlayer = std::shared_ptr<Player>( new Player(mpGame, this) );
@@ -55,6 +56,11 @@ void GameState::Update( const sf::Time& deltaFrame )
 		//if baldus exists
 		if (mBaldus)
 			{
+			//if Baldus still there but dying
+			if (!mBaldus->isAlive()) createExplosion = true; 
+			baldusLastPosition = mBaldus->GetSprite().getPosition();
+			
+			
 			//and got hit by laser 
 			if (i->GetSprite().getGlobalBounds().intersects(mBaldus->GetSprite().getGlobalBounds()))
 				{
@@ -66,18 +72,22 @@ void GameState::Update( const sf::Time& deltaFrame )
 				break;
 				}
 			}
-         if(i->GetSprite().getPosition().y < -200)
+        if(i->GetSprite().getPosition().y < -200)
             {
              std::swap(*i, laserShots.back());
              laserShots.pop_back();
              break;
             }
-         else
-         {
+        else
+			{
              ++i;
-         }
+			}
 
-        }
+        } //end of laserShots
+	for (auto& i : explosion)
+	{
+		i.Update(mpGame->mFrameDelta);
+	}
 
 	if ( mPlayer )
 		mPlayer->Update( mpGame->mFrameDelta );
@@ -88,10 +98,9 @@ void GameState::Update( const sf::Time& deltaFrame )
     if(mBaldus)
         {
         mBaldus->Update((mpGame->mFrameDelta));
-		if (mBaldus->shutDown())
-			{
-			mBaldus.reset();
-			}
+
+		if (mBaldus->shutDown() ) mBaldus.reset();
+			
         }
 
 	if ( mPlayer )
@@ -100,8 +109,23 @@ void GameState::Update( const sf::Time& deltaFrame )
 		mpGame->mAudioMan.SetListenerPosition( playerPos.x, playerPos.y, 0.0f );
 		}
 
+	if (createExplosion)
+	{
+		
+			++mExplosionParticles;
+			CreateExplosion();
+			if (mExplosionParticles > 30)
+			{
+				//reset
+				createExplosion = false;
+				mExplosionParticles = 0;
+			}
+		}
+		
+	
 
     //Clean Up if needed;
+		
 	}
 
 
@@ -117,6 +141,10 @@ void GameState::Render()
 		mpGame->mRenderWindow.draw( i->GetSprite() );
 		}
 
+	for (auto& i : explosion)
+		{
+		mpGame->mRenderWindow.draw(i.GetSprite());
+		}
     for (Laser& i : laserShots)
         {
         mpGame->mRenderWindow.draw(i.GetSprite());
@@ -161,3 +189,14 @@ void GameState::ShootLaser(bool leftSide, Weapon weapon)
     shot.SetTexture(mpGame->mLaserTexture);
     laserShots.push_back(shot);
     }
+
+void GameState::CreateExplosion()	
+	{
+
+		Star star(mpGame, mPlayer);
+		star.SetTexture(mpGame->mStarTexture); //TODO: set in Star-Constructor
+		star.SetColor(sf::Color::Yellow);
+		star.SetRandomDirection(baldusLastPosition);
+		explosion.push_back(std::move(star));
+		
+	}

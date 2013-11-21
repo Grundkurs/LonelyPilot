@@ -24,13 +24,17 @@ class GameState : public IState
     bool                            mResumedGame;
 
     std::vector<sptr_Entity>        entities;
-    std::vector<Laser>               laserShots;
+    std::vector<Laser>              laserShots;
+	std::vector<Star>				explosion; 
 
     std::shared_ptr<Player>         mPlayer;
     std::shared_ptr<Ambulance>      mAmbulance;
     std::shared_ptr<Baldus>         mBaldus;
     std::unique_ptr<Background>     mBackground;
 const   State                       mState;
+int									mExplosionParticles;
+bool								createExplosion;
+sf::Vector2f						baldusLastPosition;
 
 
 public:
@@ -43,6 +47,7 @@ const   State                       GetStateInput();
         void                        SetResumeProperty(bool resume);
         void                        ShootLaser(bool leftSide, Weapon weapon);
         void                        CleanUpLaser(std::vector<Laser>& laserShots);
+		void						CreateExplosion();
 };
 
 

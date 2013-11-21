@@ -1,6 +1,7 @@
 #include "Star.h"
 #include <iostream>
 #include "Game.h"
+#include "Baldus.h"
 class Game;
 
 
@@ -27,8 +28,8 @@ Star::Star( Game * pGame, std::shared_ptr<Player>player )
         {
         mSpeedEnhancment = 1.5f;
         }
-    mSpeed.x = 0;
-    mSpeed.y = ( (mPos.y /8) * mSpeedEnhancment);
+    mDirection.x = 0;
+    mDirection.y = ( (mPos.y /8) * mSpeedEnhancment);
     SetRandomColorAndSize( mpGame->mRandomNumGenerator );
 
     }
@@ -50,7 +51,7 @@ void Star::Update( const sf::Time& deltaFrame )
     newPos.x += ( -mPlayer->mVelocity.x) * deltaFrame.asSeconds() * 0.2f; //x-movement of stars 5x slower than y-movement
 
     //independend star-movement
-    newPos += mSpeed * deltaFrame.asSeconds();
+    newPos += mDirection * deltaFrame.asSeconds();
 
     //offset of 20 pixels at top and bottom (788 instead of 768 for bottom and -20 instead of 0 for top)
     if( newPos.y > ( size.y + 400 ) )
@@ -132,3 +133,28 @@ const sf::Sprite& Star::GetSprite() const
     {
     return mSprite;
     }
+
+void Star::SetRandomDirection(const sf::Vector2f baldusPos)
+	{
+	sf::Vector2f newPos(baldusPos);
+	newPos.x += 50.f; 
+	newPos.y += 50.f;
+	mSprite.setPosition(newPos);
+
+	
+	int even = mpGame->mRandomNumGenerator.getRandomInt(2);
+	int dirX = Random::Between(20, 170);
+	int dirY = Random::Between(30, 160);
+	mDirection.x = dirX;
+	mDirection.y = dirY;
+	if (even % 2 == 0)
+	{
+		mDirection.x *= -1;
+		mDirection.y *= -1; 
+	}
+	
+	}
+void Star::SetColor(sf::Color color)
+	{
+	mSprite.setColor(color);
+	}
