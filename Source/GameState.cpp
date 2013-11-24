@@ -56,16 +56,16 @@ void GameState::Update( const sf::Time& deltaFrame )
 		//if baldus exists
 		if (mBaldus)
 			{
-			//if Baldus still there but dying
-			if (!mBaldus->isAlive()) createExplosion = true; 
-			baldusLastPosition = mBaldus->GetSprite().getPosition();
-			
 			
 			//and got hit by laser 
 			if (i->GetSprite().getGlobalBounds().intersects(mBaldus->GetSprite().getGlobalBounds()))
 				{
 					//TODO: Enemy got hit
 				mBaldus->HitPoint(mPlayer->getDamageBoost());
+
+				//if Baldus starts dying start creating explosionParticles
+				if (!mBaldus->isAlive()) createExplosion = true;
+				baldusLastPosition = mBaldus->GetSprite().getPosition();
 
 				std::swap(*i, laserShots.back());
 				laserShots.pop_back();
@@ -114,7 +114,7 @@ void GameState::Update( const sf::Time& deltaFrame )
 		
 			++mExplosionParticles;
 			CreateExplosion();
-			if (mExplosionParticles > 30)
+			if (mExplosionParticles > 15)
 			{
 				//reset
 				createExplosion = false;

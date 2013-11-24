@@ -143,10 +143,9 @@ void Star::SetRandomDirection(const sf::Vector2f baldusPos)
 
 	
 	int even = mpGame->mRandomNumGenerator.getRandomInt(2);
-	int dirX = Random::Between(20, 170);
-	int dirY = Random::Between(30, 160);
-	mDirection.x = dirX;
-	mDirection.y = dirY;
+	mDirection.x = Random::Between(20, 170);
+	mDirection.y = Random::Between(30, 160);
+	
 	if (even % 2 == 0)
 	{
 		mDirection.x *= -1;

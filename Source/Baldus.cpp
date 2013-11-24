@@ -134,6 +134,7 @@ void Baldus::HitPoint(int damageRate)
 	else
 		{
 		mHealth = result;
+		misAlive = true; 
 		}
 	}
 
