@@ -171,7 +171,7 @@ const State GameState::GetStateInput()
             {
                 return State::Menu;
             }
-
+		//if mResumedGame true, return State::Resume, otherwise return State::Game
         return mResumedGame ? State::Resume : State::Game;
 
     }
