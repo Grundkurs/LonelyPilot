@@ -8,6 +8,7 @@
 class Star :
 	public IEntity
 {
+protected:
 
 		sf::Sprite					mSprite;
 		Game *						mpGame;
@@ -21,9 +22,10 @@ class Star :
 
 public:
 									Star(Game* pGame, std::shared_ptr<Player> player);
+									Star(Game* pGame, std::shared_ptr<Player> player, sf::Vector2f direction);
 									~Star();
 
-		void						Update(const sf::Time& deltaFrame);
+virtual	void						Update(const sf::Time& deltaFrame);
 		void						SetTexture(const sf::Texture& tex);
 const	sf::Sprite&					GetSprite() const;
 		void						SetRandomDirection(const sf::Vector2f baldusPos);

@@ -14,6 +14,7 @@
 #include "Baldus.h"
 
 class Game;
+class ExplosionParticle;
 
 typedef std::shared_ptr<IEntity> sptr_Entity;
 
@@ -25,7 +26,7 @@ class GameState : public IState
 
     std::vector<sptr_Entity>        entities;
     std::vector<Laser>              laserShots;
-	std::vector<Star>				explosion; 
+	std::vector<ExplosionParticle>	explosion; 
 
     std::shared_ptr<Player>         mPlayer;
     std::shared_ptr<Ambulance>      mAmbulance;
@@ -41,7 +42,7 @@ public:
                                     GameState( Game* pGame);
                                     ~GameState();
 const   State                       GetStateInput();
-
+		Baldus*						GetBaldus(); 
         void                        Update(const sf::Time& deltaFrame);
         void                        Render();
         void                        SetResumeProperty(bool resume);

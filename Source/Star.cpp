@@ -34,7 +34,15 @@ Star::Star( Game * pGame, std::shared_ptr<Player>player )
 
     }
 
-
+Star::Star(Game* pGame, std::shared_ptr<Player> player, sf::Vector2f direction)
+: mpGame(pGame),
+mPlayer(player),
+mPos(sf::Vector2f(0.f, 0.f)),
+mDirection(sf::Vector2f(0.f, 0.f)),
+mSpeedEnhancment(1.0)
+{
+	mSprite.setPosition(sf::Vector2f(-1.f, -1.f));
+}
 Star::~Star()
     {
     std::cout << "destroying Star\n";
@@ -147,10 +155,10 @@ void Star::SetRandomDirection(const sf::Vector2f baldusPos)
 	mDirection.y = Random::Between(30, 160);
 	
 	if (even % 2 == 0)
-	{
+		{
 		mDirection.x *= -1;
 		mDirection.y *= -1; 
-	}
+		}
 	
 	}
 void Star::SetColor(sf::Color color)

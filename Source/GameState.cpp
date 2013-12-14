@@ -3,6 +3,7 @@
 #include <iostream>
 #include <memory>
 #include "StringUtilities.h"
+#include "ExplosionParticle.h"
 
 //TODO: can I initialize entities-vector with default size like 200 star-entities and set all to nullptr? like entities[200, nullptr]
 GameState::GameState(Game * pGame)
@@ -29,6 +30,18 @@ GameState::GameState(Game * pGame)
 		star->SetTexture( mpGame->mStarTexture );
 		entities.push_back( std::move(star) );
 		}
+
+
+	//initialize 25 explosion particles
+	for (int i = 0; i < 26; ++i)
+		{
+		ExplosionParticle particle(pGame,this, mPlayer);
+		particle.SetTexture(mpGame->mStarTexture);
+		explosion.push_back(std::move(particle));
+		}
+
+
+
     //initialize BackgroundPicture
 	mBackground = std::unique_ptr<Background>( new Background(mpGame) );
 	mBackground->SetTexture( mpGame->mBackgroundTexture );
@@ -84,6 +97,7 @@ void GameState::Update( const sf::Time& deltaFrame )
 			}
 
         } //end of laserShots
+
 	for (auto& i : explosion)
 	{
 		i.Update(mpGame->mFrameDelta);
@@ -112,9 +126,10 @@ void GameState::Update( const sf::Time& deltaFrame )
 	if (createExplosion)
 	{
 		
+			explosion[mExplosionParticles].SetRandomDirection(mBaldus->GetSprite().getPosition());
 			++mExplosionParticles;
-			CreateExplosion();
-			if (mExplosionParticles > 15)
+			
+			if (mExplosionParticles > 25)
 			{
 				//reset
 				createExplosion = false;
@@ -190,13 +205,15 @@ void GameState::ShootLaser(bool leftSide, Weapon weapon)
     laserShots.push_back(shot);
     }
 
+
 void GameState::CreateExplosion()	
 	{
 
-		Star star(mpGame, mPlayer);
-		star.SetTexture(mpGame->mStarTexture); //TODO: set in Star-Constructor
-		star.SetColor(sf::Color::Yellow);
-		star.SetRandomDirection(baldusLastPosition);
-		explosion.push_back(std::move(star));
+	
 		
+	}
+
+Baldus* GameState::GetBaldus()
+	{
+	return mBaldus.get(); 
 	}
