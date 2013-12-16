@@ -2,9 +2,9 @@
 #include "Game.h"
 
 ExplosionParticle::ExplosionParticle(Game* pGame, GameState* state, std::shared_ptr<Player> player)
-: Star{ pGame, player, sf::Vector2f(0.f,0.f) },
-isExploding{false},
-mpGameState{state}
+    : Star (pGame, player,sf::Vector2f(-8.f,-8.f) ),
+isExploding(false),
+mpGameState(state)
 	{
 	}
 
@@ -22,7 +22,7 @@ void ExplosionParticle::Update(const sf::Time& deltaFrame)
 	}
 void ExplosionParticle::SetRandomDirection(sf::Vector2f origin)
 	{
-		isExploding = true; 
+        isExploding = true;
 		sf::Vector2f newPos(origin);
 		newPos.x += 50.f;
 		newPos.y += 50.f;

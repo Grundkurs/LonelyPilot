@@ -19,15 +19,16 @@ SOURCES += main.cpp \
 	StringUtilities.cpp \
 	RandomGenerator.cpp \
 	AudioManager.cpp \
-        XML.cpp \
         tinyxml2.cpp \
-    ConfigLoader.cpp \
-    VectorUtilities.cpp \
-    InputInterval.cpp \
-    Optionstate.cpp \
-    Laser.cpp \
-    Baldus.cpp \
-    Enemy.cpp
+      ConfigLoader.cpp \
+        VectorUtilities.cpp \
+        InputInterval.cpp \
+        Optionstate.cpp \
+        Laser.cpp \
+        Baldus.cpp \
+        Enemy.cpp \
+    SoundManager.cpp \
+    ExplosionParticle.cpp
 
 
 INCLUDEPATH += C:\SFMLMinGW\include
@@ -59,13 +60,17 @@ HEADERS += \
 	StringUtilities.h \
 	RandomGenerator.h \
 	AudioManager.h \
-        XML.h \
-	XML_Loader.h \
         tinyxml2.h \
         ConfigLoader.h \
-    VectorUtilities.h \
-    InputInterval.h \
-    Optionstate.h \
-    Laser.h \
-    Baldus.h \
-    Enemy.h
+        VectorUtilities.h \
+        InputInterval.h \
+        Optionstate.h \
+        Laser.h \
+        Baldus.h \
+        Enemy.h \
+    SoundManager.h \
+    ExplosionParticle.h
+
+OTHER_FILES += \
+    LonesomePilot.pro.user.02d4a10 \
+    LonesomePilot.pro.user

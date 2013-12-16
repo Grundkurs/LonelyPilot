@@ -12,6 +12,7 @@ GameState::GameState(Game * pGame)
 	mPlayer(nullptr),
 	mAmbulance(nullptr),
 	mExplosionParticles(0),
+    createExplosion(false),
     mState(State::Game)
 	{
     mPlayer = std::shared_ptr<Player>( new Player(mpGame, this) );
@@ -113,6 +114,28 @@ void GameState::Update( const sf::Time& deltaFrame )
         {
         mBaldus->Update((mpGame->mFrameDelta));
 
+        //check if baldus is already exploding while still existing
+        if (createExplosion && mBaldus->canBeHit())
+            {
+
+             explosion[mExplosionParticles].SetRandomDirection(baldusLastPosition);
+             ++mExplosionParticles;
+
+             if (mExplosionParticles > 25)
+                {
+                //reset
+                mExplosionParticles = 0;
+                createExplosion = false;
+                mBaldus->mcanBeHit = false; //if particles got create, explosion-animation is finished,
+                                            //so baldus cant be hit anymore. also avoids that explosion appears twice when player keeps shooting
+                }
+
+            }
+
+
+
+
+
 		if (mBaldus->shutDown() ) mBaldus.reset();
 			
         }
@@ -123,19 +146,7 @@ void GameState::Update( const sf::Time& deltaFrame )
 		mpGame->mAudioMan.SetListenerPosition( playerPos.x, playerPos.y, 0.0f );
 		}
 
-	if (createExplosion)
-	{
-		
-			explosion[mExplosionParticles].SetRandomDirection(mBaldus->GetSprite().getPosition());
-			++mExplosionParticles;
-			
-			if (mExplosionParticles > 25)
-			{
-				//reset
-				createExplosion = false;
-				mExplosionParticles = 0;
-			}
-		}
+
 		
 	
 

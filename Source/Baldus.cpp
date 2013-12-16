@@ -13,6 +13,7 @@ Baldus::Baldus(Game * pGame, Player * pPlayer) : Enemy(89,107)
 	mFrameCounter = 0.f ;
 	mHealth = 100 ;
 	misAlive = true ;
+    mcanBeHit = true;
 	misShutDown = false;
 	mSpriteRect.width = mWidth;
 	mSpriteRect.height = mHeight;
@@ -125,7 +126,7 @@ void Baldus::Animation(const sf::Time& deltaFrame)
 void Baldus::HitPoint(int damageRate)
 	{
 	int result = mHealth - damageRate;
-	if (result <= 0) // enemy dies
+    if (result <= 0) // baldus dies
 		{
 		mHealth = 0;
 		mCurrentColumn = 0;  //set Animation-Column to 0 so the Destroy-Animation start at beginning and not somewhere in the middle of spriteSheet
@@ -139,3 +140,4 @@ void Baldus::HitPoint(int damageRate)
 	}
 
 bool Baldus::isAlive(){ return misAlive;  }
+bool Baldus::canBeHit(){return mcanBeHit; }

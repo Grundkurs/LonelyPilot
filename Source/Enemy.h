@@ -22,6 +22,7 @@ public:
 			int                         mCurrentRow;
 			int							mHealth;
 			bool						misAlive;
+            bool                        mcanBeHit;
 			bool						misShutDown;
 
 			float						mFrameRate;

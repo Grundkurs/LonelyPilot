@@ -34,14 +34,14 @@ Star::Star( Game * pGame, std::shared_ptr<Player>player )
 
     }
 
-Star::Star(Game* pGame, std::shared_ptr<Player> player, sf::Vector2f direction)
-: mpGame(pGame),
-mPlayer(player),
-mPos(sf::Vector2f(0.f, 0.f)),
-mDirection(sf::Vector2f(0.f, 0.f)),
-mSpeedEnhancment(1.0)
+Star::Star(Game* pGame, std::shared_ptr<Player> player, sf::Vector2f position)
+  : mpGame( pGame ),
+    mPlayer( player ),
+    mPos( sf::Vector2f(0.f, 0.f) ),
+    mSpeedEnhancment( 0.0 )
+
 {
-	mSprite.setPosition(sf::Vector2f(-1.f, -1.f));
+    mSprite.setPosition(position);
 }
 Star::~Star()
     {
