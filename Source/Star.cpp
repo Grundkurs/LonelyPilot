@@ -2,6 +2,7 @@
 #include <iostream>
 #include "Game.h"
 #include "Baldus.h"
+#include <math.h>
 class Game;
 
 
@@ -38,7 +39,7 @@ Star::Star(Game* pGame, std::shared_ptr<Player> player, sf::Vector2f position)
   : mpGame( pGame ),
     mPlayer( player ),
     mPos( sf::Vector2f(0.f, 0.f) ),
-    mSpeedEnhancment( 0.0 )
+    mSpeedEnhancment( 1.0 )
 
 {
     mSprite.setPosition(position);
@@ -58,9 +59,11 @@ void Star::Update( const sf::Time& deltaFrame )
     newPos.y += ( -mPlayer->mVelocity.y) * deltaFrame.asSeconds();
     newPos.x += ( -mPlayer->mVelocity.x) * deltaFrame.asSeconds() * 0.2f; //x-movement of stars 5x slower than y-movement
 
-    //independend star-movement
-    newPos += mDirection * deltaFrame.asSeconds();
-
+    //CPU-Speed independend star-movement           
+	newPos += mDirection * deltaFrame.asSeconds() * mSpeedEnhancment;
+	
+	
+	
     //offset of 20 pixels at top and bottom (788 instead of 768 for bottom and -20 instead of 0 for top)
     if( newPos.y > ( size.y + 400 ) )
         {
@@ -144,22 +147,28 @@ const sf::Sprite& Star::GetSprite() const
 
 void Star::SetRandomDirection(const sf::Vector2f baldusPos)
 	{
-	sf::Vector2f newPos(baldusPos);
-	newPos.x += 50.f; 
-	newPos.y += 50.f;
-	mSprite.setPosition(newPos);
+	/*
+	//center of explosion-circle should be position of exploding enemy
+	sf::Vector2f center(baldusPos);
+	center.x += 50.f; 
+	center.y += 50.f;
+	mSprite.setPosition(center);
+	
+	double angleX = Random::Between(0, 360);
+	double angleY = Random::Between(0, 360);
 
 	
 	int even = mpGame->mRandomNumGenerator.getRandomInt(2);
 	mDirection.x = Random::Between(20, 170);
 	mDirection.y = Random::Between(30, 160);
 	
+	int even = Random::Between(0, 50);
 	if (even % 2 == 0)
 		{
 		mDirection.x *= -1;
 		mDirection.y *= -1; 
-		}
-	
+		} 
+	*/
 	}
 void Star::SetColor(sf::Color color)
 	{

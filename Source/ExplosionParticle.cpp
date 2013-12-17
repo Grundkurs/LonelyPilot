@@ -6,6 +6,7 @@ ExplosionParticle::ExplosionParticle(Game* pGame, GameState* state, std::shared_
 isExploding(false),
 mpGameState(state)
 	{
+	mSpeedEnhancment = 4.f;
 	}
 
 
@@ -16,28 +17,34 @@ ExplosionParticle::~ExplosionParticle()
 
 
 void ExplosionParticle::Update(const sf::Time& deltaFrame)
-	{
+{
 	if (isExploding) Star::Update(deltaFrame);
 
-	}
-void ExplosionParticle::SetRandomDirection(sf::Vector2f origin)
-	{
-        isExploding = true;
-		sf::Vector2f newPos(origin);
-		newPos.x += 50.f;
-		newPos.y += 50.f;
-		mSprite.setPosition(newPos);
-
-
-		int even = mpGame->mRandomNumGenerator.getRandomInt(2);
-		mDirection.x = Random::Between(20, 170);
-		mDirection.y = Random::Between(30, 160);
-
-		if (even % 2 == 0)
+	//if Particle outside Screen, disable movement and put outside screen
+	sf::Vector2u size = mpGame->mRenderWindow.getSize();
+	sf::Vector2f currPos = mSprite.getPosition();
+	if (currPos.x < 0 || currPos.y > size.y) 
 		{
-			mDirection.x *= -1;
-			mDirection.y *= -1;
+		isExploding = false; 
+		mSprite.setPosition(sf::Vector2f(-3.f, -3.f));
 		}
+
+
+	}
+void ExplosionParticle::SetRandomDirection(sf::Vector2f enemyPos)
+	{
+	isExploding = true; 
+	sf::Vector2f center(enemyPos);
+	center.x += 50.f;
+	center.y += 50.f;
+	mSprite.setPosition(enemyPos);
+
+	float angleX = Random::Between(-360, 360);
+	float angleY = Random::Between(-360, 360);
+
+	mDirection.x = angleX;
+	mDirection.y = angleY;
+
 
 	
 	}
