@@ -12,7 +12,7 @@ GameState::GameState(Game * pGame)
 	mPlayer(nullptr),
 	mAmbulance(nullptr),
 	mExplosionParticles(0),
-    createExplosion(false),
+    isBaldusExplosionFinished(false),
     mState(State::Game)
 	{
     mPlayer = std::shared_ptr<Player>( new Player(mpGame, this) );
@@ -74,13 +74,13 @@ void GameState::Update(const sf::Time& deltaFrame)
 			//and got hit by laser 
 			if (i->GetSprite().getGlobalBounds().intersects(mBaldus->GetSprite().getGlobalBounds()))
 			{
-				mBaldus->HitPoint(mPlayer->getDamageBoost());
+				if(mBaldus->mcanBeHit) mBaldus->HitPoint(mPlayer->getDamageBoost());
 
 				//if Baldus starts dying start creating explosionParticles
-				if (!mBaldus->isAlive())
-					{
-					mBaldus->mcanBeHit = false; 
-					}
+				if (!mBaldus->misAlive)
+				{
+					mBaldus->mcanBeHit = false;
+				}
 				baldusLastPosition = mBaldus->GetSprite().getPosition();
 
 				std::swap(*i, laserShots.back());
@@ -117,7 +117,7 @@ void GameState::Update(const sf::Time& deltaFrame)
 		mBaldus->Update((mpGame->mFrameDelta));
 
 		//check if baldus is already exploding while still existing
-		if (!mBaldus->mcanBeHit)
+		if (!mBaldus->mcanBeHit && !isBaldusExplosionFinished)
 		{
 			explosion[mExplosionParticles].SetRandomDirection(baldusLastPosition);
 			++mExplosionParticles;
@@ -126,7 +126,7 @@ void GameState::Update(const sf::Time& deltaFrame)
 			{
 				//reset
 				mExplosionParticles = 0;
-				mBaldus->mcanBeHit = true; 
+				isBaldusExplosionFinished = true; 
 				
 			}
 
@@ -135,6 +135,7 @@ void GameState::Update(const sf::Time& deltaFrame)
 
 		if (mBaldus->shutDown())
 			{
+			isBaldusExplosionFinished = false; 
 			mBaldus.reset(new Baldus(mpGame, mPlayer.get()));
 			mBaldus->SetTexture(mpGame->mBaldusTexture);
 			}

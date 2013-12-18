@@ -22,15 +22,15 @@ void ExplosionParticle::Update(const sf::Time& deltaFrame)
 	if (isExploding)
 		{
 		Star::Update(deltaFrame);
+
 		float shrinkFactor = 1.2f;
 		mSize.x -= shrinkFactor * deltaFrame.asSeconds();
 		mSize.y -= shrinkFactor * deltaFrame.asSeconds();
 		mSprite.setScale(mSize);
-		//if Stars invisible, reset them to default position outside screen
-		if (mSize.x < 0)
-			{
-			ResetSettings();
-			}
+		
+		//if Stars invisible, reset default position and size 
+		if (mSize.x < 0) ResetSettings();
+		
 		}
 }
 

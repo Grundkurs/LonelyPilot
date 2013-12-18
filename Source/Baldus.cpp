@@ -132,6 +132,7 @@ void Baldus::HitPoint(int damageRate)
 		mHealth = 0;
 		mCurrentColumn = 0;  //set Animation-Column to 0 so the Destroy-Animation start at beginning and not somewhere in the middle of spriteSheet
 		misAlive = false;
+		mcanBeHit = false;
 		}
 	else
 		{

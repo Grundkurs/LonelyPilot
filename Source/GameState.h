@@ -34,7 +34,7 @@ class GameState : public IState
     std::unique_ptr<Background>     mBackground;
 const   State                       mState;
 int									mExplosionParticles;
-bool								createExplosion;
+bool								isBaldusExplosionFinished;
 
 
 
