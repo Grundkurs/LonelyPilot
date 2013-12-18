@@ -8,8 +8,8 @@ class Player;
 class Enemy : public IEntity
 {
 public:
-	Enemy(int width, int height);
-	~Enemy();
+			Enemy(int width, int height);
+virtual		~Enemy();
 
 			Game *						mpGame;
 			Player*						mpPlayer;

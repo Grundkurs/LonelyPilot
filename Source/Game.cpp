@@ -33,7 +33,7 @@ bool Game::Initialize()
 		return false;
 		}
 
-	mRenderWindow.create(sf::VideoMode(mConfig.GetScreenWidth(), mConfig.GetScreenHeight()), mConfig.GetWindowTitle() );
+	mRenderWindow.create(sf::VideoMode(mConfig.GetScreenWidth(), mConfig.GetScreenHeight()), mConfig.GetWindowTitle(), sf::Style::Fullscreen );
 	mRenderWindow.display();
 
 	if( !mRenderWindow.isOpen() )

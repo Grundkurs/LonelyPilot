@@ -136,6 +136,7 @@ void GameState::Update(const sf::Time& deltaFrame)
 			isBaldusExplosionFinished = false; //after baldus vanishes new explosionParticles can be created
 			mBaldus.reset(new Baldus(mpGame, mPlayer.get()));
 			mBaldus->SetTexture(mpGame->mBaldusTexture);
+			
 			}
 	
 

@@ -19,11 +19,16 @@ Baldus::Baldus(Game * pGame, Player * pPlayer) : Enemy(89,107)
 	mSpriteRect.width = mWidth;
 	mSpriteRect.height = mHeight;
 	mSprite.setPosition(sf::Vector2f(400.f, -400.f));
+
+	//set TextureRect
+	mSprite.setTextureRect(sf::IntRect(mCurrentColumn * mWidth, mCurrentRow *mHeight, mWidth, mHeight));
 }
 
 
 Baldus::~Baldus()
-	{}
+{
+	std::cout << "Baldus destroyed\n";
+}
 void Baldus::Update(const sf::Time& deltaFrame)
 	{
 	Animation(deltaFrame);
@@ -121,6 +126,7 @@ void Baldus::Animation(const sf::Time& deltaFrame)
 				}
 
 		} // end of else-statement
+
 	mSprite.setTextureRect(sf::IntRect(mCurrentColumn * mWidth, mCurrentRow *mHeight, mWidth, mHeight));
    }
 
