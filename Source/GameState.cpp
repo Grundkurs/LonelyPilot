@@ -63,22 +63,24 @@ void GameState::Update(const sf::Time& deltaFrame)
 	{
 		i->Update(mpGame->mFrameDelta);
 	}
-
+	//Check for Laser Collision
 	for (auto i = laserShots.begin(); i != laserShots.end();)
 	{
 		i->Update(mpGame->mFrameDelta);
+
 		//if baldus exists
 		if (mBaldus)
-		{
-
+		{	
 			//and got hit by laser 
 			if (i->GetSprite().getGlobalBounds().intersects(mBaldus->GetSprite().getGlobalBounds()))
 			{
-				//TODO: Enemy got hit
 				mBaldus->HitPoint(mPlayer->getDamageBoost());
 
 				//if Baldus starts dying start creating explosionParticles
-				if (!mBaldus->isAlive()) createExplosion = true;
+				if (!mBaldus->isAlive())
+					{
+					mBaldus->mcanBeHit = false; 
+					}
 				baldusLastPosition = mBaldus->GetSprite().getPosition();
 
 				std::swap(*i, laserShots.back());
@@ -115,19 +117,17 @@ void GameState::Update(const sf::Time& deltaFrame)
 		mBaldus->Update((mpGame->mFrameDelta));
 
 		//check if baldus is already exploding while still existing
-		if (createExplosion && mBaldus->canBeHit())
+		if (!mBaldus->mcanBeHit)
 		{
-
 			explosion[mExplosionParticles].SetRandomDirection(baldusLastPosition);
 			++mExplosionParticles;
-
+			
 			if (mExplosionParticles > 25)
 			{
 				//reset
 				mExplosionParticles = 0;
-				createExplosion = false;
-				mBaldus->mcanBeHit = false; //if particles got create, explosion-animation is finished,
-				//so baldus cant be hit anymore. also avoids that explosion appears twice when player keeps shooting
+				mBaldus->mcanBeHit = true; 
+				
 			}
 
 		}

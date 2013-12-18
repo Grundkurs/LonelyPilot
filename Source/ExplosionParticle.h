@@ -9,7 +9,7 @@ public:
 	ExplosionParticle(Game* pGame, GameState* state,  std::shared_ptr<Player> player);
 						~ExplosionParticle();
 
-			bool		isExploding; 
+			bool		isExploding;
 virtual		void		Update(const sf::Time& deltaFrame);
 			void		SetRandomDirection(sf::Vector2f origin);
 private:
