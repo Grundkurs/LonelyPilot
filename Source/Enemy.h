@@ -26,6 +26,7 @@ public:
 			bool						misShutDown;
 
 			float						mFrameRate;
+			float						mFrameRateDestroySequence;
 			float						mVelocity;
 			float						mFrameCounter;
 public:

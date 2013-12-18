@@ -34,6 +34,7 @@ friend class GameState; // TODO: hack to be able to grap mPos from GameState
         float                   mMaxSpeed;
         int                     mDamageBoost;
 		Weapon					mCurrentWeapon;
+		bool					misVulnerable; 
 
 
 public:
@@ -45,6 +46,7 @@ inline  int						getDamageBoost(){ return mDamageBoost; }
         void					Update(const sf::Time& deltaFrame);
         const	sf::Sprite&		GetSprite() const;
         void                    SwitchDamageBoost(int choice);
+
 
 
     //public fields

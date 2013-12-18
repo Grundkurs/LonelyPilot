@@ -14,6 +14,8 @@ virtual		void		Update(const sf::Time& deltaFrame);
 			void		SetRandomDirection(sf::Vector2f origin);
 private:
 			GameState*	mpGameState; 
+			sf::Vector2f mSize; 
+			void ResetSettings();
 			
 };
 

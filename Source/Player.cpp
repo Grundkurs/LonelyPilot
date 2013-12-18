@@ -22,7 +22,8 @@ Player::Player( Game* pGame, GameState* pGameState )
     mCollisionBumper(mpGame->mConfig.GetPlayerCollisionBumper()),
     mMaxSpeed(mpGame->mConfig.GetPlayerMaxSpeed()),
 	mCurrentWeapon(Weapon::Blue),
-    mDamageBoost(mpGame->mConfig.GetPlayerDamageBoost())
+    mDamageBoost(mpGame->mConfig.GetPlayerDamageBoost()),
+	misVulnerable(true)
 	{
 
 	sf::Vector2u size = pGame->mRenderWindow.getSize();

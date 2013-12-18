@@ -131,11 +131,16 @@ bool ConfigLoader::LoadFromFile(const string &file)
 
     mStarTexPath = pStarSettings->FirstChildElement("texturePath")->GetText();
 	XMLElement * pEnemiesSettings = doc.FirstChildElement("enemies");
-	if (!pEnemiesSettings)
-	{
-		return false;
-	}
+
+	if (!pEnemiesSettings) return false;
+
 	mBaldusTexPath = pEnemiesSettings->FirstChildElement("BaldusTexturePath")->GetText(); 
+
+	XMLElement* pHUDSettings = doc.FirstChildElement("HUD"); 
+	
+	if (!pHUDSettings) return false; 
+
+	HUDLivesTexPath = pHUDSettings->FirstChildElement("LivesTexturePath")->GetText(); 
 
 	return true;
     } //end of Initialize();
@@ -209,10 +214,13 @@ int& ConfigLoader::GetStarAmount()
     {
     return mStarAmount;
     }
-std::string& ConfigLoader::GetStarTexPath()
+string& ConfigLoader::GetStarTexPath()
     {
     return mStarTexPath;
     }
 
 
-std::string& ConfigLoader::GetBaldusTexPath(){ return mBaldusTexPath; }
+string& ConfigLoader::GetBaldusTexPath(){ return mBaldusTexPath; }
+
+string& ConfigLoader::GetHUDLivesTexPath(){ return HUDLivesTexPath; }
+

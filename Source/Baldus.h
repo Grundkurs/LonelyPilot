@@ -20,6 +20,7 @@ class Baldus : public Enemy
 		void						Animation(const sf::Time& deltaFrame);
 		void						Movement(const sf::Time& deltaFrame);
 		void						HitPoint(int damageRate);
+		void						SetPosition(sf::Vector2f pos);
 const	sf::Sprite&					GetSprite() const;
 
 };

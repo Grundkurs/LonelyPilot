@@ -9,6 +9,7 @@ Baldus::Baldus(Game * pGame, Player * pPlayer) : Enemy(89,107)
 	mCurrentColumn = 0 ;
 	mCurrentRow = 0;
 	mFrameRate = .030f;
+	mFrameRateDestroySequence = .060f;
 	mVelocity = 50.f ;
 	mFrameCounter = 0.f ;
 	mHealth = 100 ;
@@ -70,10 +71,10 @@ void Baldus::Animation(const sf::Time& deltaFrame)
 		//Destroy Sequence;
 		if (mCurrentRow < 2) mCurrentRow = 2; //in destroy-sequence, mCurrentRow should always be at least in second animation-row
 
-		mFrameRate = 0.055f; //make explosion-animation a bit slower than the normal animation (looks much better!);
+		 //make explosion-animation a bit slower than the normal animation (looks much better!);
 		mFrameCounter += deltaFrame.asSeconds();
 
-		if (mFrameCounter > mFrameRate)
+		if (mFrameCounter > mFrameRateDestroySequence)
 		{
 			++mCurrentColumn;
 			//4
@@ -141,3 +142,4 @@ void Baldus::HitPoint(int damageRate)
 
 bool Baldus::isAlive(){ return misAlive;  }
 bool Baldus::canBeHit(){return mcanBeHit; }
+void Baldus::SetPosition(sf::Vector2f pos){	mSprite.setPosition(pos); }

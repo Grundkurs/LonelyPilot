@@ -57,24 +57,24 @@ GameState::~GameState()
 	std::cout << "Destroying GameState\n";
 	}
 
-void GameState::Update( const sf::Time& deltaFrame )
+void GameState::Update(const sf::Time& deltaFrame)
+{
+	for (sptr_Entity& i : entities)
 	{
-    for( sptr_Entity& i : entities )
-		{
-		i->Update( mpGame->mFrameDelta );
-		}
+		i->Update(mpGame->mFrameDelta);
+	}
 
-    for(auto i = laserShots.begin(); i != laserShots.end();)
-        {
-        i->Update(mpGame->mFrameDelta);
+	for (auto i = laserShots.begin(); i != laserShots.end();)
+	{
+		i->Update(mpGame->mFrameDelta);
 		//if baldus exists
 		if (mBaldus)
-			{
-			
+		{
+
 			//and got hit by laser 
 			if (i->GetSprite().getGlobalBounds().intersects(mBaldus->GetSprite().getGlobalBounds()))
-				{
-					//TODO: Enemy got hit
+			{
+				//TODO: Enemy got hit
 				mBaldus->HitPoint(mPlayer->getDamageBoost());
 
 				//if Baldus starts dying start creating explosionParticles
@@ -84,76 +84,77 @@ void GameState::Update( const sf::Time& deltaFrame )
 				std::swap(*i, laserShots.back());
 				laserShots.pop_back();
 				break;
-				}
 			}
-        if(i->GetSprite().getPosition().y < -200)
-            {
-             std::swap(*i, laserShots.back());
-             laserShots.pop_back();
-             break;
-            }
-        else
-			{
-             ++i;
-			}
+		}
+		if (i->GetSprite().getPosition().y < -200)
+		{
+			std::swap(*i, laserShots.back());
+			laserShots.pop_back();
+			break;
+		}
+		else
+		{
+			++i;
+		}
 
-        } //end of laserShots
+	} //end of laserShots
 
 	for (auto& i : explosion)
 	{
 		i.Update(mpGame->mFrameDelta);
 	}
 
-	if ( mPlayer )
-		mPlayer->Update( mpGame->mFrameDelta );
+	if (mPlayer)
+		mPlayer->Update(mpGame->mFrameDelta);
 
-	if ( mAmbulance )
-		mAmbulance->Update( mpGame->mFrameDelta );
+	if (mAmbulance)
+		mAmbulance->Update(mpGame->mFrameDelta);
 
-    if(mBaldus)
-        {
-        mBaldus->Update((mpGame->mFrameDelta));
+	if (mBaldus)
+	{
+		mBaldus->Update((mpGame->mFrameDelta));
 
-        //check if baldus is already exploding while still existing
-        if (createExplosion && mBaldus->canBeHit())
-            {
-
-             explosion[mExplosionParticles].SetRandomDirection(baldusLastPosition);
-             ++mExplosionParticles;
-
-             if (mExplosionParticles > 25)
-                {
-                //reset
-                mExplosionParticles = 0;
-                createExplosion = false;
-                mBaldus->mcanBeHit = false; //if particles got create, explosion-animation is finished,
-                                            //so baldus cant be hit anymore. also avoids that explosion appears twice when player keeps shooting
-                }
-
-            }
-
-
-
-
-
-		if (mBaldus->shutDown() ) mBaldus.reset();
-			
-        }
-
-	if ( mPlayer )
+		//check if baldus is already exploding while still existing
+		if (createExplosion && mBaldus->canBeHit())
 		{
-		sf::Vector2f playerPos( mPlayer->GetSprite().getPosition() );
-		mpGame->mAudioMan.SetListenerPosition( playerPos.x, playerPos.y, 0.0f );
+
+			explosion[mExplosionParticles].SetRandomDirection(baldusLastPosition);
+			++mExplosionParticles;
+
+			if (mExplosionParticles > 25)
+			{
+				//reset
+				mExplosionParticles = 0;
+				createExplosion = false;
+				mBaldus->mcanBeHit = false; //if particles got create, explosion-animation is finished,
+				//so baldus cant be hit anymore. also avoids that explosion appears twice when player keeps shooting
+			}
+
 		}
 
 
-		
+		if (mBaldus->shutDown())
+			{
+			mBaldus.reset(new Baldus(mpGame, mPlayer.get()));
+			mBaldus->SetTexture(mpGame->mBaldusTexture);
+			}
 	
 
-    //Clean Up if needed;
-		
-	}
 
+		if (mPlayer)
+		{
+			sf::Vector2f playerPos(mPlayer->GetSprite().getPosition());
+			mpGame->mAudioMan.SetListenerPosition(playerPos.x, playerPos.y, 0.0f);
+		}
+
+
+
+
+
+		//Clean Up if needed;
+
+	}
+}
 
 
 void GameState::Render()

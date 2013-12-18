@@ -7,10 +7,6 @@
 
 using std::string;
 
-// STEFAN don't look at this class until you've made your own.
-// For learning purposes.
-
-// TODO: Should probably make data private and write getters
 class ConfigLoader
 {
 public:
@@ -31,16 +27,19 @@ public:
     float& GetPlayerMaxSpeed();
     int&   GetPlayerDamageBoost();
     sf::Vector2f GetPlayerSpeed();
-    std::string& GetPlayerTexPath();
-    std::string& GetPlayerTexFrontPath();
-    std::string& GetTextureLasersPath();
+	string& GetPlayerTexPath();
+	string& GetPlayerTexFrontPath();
+    string& GetTextureLasersPath();
 
     //Star Settings
     int& GetStarAmount();
-    std::string& GetStarTexPath();
+    string& GetStarTexPath();
 
 	//enemies Settings
-	std::string& GetBaldusTexPath();
+	string& GetBaldusTexPath();
+
+	//HUD
+	string& GetHUDLivesTexPath(); 
 
 private:
 	// Game Settings
@@ -52,18 +51,21 @@ private:
 	float mPlayerSpeedX;
 	float mPlayerSpeedY;
     float mPlayerMaxSpeed;
-    std::string mPlayerTexPath;
-    std::string mPlayerTexFrontPath;
-    std::string mTextureLasersPath;
+    string mPlayerTexPath;
+    string mPlayerTexFrontPath;
+    string mTextureLasersPath;
     float mPlayerCollisionBumper;
     int mPlayerDamageBoost;
 
     // Star Settings
     int mStarAmount;
-    std::string mStarTexPath;
+	string mStarTexPath;
 
 	// Enemy Settings
-	std::string mBaldusTexPath; 
+	string mBaldusTexPath; 
+
+	//HUD Settings
+	string HUDLivesTexPath; 
 	
 };
 

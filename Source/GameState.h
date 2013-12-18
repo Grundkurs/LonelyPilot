@@ -35,7 +35,7 @@ class GameState : public IState
 const   State                       mState;
 int									mExplosionParticles;
 bool								createExplosion;
-sf::Vector2f						baldusLastPosition;
+
 
 
 public:
@@ -43,6 +43,7 @@ public:
                                     ~GameState();
 const   State                       GetStateInput();
 		Baldus*						GetBaldus(); 
+		sf::Vector2f				baldusLastPosition;
         void                        Update(const sf::Time& deltaFrame);
         void                        Render();
         void                        SetResumeProperty(bool resume);
