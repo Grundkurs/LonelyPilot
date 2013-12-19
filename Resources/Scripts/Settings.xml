@@ -26,3 +26,7 @@
 <enemies>
 <BaldusTexturePath>..\\Resources\\Visual\\BaldusSheet4.png</BaldusTexturePath>
 </enemies>
+
+<HUD>
+<LivesTexturePath>..\\Resources\\Visual\\HUD\\Lives.png</LivesTexturePath>
+</HUD>
