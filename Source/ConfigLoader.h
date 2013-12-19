@@ -39,8 +39,8 @@ public:
 	string& GetBaldusTexPath();
 
 	//HUD
-	string& GetHUDLivesTexPath(); 
-
+	string& GetHUDLivesBarTexPath(); 
+	string& GetHUDHealthBarPath();
 private:
 	// Game Settings
 	int mScreenWidth;
@@ -66,6 +66,7 @@ private:
 
 	//HUD Settings
 	string HUDLivesTexPath; 
+	string HUDHealthBarPath; 
 	
 };
 

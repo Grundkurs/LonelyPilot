@@ -8,6 +8,8 @@ mpGameState(state),
 mSize(sf::Vector2f(1.f,1.f))
 	{
 	mSpeedEnhancment = 1.5f;
+	mSprite.setPosition(sf::Vector2f(-3.f, -3.f));
+	mSprite.setScale(mSize);
 	}
 
 
@@ -27,11 +29,11 @@ void ExplosionParticle::Update(const sf::Time& deltaFrame)
 		mSize.x -= shrinkFactor * deltaFrame.asSeconds();
 		mSize.y -= shrinkFactor * deltaFrame.asSeconds();
 		mSprite.setScale(mSize);
-		
-		//if Stars invisible, reset default position and size 
-		if (mSize.x < 0) ResetSettings();
-		
 		}
+
+	//if Stars invisible, reset default position and size 
+	if (mSprite.getScale().x <= 0) ResetSettings();
+
 }
 
 	

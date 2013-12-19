@@ -5,16 +5,16 @@ class Game;
 
 class HUD
 {
-	sf::Sprite			mHealthBar; 
-	sf::Sprite			mPlayerLifeIcons; 
-	sf::IntRect			mLifeIconBar; 
+	sf::Sprite			mHealthBarSprite; 
+	sf::Sprite			mPlayerLifeIconsSprite; 
+	sf::IntRect			mHealthBarRect; 
 public:
-	HUD();
+	HUD(Game* mpGame);
 	~HUD();
 
 	Game*				mpGame; 
-	void				Update( const sf::Time& deltaFrame );
-	void				Draw(const sf::RenderWindow& renderWindow);
+	void				Update(const sf::Time& deltaFrame );
+	void				Draw(sf::RenderWindow& renderWindow);
 };
 
 #endif //HUD_H

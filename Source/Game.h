@@ -31,6 +31,8 @@ public:
 		sf::Clock				mStartClock;
 		sf::Time				mFrameDelta;
 		sf::Time				mFrameStamp;
+		int						ScreenWidth; 
+		int						ScreenHeight; 
 
 
 
@@ -48,6 +50,8 @@ public:
 		sf::Texture				mAmbulanceTexture;
 		sf::Texture             mBaldusTexture;
 		sf::Texture             mLaserTexture;
+		sf::Texture				mLivesBarTexture; 
+		sf::Texture				mHealthBarTexture; 
 
 
 		ConfigLoader mConfig;

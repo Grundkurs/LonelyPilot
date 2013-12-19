@@ -4,17 +4,19 @@
 #include <memory>
 #include "StringUtilities.h"
 #include "ExplosionParticle.h"
+#include "HUD.h"
 
-//TODO: can I initialize entities-vector with default size like 200 star-entities and set all to nullptr? like entities[200, nullptr]
 GameState::GameState(Game * pGame)
 :
 	mpGame(pGame),
 	mPlayer(nullptr),
 	mAmbulance(nullptr),
-	mExplosionParticles(0),
+	mExplosionParticleCounter(0),
     isBaldusExplosionFinished(false),
+	mExplosionParticles(100),
     mState(State::Game)
 	{
+	Hud = std::unique_ptr<HUD>(new HUD(mpGame));
     mPlayer = std::shared_ptr<Player>( new Player(mpGame, this) );
 	mPlayer->SetTexture( mpGame->mPlayerTexture );
 
@@ -33,8 +35,8 @@ GameState::GameState(Game * pGame)
 		}
 
 
-	//initialize 25 explosion particles
-	for (int i = 0; i < 26; ++i)
+	//initialize  explosion particles
+	for (int i = 0; i < mExplosionParticles; ++i)
 		{
 		ExplosionParticle particle(pGame,this, mPlayer);
 		particle.SetTexture(mpGame->mStarTexture);
@@ -59,6 +61,8 @@ GameState::~GameState()
 
 void GameState::Update(const sf::Time& deltaFrame)
 {
+	Hud->Update(deltaFrame);
+
 	for (sptr_Entity& i : entities)
 	{
 		i->Update(mpGame->mFrameDelta);
@@ -77,9 +81,11 @@ void GameState::Update(const sf::Time& deltaFrame)
 				if( mBaldus->mcanBeHit ) mBaldus->HitPoint( mPlayer->getDamageBoost() );
 
 				//if Baldus starts dying it cant be hit anymore
-				if ( !mBaldus->misAlive ) mBaldus->mcanBeHit = false;
-				
-				baldusLastPosition = mBaldus->GetSprite().getPosition();
+				if (!mBaldus->misAlive) 
+					{
+					mBaldus->mcanBeHit = false;
+					baldusLastPosition = mBaldus->GetSprite().getPosition();
+					}
 
 				std::swap(*i, laserShots.back());
 				laserShots.pop_back();
@@ -97,7 +103,7 @@ void GameState::Update(const sf::Time& deltaFrame)
 			++i;
 		}
 
-	} //end of laserShots
+	} //end of lasershot-Collison
 
 	for (auto& i : explosion)
 	{
@@ -117,13 +123,13 @@ void GameState::Update(const sf::Time& deltaFrame)
 		//check if baldus is already exploding while still existing
 		if (!mBaldus->mcanBeHit && !isBaldusExplosionFinished)
 		{
-			explosion[mExplosionParticles].SetRandomDirection(baldusLastPosition);
-			++mExplosionParticles;
+			explosion[mExplosionParticleCounter].SetRandomDirection(baldusLastPosition);
+			++mExplosionParticleCounter;
 			
-			if (mExplosionParticles > 25)
+			if (mExplosionParticleCounter > (mExplosionParticles-1))
 			{
 				//reset
-				mExplosionParticles = 0;
+				mExplosionParticleCounter = 0;
 				isBaldusExplosionFinished = true; 
 				
 			}
@@ -146,13 +152,6 @@ void GameState::Update(const sf::Time& deltaFrame)
 			sf::Vector2f playerPos(mPlayer->GetSprite().getPosition());
 			mpGame->mAudioMan.SetListenerPosition(playerPos.x, playerPos.y, 0.0f);
 		}
-
-
-
-
-
-		//Clean Up if needed;
-
 	}
 }
 
@@ -160,33 +159,23 @@ void GameState::Update(const sf::Time& deltaFrame)
 void GameState::Render()
 	{
 	mpGame->mRenderWindow.clear( sf::Color::Black );
-		//first draw background, than everything else
+	//first draw background, than everything else
 	mpGame->mRenderWindow.draw( mBackground->GetSprite() );
 
-    for( sptr_Entity& i : entities )
-		{
-		mpGame->mRenderWindow.draw( i->GetSprite() );
-		}
+    for( sptr_Entity& i : entities ) mpGame->mRenderWindow.draw( i->GetSprite() );
 
-	for (auto& i : explosion)
-		{
-		mpGame->mRenderWindow.draw(i.GetSprite());
-		}
-    for (Laser& i : laserShots)
-        {
-        mpGame->mRenderWindow.draw(i.GetSprite());
-        }
+	for (auto& i : explosion) mpGame->mRenderWindow.draw(i.GetSprite());
 
-	if ( mPlayer )
-		mpGame->mRenderWindow.draw( mPlayer->GetSprite() );
+    for (Laser& i : laserShots) mpGame->mRenderWindow.draw(i.GetSprite());
 
-	if ( mAmbulance )
-		mpGame->mRenderWindow.draw( mAmbulance->GetSprite() );
+	if ( mPlayer ) 	mpGame->mRenderWindow.draw( mPlayer->GetSprite() );
 
-    if( mBaldus)
-        {
-        mpGame->mRenderWindow.draw(mBaldus->GetSprite());
-        }
+	if ( mAmbulance ) mpGame->mRenderWindow.draw( mAmbulance->GetSprite() );
+
+    if( mBaldus) mpGame->mRenderWindow.draw(mBaldus->GetSprite());
+
+	if (Hud) Hud->Draw(mpGame->mRenderWindow); //HUD-System takes care of drawing by itsself, so it gets the renderWindow passed
+
 
 	mpGame->mRenderWindow.display();
 
@@ -214,7 +203,7 @@ void GameState::ShootLaser(bool leftSide, Weapon weapon)
     {
     Laser shot(mPlayer.get(),leftSide, weapon);
     shot.SetTexture(mpGame->mLaserTexture);
-    laserShots.push_back(shot);
+    laserShots.push_back(std::move(shot));
     }
 
 

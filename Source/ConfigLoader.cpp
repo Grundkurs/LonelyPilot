@@ -141,6 +141,7 @@ bool ConfigLoader::LoadFromFile(const string &file)
 	if (!pHUDSettings) return false; 
 
 	HUDLivesTexPath = pHUDSettings->FirstChildElement("LivesTexturePath")->GetText(); 
+	HUDHealthBarPath = pHUDSettings->FirstChildElement("HealthBarTexturePath")->GetText();
 
 	return true;
     } //end of Initialize();
@@ -222,5 +223,6 @@ string& ConfigLoader::GetStarTexPath()
 
 string& ConfigLoader::GetBaldusTexPath(){ return mBaldusTexPath; }
 
-string& ConfigLoader::GetHUDLivesTexPath(){ return HUDLivesTexPath; }
+string& ConfigLoader::GetHUDLivesBarTexPath(){ return HUDLivesTexPath; }
 
+string& ConfigLoader::GetHUDHealthBarPath(){ return HUDHealthBarPath; }

@@ -32,8 +32,9 @@ bool Game::Initialize()
         std::cout << "fail to load something";
 		return false;
 		}
-
-	mRenderWindow.create(sf::VideoMode(mConfig.GetScreenWidth(), mConfig.GetScreenHeight()), mConfig.GetWindowTitle(), sf::Style::Fullscreen );
+	ScreenWidth = mConfig.GetScreenWidth();
+	ScreenHeight = mConfig.GetScreenHeight();
+	mRenderWindow.create(sf::VideoMode(ScreenWidth, ScreenHeight), mConfig.GetWindowTitle(), sf::Style::Fullscreen );
 	mRenderWindow.display();
 
 	if( !mRenderWindow.isOpen() )
@@ -94,6 +95,19 @@ bool Game::Initialize()
         }
     std::cout << "successfully loaded baldus-texture\n";
 
+	file = mConfig.GetHUDLivesBarTexPath(); 
+	if (!mLivesBarTexture.loadFromFile(ToPlatformPath(file)))
+		{
+		std::cout << "error loading LivesBar Texture\n"; 
+		return false;
+		}
+
+	file = mConfig.GetHUDHealthBarPath(); 
+	if (!mHealthBarTexture.loadFromFile(ToPlatformPath(file)))
+	{
+		std::cout << "error loading Health Bar Texture\n";
+		return false;
+	}
 
      uPtr_CurrentState.reset(new MenuState(this));
 

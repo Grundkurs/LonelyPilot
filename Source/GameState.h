@@ -15,7 +15,7 @@
 
 class Game;
 class ExplosionParticle;
-
+class HUD;
 typedef std::shared_ptr<IEntity> sptr_Entity;
 
 
@@ -24,6 +24,7 @@ class GameState : public IState
     Game*                           mpGame;
     bool                            mResumedGame;
 
+	std::unique_ptr<HUD>			Hud;
     std::vector<sptr_Entity>        entities;
     std::vector<Laser>              laserShots;
 	std::vector<ExplosionParticle>	explosion; 
@@ -33,8 +34,9 @@ class GameState : public IState
     std::shared_ptr<Baldus>         mBaldus;
     std::unique_ptr<Background>     mBackground;
 const   State                       mState;
-int									mExplosionParticles;
-bool								isBaldusExplosionFinished;
+		int							mExplosionParticles;
+		int							mExplosionParticleCounter;
+		bool						isBaldusExplosionFinished;
 
 
 

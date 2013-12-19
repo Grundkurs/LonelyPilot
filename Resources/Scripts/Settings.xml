@@ -20,7 +20,7 @@
 
 <star>
 <texturePath>..\\Resources\\Visual\\Star.png</texturePath>
-<amountOfStars>150</amountOfStars>
+<amountOfStars>90</amountOfStars>
 </star>
 
 <enemies>
@@ -29,4 +29,5 @@
 
 <HUD>
 <LivesTexturePath>..\\Resources\\Visual\\HUD\\Lives.png</LivesTexturePath>
+<HealthBarTexturePath>..\\Resources\\Visual\\HUD\\HealthBar.png</HealthBarTexturePath>
 </HUD>
