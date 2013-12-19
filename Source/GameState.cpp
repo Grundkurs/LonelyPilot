@@ -78,7 +78,11 @@ void GameState::Update(const sf::Time& deltaFrame)
 			//and got hit by laser 
 			if (i->GetSprite().getGlobalBounds().intersects(mBaldus->GetSprite().getGlobalBounds()))
 			{
-				if( mBaldus->mcanBeHit ) mBaldus->HitPoint( mPlayer->getDamageBoost() );
+				if (mBaldus->mcanBeHit) 
+					{ 
+					mBaldus->HitPoint(mPlayer->getDamageBoost()); 
+					Hud->DecreaseHealthBar(); 
+					}
 
 				//if Baldus starts dying it cant be hit anymore
 				if (!mBaldus->misAlive) 

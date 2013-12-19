@@ -15,6 +15,8 @@ public:
 	Game*				mpGame; 
 	void				Update(const sf::Time& deltaFrame );
 	void				Draw(sf::RenderWindow& renderWindow);
+
+	void				DecreaseHealthBar(); 
 };
 
 #endif //HUD_H
